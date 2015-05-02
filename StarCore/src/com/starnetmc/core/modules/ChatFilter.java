@@ -60,23 +60,9 @@ public class ChatFilter implements Listener, Module {
 	}
 
 	@Override
-	public void setName(String name) {
-
-		name = "Chat Filter";
-
-	}
-
-	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
 		return ModuleType.CHAT;
-	}
-
-	@Override
-	public void setType(ModuleType mt) {
-
-		mt = ModuleType.CHAT;
-
 	}
 
 	@Override

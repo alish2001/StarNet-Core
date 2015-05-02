@@ -203,11 +203,6 @@ public class Settings implements Module, Listener {
 		return "Settings Manager";
 	}
 
-	@Override
-	public void setName(String name) {
-		name = "Settings Manager";
-
-	}
 
 	@Override
 	public ModuleType getType(ModuleType mt) {
@@ -215,11 +210,6 @@ public class Settings implements Module, Listener {
 		return ModuleType.SERVER;
 	}
 
-	@Override
-	public void setType(ModuleType mt) {
-		mt = ModuleType.SERVER;
-
-	}
 
 	@Override
 	public void enable() {

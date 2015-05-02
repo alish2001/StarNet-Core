@@ -26,13 +26,6 @@ public class Message implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("message")) {
 
-			if (args.length == 0) {
-
-				sender.sendMessage(F.error("Commands", "Not enough arguments!"));
-				sender.sendMessage(F.RED + "Try /msg <player> <your message>");
-
-				return true;
-			}
 
 			if (args.length < 2) {
 

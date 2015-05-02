@@ -20,24 +20,12 @@ public class Tutorial implements Module {
 		return "Tutorial";
 	}
 
-	@Override
-	public void setName(String name) {
-
-		name = getName();
-
-	}
+	
 
 	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
 		return this.mt;
-	}
-
-	@Override
-	public void setType(ModuleType mt) {
-
-		mt = ModuleType.INFO;
-
 	}
 
 	@Override

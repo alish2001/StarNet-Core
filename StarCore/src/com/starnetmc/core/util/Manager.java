@@ -7,7 +7,6 @@ import java.sql.Statement;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.Main;
-import com.starnetmc.core.objects.Rank;
 
 public class Manager {
 
@@ -84,7 +83,7 @@ public class Manager {
 
 	}
 
-	public static void setRank(String uuid, Rank rank) throws Exception {
+	public static void setRank(String uuid, String rank) throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();

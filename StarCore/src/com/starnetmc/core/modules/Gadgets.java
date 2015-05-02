@@ -40,24 +40,14 @@ public class Gadgets implements Module{
 		return "Gadget Manager";
 	}
 
-	@Override
-	public void setName(String name) {
-		name = "Gadget Manager";
-		
-	}
-
+	
 	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
 		return ModuleType.SERVER;
 	}
 
-	@Override
-	public void setType(ModuleType mt) {
-		
-		mt = ModuleType.SERVER;
-		
-	}
+	
 
 	@Override
 	public void enable() {

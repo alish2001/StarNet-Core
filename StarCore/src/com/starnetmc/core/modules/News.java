@@ -3,37 +3,33 @@ package com.starnetmc.core.modules;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
-public class Chat implements Module {
+public class News implements Module{
 
-	private String name;
-	private ModuleType mt;
-
+	
+	
+	
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return this.name;
+		return "News Manager";
 	}
-
 
 	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
-		return this.mt;
+		return ModuleType.INFO;
 	}
-
 
 	@Override
 	public void enable() {
 		setEnabled(true);
-		System.out.println(getName()+" enabled.");
-
+		
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println(getName()+" disabled.");
-
+		
 	}
 
 	@Override

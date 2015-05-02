@@ -18,11 +18,7 @@ public class Border implements Module, Listener {
 		return "World Border";
 	}
 
-	@Override
-	public void setName(String name) {
-		name = "World Border";
-
-	}
+	
 
 	@Override
 	public ModuleType getType(ModuleType mt) {
@@ -30,11 +26,6 @@ public class Border implements Module, Listener {
 		return ModuleType.SERVER;
 	}
 
-	@Override
-	public void setType(ModuleType mt) {
-		mt = ModuleType.SERVER;
-
-	}
 
 	@Override
 	public void enable() {

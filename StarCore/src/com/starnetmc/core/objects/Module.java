@@ -4,11 +4,8 @@ public interface Module {
 
 	public String getName();
 
-	public void setName(String name);
-
 	public ModuleType getType(ModuleType mt);
 
-	public void setType(ModuleType mt);
 
 	public void enable();
 	public void disable();

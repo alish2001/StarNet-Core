@@ -80,11 +80,7 @@ public class NMS implements Module, Listener {
 		return "NPC Manager";
 	}
 
-	@Override
-	public void setName(String name) {
-		name = "NPC Manager";
-
-	}
+	
 
 	@Override
 	public ModuleType getType(ModuleType mt) {
@@ -92,11 +88,6 @@ public class NMS implements Module, Listener {
 		return ModuleType.SERVER;
 	}
 
-	@Override
-	public void setType(ModuleType mt) {
-		mt = ModuleType.SERVER;
-
-	}
 
 	@Override
 	public void enable() {

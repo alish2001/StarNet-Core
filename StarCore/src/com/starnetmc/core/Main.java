@@ -39,7 +39,6 @@ import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.npc.command.NPCCommand;
-import com.starnetmc.core.objects.News;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.GadgetsUI;
 import com.starnetmc.core.util.GamemodeUI;
@@ -114,7 +113,6 @@ public class Main extends JavaPlugin {
 		registerCommands();
 		registerListeners();
 		enableModules();
-		new News(this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Updater(this), 1L, 1L);
 		getLogger().info(F.info("Plugin", "All modules enabled."));
 	}
