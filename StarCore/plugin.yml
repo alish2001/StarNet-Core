@@ -1,0 +1,44 @@
+name: StarCore
+main: com.starnetmc.core.Main
+version: 0.1
+author: SparkWings
+
+commands:
+    npc:
+    
+    chat:
+    
+    settings:
+        aliases: [settings,setting,prefs,options]
+        
+    spawn:
+        aliases: [spawn, sp, sawnp, spanw]
+        
+    setspawn:
+        aliases: [setspawn, setsp, ss, setapwn]
+        
+    test:
+    
+    t:
+    
+    gm:
+        aliases: [gm, gamemode, gaymmoad, gamemdoe]
+        
+    gms:
+    
+    gma:
+    
+    gmc:
+    
+    gmsp:
+    
+    message:
+        aliases: [message, msg, tell, w, whisper]
+        
+    reply:
+        aliases: [reply, r]
+    afk:
+    teleport:
+        aliases: [teleport,tp,tetleport,teleprot]
+    tpall:
+        aliases: [tpall,teleportall]
