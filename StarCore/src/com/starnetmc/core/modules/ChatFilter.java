@@ -3,7 +3,6 @@ package com.starnetmc.core.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -29,11 +28,8 @@ public class ChatFilter implements Listener, Module {
 					e.getPlayer()
 							.sendMessage(
 									F.error("Filter",
-											"WARNING! Your last message contained a word that is blocked by our swear filter."));
-					e.getPlayer()
-							.sendMessage(
-									ChatColor.RED
-											+ "If you believe this is in error, please contact a server admin.");
+											"WARNING! Your last message contained a word that is blocked by our swear filter. If you believe this is in error, please contact a server admin."));
+
 				}
 			}
 
@@ -56,11 +52,11 @@ public class ChatFilter implements Listener, Module {
 
 	@Override
 	public double getVersion() {
-		
+
 		return 0.7;
-		
+
 	}
-	
+
 	@Override
 	public void enable() {
 		setEnabled(true);
@@ -70,14 +66,14 @@ public class ChatFilter implements Listener, Module {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("<Chat Filter> "+getVersion()+" enabled.");
+		System.out.println("<Chat Filter> " + getVersion() + " enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println("<Chat Filter> "+getVersion()+" disabled.");
+		System.out.println("<Chat Filter> " + getVersion() + " disabled.");
 
 	}
 

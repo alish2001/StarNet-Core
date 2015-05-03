@@ -36,7 +36,7 @@ public class Gamemode implements CommandExecutor {
 				case "MVP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				case "MVPPLUS":
+				case "VIP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
 				case "HELPER":

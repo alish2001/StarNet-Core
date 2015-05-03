@@ -55,7 +55,7 @@ public class Spawn implements CommandExecutor {
 				case "MVP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					break;
-				case "MVPPLUS":
+				case "VIP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					break;
 				case "HELPER":

@@ -33,7 +33,7 @@ public class Time implements CommandExecutor {
 						player.sendMessage(F.error("Permissions",
 								"No permission!"));
 						return true;
-					case "MVPPLUS":
+					case "VIP":
 						player.sendMessage(F.error("Permissions",
 								"No permission!"));
 						return true;

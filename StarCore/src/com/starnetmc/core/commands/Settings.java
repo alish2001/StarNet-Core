@@ -40,7 +40,7 @@ public class Settings implements CommandExecutor {
 					case "MVP":
 						SettingsGUI.openSettingsGUI(player);
 						break;
-					case "MVPPLUS":
+					case "VIP":
 						SettingsGUI.openSettingsGUI(player);
 						break;
 					case "HELPER":

@@ -38,7 +38,7 @@ import com.starnetmc.core.util.Manager;
 						return true;
 					}
 					if (Manager.getRank(player.getUniqueId().toString()).equals(
-							"JRMOD")) {
+							"HELPER")) {
 						player.sendMessage(F.error("Permissions", "No permission!"));
 						return true;
 					}
@@ -49,6 +49,16 @@ import com.starnetmc.core.util.Manager;
 					}
 					if (Manager.getRank(player.getUniqueId().toString()).equals(
 							"BUILDER")) {
+						player.sendMessage(F.error("Permissions", "No permission!"));
+						return true;
+					}
+					if (Manager.getRank(player.getUniqueId().toString()).equals(
+							"VIP")) {
+						player.sendMessage(F.error("Permissions", "No permission!"));
+						return true;
+					}
+					if (Manager.getRank(player.getUniqueId().toString()).equals(
+							"MVP")) {
 						player.sendMessage(F.error("Permissions", "No permission!"));
 						return true;
 					}

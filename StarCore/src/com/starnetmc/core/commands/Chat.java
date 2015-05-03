@@ -34,7 +34,7 @@ public class Chat implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("clear")) {
 
 				try {
-					if (!(Manager.getRank(p.getUniqueId().toString()) != "OWNER")) {
+					if ((Manager.getRank(p.getUniqueId().toString()) != "OWNER")) {
 						p.sendMessage(F.error("Permissions", "No permission!"));
 						return true;
 					}

@@ -57,7 +57,7 @@ public class Message implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("reply")) {
 
 			Player player = (Player) sender;
-			Player target1 = conversation.get(player);
+			Player target1 = conversation.get(target);
 			String msg = "";
 			for (String arg : args)
 				msg = msg + arg + " ";

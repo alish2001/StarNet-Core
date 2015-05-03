@@ -52,6 +52,14 @@ public class Teleport implements CommandExecutor {
 				case "YOUTUBE":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
+					
+				case "VIP":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+					
+				case "MVP":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
 
 				case "MODERATOR":
 					if (args[0].equalsIgnoreCase(player.getName())
