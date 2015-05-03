@@ -184,16 +184,22 @@ public class LScoreboard implements Module, Listener {
 		return ModuleType.INFO;
 	}
 
+	@Override
+	public double getVersion() {
+		
+		return 1.0;
+		
+	}
 
 	@Override
 	public void enable() {
-		System.out.println(getName() + " enabled.");
+		System.out.println("<Scoreboard> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		System.out.println(getName() + " disabled.");
+		System.out.println("<Scoreboard> "+getVersion()+" disabled.");
 
 	}
 

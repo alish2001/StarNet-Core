@@ -1,6 +1,5 @@
 package com.starnetmc.core;
 
-import java.io.File;
 import java.sql.SQLException;
 
 import net.minecraft.server.v1_8_R1.EntityPig;
@@ -10,7 +9,6 @@ import net.minecraft.server.v1_8_R1.EntityVillager;
 import net.minecraft.server.v1_8_R1.EntityZombie;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.commands.AFK;
@@ -32,6 +30,7 @@ import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.Gadgets;
 import com.starnetmc.core.modules.LScoreboard;
+import com.starnetmc.core.modules.News;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
@@ -51,7 +50,6 @@ public class Main extends JavaPlugin {
 	// Util
 	private static Main plugin;
 	public Manager mysql = new Manager(this);
-	public static FileConfiguration config;
 
 	// Modules
 	/**
@@ -68,6 +66,7 @@ public class Main extends JavaPlugin {
 	Gadgets gadgets = new Gadgets();
 	Border border = new Border();
 	LScoreboard sb = new LScoreboard();
+	News news = new News();
 	
 
 	@SuppressWarnings("deprecation")
@@ -75,18 +74,8 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 
 		plugin = this;
-		config = getConfig();
+		
 
-		try {
-			File conf = new File(getDataFolder(), "config.yml");
-			if (conf.exists()) {
-
-			} else {
-				conf.createNewFile();
-			}
-		} catch (Exception e) {
-			System.out.println(F.error("File", "An error occured."));
-		}
 
 		try {
 			this.mysql.setupDB();
@@ -155,6 +144,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new Block(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Border(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new BlockCommands(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new News(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetsUI(), this);
 		Bukkit.getServer().getPluginManager()
@@ -186,6 +176,7 @@ public class Main extends JavaPlugin {
 		tutorial.enable();
 		nms.enable();
 		sb.enable();
+		news.enable();
 
 	}
 
@@ -199,11 +190,9 @@ public class Main extends JavaPlugin {
 		tutorial.disable();
 		nms.disable();
 		sb.disable();
+		news.disable();
 	}
 
-	public static FileConfiguration getConfiguration() {
-		return config;
-	}
 
 	public static Main getPlugin() {
 		return Main.plugin;

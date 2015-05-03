@@ -80,24 +80,27 @@ public class NMS implements Module, Listener {
 		return "NPC Manager";
 	}
 
-	
-
 	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
 		return ModuleType.SERVER;
 	}
 
+	public double getVersion() {
+
+		return 0.6;
+		
+	}
 
 	@Override
 	public void enable() {
-		System.out.println("<NPC AI> v1.0 Enabled");
+		System.out.println("<NPC Manager> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		System.out.println("<NPC AI> Disabled.");
+		System.out.println("<NPC Manager> "+getVersion()+" disabled.");
 
 	}
 

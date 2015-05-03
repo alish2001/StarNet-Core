@@ -1,7 +1,6 @@
 package com.starnetmc.core.modules;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -9,14 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.starnetmc.core.Main;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.Manager;
 
 public class ChatFilter implements Listener, Module {
 
-	private static List<String> blocked = new ArrayList<String>();
+	private static List<String> _blockedWords = new ArrayList<String>();
 
 	@EventHandler
 	public void filterChat(AsyncPlayerChatEvent e) {
@@ -25,7 +24,7 @@ public class ChatFilter implements Listener, Module {
 
 			String[] message = e.getMessage().toLowerCase().split(" ");
 			for (String s : message) {
-				if (blocked.contains(s)) {
+				if (_blockedWords.contains(s)) {
 					e.setCancelled(true);
 					e.getPlayer()
 							.sendMessage(
@@ -43,16 +42,6 @@ public class ChatFilter implements Listener, Module {
 		}
 	}
 
-	public static void init() {
-
-		Iterator<String> o = Main.getConfiguration().getStringList("filtered").iterator();
-
-		while (o.hasNext()) {
-			blocked.add(o.next());
-		}
-
-	}
-
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -66,17 +55,29 @@ public class ChatFilter implements Listener, Module {
 	}
 
 	@Override
+	public double getVersion() {
+		
+		return 0.7;
+		
+	}
+	
+	@Override
 	public void enable() {
 		setEnabled(true);
-		ChatFilter.init();
-		System.out.println(getName()+" enabled.");
+		try {
+			_blockedWords = Manager.downloadFilter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("<Chat Filter> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println(getName()+" disabled.");
+		System.out.println("<Chat Filter> "+getVersion()+" disabled.");
 
 	}
 

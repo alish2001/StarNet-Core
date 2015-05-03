@@ -47,17 +47,22 @@ public class Gadgets implements Module{
 		return ModuleType.SERVER;
 	}
 
-	
+	@Override
+	public double getVersion() {
+		
+		return 0.9;
+		
+	}
 
 	@Override
 	public void enable() {
-		System.out.println(getName()+" enabled.");
+		System.out.println("<Gadgets> "+getVersion()+" enabled.");
 		
 	}
 
 	@Override
 	public void disable() {
-		System.out.println(getName()+" disabled.");
+		System.out.println("<Gadgets> "+getVersion()+" disabled.");
 		
 	}
 

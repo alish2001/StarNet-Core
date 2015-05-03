@@ -26,18 +26,24 @@ public class Border implements Module, Listener {
 		return ModuleType.SERVER;
 	}
 
+	@Override
+	public double getVersion() {
+		
+		return 1.0;
+		
+	}
 
 	@Override
 	public void enable() {
 		setEnabled(true);
-		System.out.println(getName()+" enabled.");
+		System.out.println("<World Border> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println(getName()+" enabled.");
+		System.out.println("<World Border> "+getVersion()+" disabled.");
 
 	}
 

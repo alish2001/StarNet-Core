@@ -21,19 +21,25 @@ public class Chat implements Module {
 		return this.mt;
 	}
 
+	@Override
+	public double getVersion() {
+		
+		return 0.5;
+		
+	}
+	
 
 	@Override
 	public void enable() {
 		setEnabled(true);
-		System.out.println(getName()+" enabled.");
+		System.out.println("<Chat> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println(getName()+" disabled.");
-
+		System.out.println("<Chat> "+getVersion()+" disabled.");
 	}
 
 	@Override

@@ -6,6 +6,7 @@ public interface Module {
 
 	public ModuleType getType(ModuleType mt);
 
+	public double getVersion();
 
 	public void enable();
 	public void disable();

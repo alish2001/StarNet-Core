@@ -3,6 +3,8 @@ package com.starnetmc.core.util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.entity.Player;
 
@@ -31,6 +33,12 @@ public class Manager {
 		Statement pp = db.getConnection().createStatement();
 		pp.executeUpdate("CREATE TABLE IF NOT EXISTS `PastPunishments` (`id` INT NOT NULL AUTO_INCREMENT,`UUID` MEDIUMTEXT, `PunishmentType` varchar(32), `PunishRemover` MEDIUMTEXT, `RemoveReason` MEDIUMTEXT, PRIMARY KEY (`id`));");
 
+		Statement sf = db.getConnection().createStatement();
+		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
+		
+		Statement n = db.getConnection().createStatement();
+		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCs` (`id INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `UUID` MEDIUMTEXT. PRMARY KEY (`id`));");
+		
 	}
 
 	public static boolean hasAccount(String uuid) throws Exception {
@@ -135,4 +143,27 @@ public class Manager {
 				+ uuid + "';");
 	}
 
+	public static List<String> downloadFilter() throws Exception{
+		
+		if(!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		List<String> words = new ArrayList<String>();
+		
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM `Filter`");
+		
+		while(rs.next()) {
+			
+			words.add(rs.getString("Word"));
+			
+		}
+		
+		return words;
+		
+	}
+
+			
+	
 }

@@ -211,17 +211,23 @@ public class Settings implements Module, Listener {
 	}
 
 
+	public double getVersion() {
+		
+		return 1.0;
+		
+	}
+	
 	@Override
 	public void enable() {
 		setEnabled(true);
-		System.out.println(getName()+" enabled.");
+		System.out.println("<Settings> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		setEnabled(false);
-		System.out.println(getName() +" disabled" );
+		System.out.println("<Settings> "+getVersion()+" disabled.");
 
 	}
 
