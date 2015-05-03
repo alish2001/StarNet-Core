@@ -124,6 +124,27 @@ public class LScoreboard implements Module, Listener {
 				Score rankb = obj.getScore(F.boldBlue + "> BUILDER");
 				rankb.setScore(11);
 				break;
+			case "VIP":
+				Score beg10 = obj.getScore(F.GREEN + "--------------");
+				beg10.setScore(14);
+				Score whsp10 = obj.getScore(ChatColor.RESET.toString());
+				whsp10.setScore(13);
+				Score rank10 = obj.getScore(F.boldYellow + "RANK:");
+				rank10.setScore(12);
+				Score rankv = obj.getScore(F.boldDA + "> VIP");
+				rankv.setScore(11);
+				break;
+			case "MVP":
+				Score beg9 = obj.getScore(F.GREEN + "--------------");
+				beg9.setScore(14);
+				Score whsp9 = obj.getScore(ChatColor.RESET.toString());
+				whsp9.setScore(13);
+				Score rank9 = obj.getScore(F.boldYellow + "RANK:");
+				rank9.setScore(12);
+				Score rankmv = obj.getScore(F.boldAqua + "> MVP");
+				rankmv.setScore(11);
+				break;
+
 			default:
 				Score ranke = obj.getScore(F.BOLD + "> NO RANK");
 				ranke.setScore(11);
@@ -136,7 +157,8 @@ public class LScoreboard implements Module, Listener {
 
 			Score _shard = obj.getScore(F.boldYellow + "SHARDS:");
 			_shard.setScore(9);
-			Score com = obj.getScore(F.WHITE+"- "+F.GOLD + Manager.getShards(player.getUniqueId().toString()));
+			Score com = obj.getScore(F.WHITE + "> " + F.GOLD
+					+ Manager.getShards(player.getUniqueId().toString()));
 			com.setScore(8);
 
 			Score whsp3 = obj.getScore(ChatColor.RESET.toString() + ""
@@ -145,7 +167,7 @@ public class LScoreboard implements Module, Listener {
 
 			Score web = obj.getScore(F.boldYellow + "WEBSITE:");
 			web.setScore(6);
-			Score weba = obj.getScore(F.WHITE + "- " + F.GREEN
+			Score weba = obj.getScore(F.WHITE + "> " + F.GREEN
 					+ "www.starnetmc.com");
 			weba.setScore(5);
 
@@ -157,7 +179,7 @@ public class LScoreboard implements Module, Listener {
 			Score whsp5 = obj.getScore(F.boldYellow + "STAFF:");
 			whsp5.setScore(3);
 
-			Score whsp6 = obj.getScore(F.WHITE + "- " + F.GREEN
+			Score whsp6 = obj.getScore(F.WHITE + "> " + F.GREEN
 					+ OfflinePlayerCache.getStaff());
 			whsp6.setScore(2);
 
@@ -176,8 +198,6 @@ public class LScoreboard implements Module, Listener {
 		return "Scoreboard Manager";
 	}
 
-	
-
 	@Override
 	public ModuleType getType(ModuleType mt) {
 		// TODO Auto-generated method stub
@@ -186,20 +206,20 @@ public class LScoreboard implements Module, Listener {
 
 	@Override
 	public double getVersion() {
-		
+
 		return 1.0;
-		
+
 	}
 
 	@Override
 	public void enable() {
-		System.out.println("<Scoreboard> "+getVersion()+" enabled.");
+		System.out.println("<Scoreboard> " + getVersion() + " enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		System.out.println("<Scoreboard> "+getVersion()+" disabled.");
+		System.out.println("<Scoreboard> " + getVersion() + " disabled.");
 
 	}
 
