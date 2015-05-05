@@ -16,6 +16,7 @@ import com.starnetmc.core.commands.Gamemode;
 import com.starnetmc.core.commands.Message;
 import com.starnetmc.core.commands.Settings;
 import com.starnetmc.core.commands.Spawn;
+import com.starnetmc.core.commands.StaffChat;
 import com.starnetmc.core.commands.Teleport;
 import com.starnetmc.core.commands.Test;
 import com.starnetmc.core.commands.Time;
@@ -44,6 +45,15 @@ import com.starnetmc.core.util.GamemodeUI;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.NMS;
 import com.starnetmc.core.util.Updater;
+
+/**
+ * 
+ * @author SparkWings
+ * <p><b>This plugin is intended for use by The Star Network ONLY.</b></p>
+ * <p><b>Unauthorized use or access to this plugin will result in immediate legal action.</b></p>
+ * <p>Copyright 2015 ©StarNetwork.LTD</p>
+ *
+ */
 
 public class Main extends JavaPlugin {
 
@@ -136,6 +146,7 @@ public class Main extends JavaPlugin {
 		getCommand("teleport").setExecutor(new Teleport());
 		getCommand("tpall").setExecutor(new Teleport());
 		getCommand("afk").setExecutor(new AFK());
+		getCommand("sc").setExecutor(new StaffChat());
 	}
 
 	private void registerListeners() {

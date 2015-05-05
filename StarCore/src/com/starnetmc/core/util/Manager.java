@@ -36,8 +36,6 @@ public class Manager {
 		Statement sf = db.getConnection().createStatement();
 		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
 		
-		Statement n = db.getConnection().createStatement();
-		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCs` (`id INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `UUID` MEDIUMTEXT. PRMARY KEY (`id`));");
 		
 	}
 

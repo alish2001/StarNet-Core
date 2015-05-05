@@ -26,6 +26,9 @@ public class Message implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("message")) {
 
+			if (!(sender instanceof Player)) {
+				return true;
+			}
 
 			if (args.length < 2) {
 
@@ -56,38 +59,44 @@ public class Message implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("reply")) {
 
-			Player player = (Player) sender;
-			Player target1 = conversation.get(target);
-			String msg = "";
-			for (String arg : args)
-				msg = msg + arg + " ";
-
-			if (msg.length() > 0) {
-				msg = msg.substring(0, msg.length() - 1);
+			if (!(sender instanceof Player)) {
+				return true;
 			}
 
+			Player player = (Player) sender;
+			Player rtarget = conversation.get(player);
+
 			if (args.length == 0) {
-				player.sendMessage(F.error("Commands", "Not enough arguments!"));
+				player.sendMessage(F.error("Commands",
+						"Try adding a message :)"));
 				return true;
 			}
 
 			if (!conversation.containsKey(player)) {
 				player.sendMessage(F.error("Message",
-						"You have not replied to anyone recently."));
+						"You have not messaged anyone recently."));
 				return true;
 			}
 
-			if (!target1.isOnline()) {
+			if (!rtarget.isOnline()) {
 				player.sendMessage(F.error("Message",
 						"That player is no longer online."));
-				return true;
 			}
 
-			player.sendMessage(F.boldBlue + "You > " + target1.getName() + ": "
-					+ F.GOLD + msg);
-			player.sendMessage(F.boldBlue + player.getName() + " > You" + ": "
-					+ F.GOLD + msg);
-			target1.playSound(target1.getLocation(), Sound.ITEM_PICKUP, 10, 1F);
+			String message = "";
+			
+			for(int i = 0; i < args.length; i++) {
+				
+				message += " " + args[i];
+				
+			}
+			message = message.substring(0);
+
+			player.sendMessage(F.boldBlue + "You > " + rtarget.getName() + ": "
+					+ F.GOLD + message);
+			rtarget.sendMessage(F.boldBlue + player.getName() + " > You: "
+					+ F.GOLD + message);
+			rtarget.playSound(player.getLocation(), Sound.ITEM_PICKUP, 10, 1F);
 
 		}
 		return false;

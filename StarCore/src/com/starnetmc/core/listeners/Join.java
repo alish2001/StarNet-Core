@@ -30,6 +30,7 @@ public class Join implements Listener {
 		player.setMaxHealth(20D);
 		player.setFoodLevel(20);
 		player.setHealthScale(20D);
+		player.teleport(player.getWorld().getSpawnLocation());
 		
 		if (!Manager.hasAccount(player.getUniqueId().toString())) {
 			Manager.createAccount(player);
@@ -42,7 +43,9 @@ public class Join implements Listener {
 		Gadgets.createUserGadget(player);
 		Manager.setLastLogin(player.getUniqueId().toString());
 		
-		
+		e.setJoinMessage(F.BLUE + "<" + F.GREEN + "+" + F.BLUE + "> "
+				+ F.GRAY + player.getName());
+
 		
 		if (Manager.getRank(player.getUniqueId().toString()).equals("ADMIN")) {
 
@@ -52,8 +55,8 @@ public class Join implements Listener {
 						@Override
 						public void run() {
 
-							ParticleEffect.VILLAGER_HAPPY.display(0F, 1F, 0F,
-									1, 6, player.getLocation(), 3.0D);
+							ParticleEffect.FLAME.display(0F, 1F, 0F,
+									0, 6, player.getLocation(), 3.0D);
 
 						}
 
@@ -61,6 +64,7 @@ public class Join implements Listener {
 
 		} else if (Manager.getRank(player.getUniqueId().toString()).equals(
 				"OWNER")) {
+		
 			_partID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					Main.getPlugin(), new BukkitRunnable() {
 
@@ -68,12 +72,12 @@ public class Join implements Listener {
 						public void run() {
 
 							ParticleEffect.ENCHANTMENT_TABLE.display(0F, 0F,
-									0F, 1F, 10, player.getLocation(), 2.0D);
+									0F, 1, 30, player.getLocation(), 1.0D);
 
 						}
 
-					}, 0L, 20L);
-
+					}, 0L, 10L);
+			
 		} else if (Manager.getRank(player.getUniqueId().toString()).equals(
 				"DEVELOPER")) {
 			_partID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
@@ -82,18 +86,31 @@ public class Join implements Listener {
 						@Override
 						public void run() {
 
-							ParticleEffect.ENCHANTMENT_TABLE.display(0F, 0F,
-									0F, 1, 10, player.getLocation(), 1.0D);
+							ParticleEffect.CRIT_MAGIC.display(0F, 0F,
+									0F, 0, 5, player.getLocation(), 1.0D);
 
 						}
 
 					}, 0L, 20L);
 		}
+		else if(Manager.getRank(player.getUniqueId().toString()).equals("VIP")) {
+			
+			_partID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+					Main.getPlugin(), new BukkitRunnable() {
+
+						@Override
+						public void run() {
+
+							ParticleEffect.PORTAL.display(0F, 0F,
+									0F, 0, 5, player.getLocation(), 1.0D);
+
+						}
+
+					}, 0L, 20L);
+			
+		}
 
 		
-		e.setJoinMessage(F.BLUE + "<" + F.GREEN + "+" + F.BLUE + "> "
-				+ F.GRAY + player.getName());
-
 	}
 
 }

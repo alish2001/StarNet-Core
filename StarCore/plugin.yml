@@ -42,3 +42,5 @@ commands:
         aliases: [teleport,tp,tetleport,teleprot]
     tpall:
         aliases: [tpall,teleportall]
+    sc:
+        aliases: [sc, staffchat]
