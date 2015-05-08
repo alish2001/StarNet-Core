@@ -21,7 +21,7 @@ public class News implements Module, Listener{
 	
 	public static void sendNews(Player player, String sub) {
 		
-		 IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + F.AQUA+"The Star Network" + "\"}");
+		 IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + F.boldAqua+"The Star Network" + "\"}");
 		    IChatBaseComponent chatSub = ChatSerializer.a("{\"text\": \"" + sub + "\"}");
 		    
 		    PacketPlayOutTitle pt = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
@@ -36,7 +36,7 @@ public class News implements Module, Listener{
 	@EventHandler(priority = EventPriority.LOW)
 	public void onJoin(PlayerJoinEvent e) {
 		
-		sendNews(e.getPlayer(), F.GOLD+"- Arcade coming soon! -");
+		sendNews(e.getPlayer(), F.GOLD+"- Double Jump in lobbies! -");
 		
 	}
 	
@@ -55,7 +55,7 @@ public class News implements Module, Listener{
 
 	public double getVersion() {
 		
-		return 0.6;
+		return 1.0;
 		
 	}
 	

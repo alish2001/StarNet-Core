@@ -29,6 +29,7 @@ import com.starnetmc.core.listeners.Weather;
 import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
+import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.Gadgets;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
@@ -77,6 +78,7 @@ public class Main extends JavaPlugin {
 	Border border = new Border();
 	LScoreboard sb = new LScoreboard();
 	News news = new News();
+	DoubleJump dj = new DoubleJump();
 	
 
 	@SuppressWarnings("deprecation")
@@ -156,6 +158,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new Border(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new BlockCommands(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new News(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new DoubleJump(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetsUI(), this);
 		Bukkit.getServer().getPluginManager()
@@ -188,6 +191,7 @@ public class Main extends JavaPlugin {
 		nms.enable();
 		sb.enable();
 		news.enable();
+		dj.enable();
 
 	}
 
@@ -202,6 +206,7 @@ public class Main extends JavaPlugin {
 		nms.disable();
 		sb.disable();
 		news.disable();
+		dj.disable();
 	}
 
 

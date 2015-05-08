@@ -81,6 +81,7 @@ public class Message implements CommandExecutor {
 			if (!rtarget.isOnline()) {
 				player.sendMessage(F.error("Message",
 						"That player is no longer online."));
+				conversation.remove(player);
 			}
 
 			String message = "";
