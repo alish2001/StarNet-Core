@@ -25,6 +25,8 @@ public class GadgetsUI implements Listener {
 	public void onInvClick(InventoryClickEvent e) {
 
 		if (e.getInventory().getName().equals(F.underRed + "Gadgets")) {
+			
+			e.setCancelled(true);
 
 			Player player = (Player) e.getWhoClicked();
 
@@ -35,7 +37,7 @@ public class GadgetsUI implements Listener {
 
 			if (e.getCurrentItem().getType() == Material.FIREWORK) {
 
-				if (Gadgets.getGadgets(player).fireworksEnabled()) {
+				if (Gadgets.getGadgets(player).fireworksEnabled() == false) {
 					Gadgets.getGadgets(player).setFWEnabled(true);
 					player.getInventory().addItem(
 							new ItemStack(Material.FIREWORK));
@@ -60,7 +62,7 @@ public class GadgetsUI implements Listener {
 				e.setCancelled(true);
 
 				Firework fw = (Firework) player.getWorld().spawnEntity(
-						player.getEyeLocation(), EntityType.FIREWORK);
+						e.getClickedBlock().getLocation(), EntityType.FIREWORK);
 				FireworkMeta fwm = fw.getFireworkMeta();
 
 				Random r = new Random();
@@ -73,34 +75,34 @@ public class GadgetsUI implements Listener {
 				if (rt == 2) {
 					type = Type.BALL_LARGE;
 				}
-				if (rt == 2) {
+				if (rt == 3) {
 					type = Type.BURST;
 				}
-				if (rt == 2) {
+				if (rt == 4) {
 					type = Type.STAR;
 				}
-				if (rt == 2) {
+				if (rt == 5) {
 					type = Type.CREEPER;
 				}
 
-				int r1i = r.nextInt(4) + 1;
+				int r1i = r.nextInt(5) + 1;
 				Color color = Color.RED;
 				
 				if(r1i == 1) {
 					color = Color.AQUA;
-				}if(r1i == 1) {
+				}if(r1i == 2) {
 					color = Color.FUCHSIA;
-				}if(r1i == 1) {
+				}if(r1i == 3) {
 					color = Color.YELLOW;
-				}if(r1i == 1) {
+				}if(r1i == 4) {
 					color = Color.GREEN;
-				}if(r1i == 1) {
+				}if(r1i == 5) {
 					color = Color.RED;
 				}
 				
 				FireworkEffect effect = FireworkEffect.builder().withColor(color).with(type).build();
 				fwm.addEffect(effect);
-				fwm.setPower(2);
+				fwm.setPower(1);
 				fw.setFireworkMeta(fwm);
 				
 				

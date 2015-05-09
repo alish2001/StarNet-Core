@@ -35,7 +35,7 @@ public class DoubleJump implements Module, Listener {
 			Vector look = loc.getDirection().normalize().multiply(1.5D);
 
 			player.setVelocity(jump.add(look));
-			player.playSound(player.getLocation(), Sound.GHAST_FIREBALL, 1, 2);
+			player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 1, 1);
 			player.setAllowFlight(false);
 
 			event.setCancelled(true);

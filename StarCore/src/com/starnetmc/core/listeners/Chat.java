@@ -21,6 +21,7 @@ public class Chat implements Listener {
 
 		e.setFormat(player.getDisplayName() + F.GRAY + ": " + F.RESET
 				+ e.getMessage());
+		e.setMessage(e.getMessage().replaceAll("%s", "s"));
 
 		if (_playerLastMessage.containsKey(player.getName())
 				&& _playerLastMessage.get(player.getName()).equalsIgnoreCase(
@@ -39,6 +40,5 @@ public class Chat implements Listener {
 		}
 
 	}
-	
-	
+
 }

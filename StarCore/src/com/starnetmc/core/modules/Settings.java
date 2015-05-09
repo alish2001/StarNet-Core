@@ -50,7 +50,7 @@ public class Settings implements Module, Listener {
 		Player player = (Player) e.getWhoClicked();
 
 		if (e.getInventory().getName()
-				.equalsIgnoreCase(F.boldAqua + "SETTINGS")) {
+				.equalsIgnoreCase(F.underRed + "SETTINGS")) {
 
 			if (e.getCurrentItem() == null)
 				return;
@@ -112,7 +112,7 @@ public class Settings implements Module, Listener {
 
 		}
 		if (e.getInventory().getName()
-				.equalsIgnoreCase(F.boldAqua + "ADMIN SETTINGS")) {
+				.equalsIgnoreCase(F.underRed + "ADMIN SETTINGS")) {
 
 			if (e.getCurrentItem() == null)
 				return;

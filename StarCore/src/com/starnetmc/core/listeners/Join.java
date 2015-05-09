@@ -1,6 +1,7 @@
 package com.starnetmc.core.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +32,7 @@ public class Join implements Listener {
 		player.setFoodLevel(20);
 		player.setHealthScale(20D);
 		player.teleport(player.getWorld().getSpawnLocation());
+		player.setGameMode(GameMode.SURVIVAL);
 		
 		if (!Manager.hasAccount(player.getUniqueId().toString())) {
 			Manager.createAccount(player);

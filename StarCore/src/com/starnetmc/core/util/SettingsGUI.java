@@ -15,7 +15,7 @@ public class SettingsGUI {
 
 	public static void openSettingsGUI(Player player) {
 
-		Inventory sgui = Bukkit.createInventory(player, 45, F.boldAqua
+		Inventory sgui = Bukkit.createInventory(player, 45, F.underRed
 				+ "SETTINGS");
 
 		ItemStack chat = new ItemStack(Material.SIGN, 1);
@@ -65,7 +65,7 @@ public class SettingsGUI {
 
 	public static void openSettingsAGUI(Player player) {
 
-		Inventory agui = Bukkit.createInventory(player, 45, F.boldAqua
+		Inventory agui = Bukkit.createInventory(player, 45, F.underRed
 				+ "ADMIN SETTINGS");
 
 		ItemStack chat = new ItemStack(Material.SIGN, 1);

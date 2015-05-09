@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.commands.AFK;
+import com.starnetmc.core.commands.Broadcast;
 import com.starnetmc.core.commands.Gamemode;
 import com.starnetmc.core.commands.Message;
 import com.starnetmc.core.commands.Settings;
@@ -94,7 +95,7 @@ public class Main extends JavaPlugin {
 			getLogger().info(F.info("Database", "Connected!"));
 		} catch (ClassNotFoundException | SQLException e) {
 			getLogger()
-					.info(F.error("Database", "Unable to connect to MySql."));
+					.info(F.error("Database", "Unable to connect to MySQL."));
 			e.printStackTrace();
 		}
 		
@@ -149,6 +150,7 @@ public class Main extends JavaPlugin {
 		getCommand("tpall").setExecutor(new Teleport());
 		getCommand("afk").setExecutor(new AFK());
 		getCommand("sc").setExecutor(new StaffChat());
+		getCommand("a").setExecutor(new Broadcast());
 	}
 
 	private void registerListeners() {

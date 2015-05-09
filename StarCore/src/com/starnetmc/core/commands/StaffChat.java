@@ -1,6 +1,7 @@
 package com.starnetmc.core.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,12 +53,11 @@ public class StaffChat implements CommandExecutor {
 					return true;
 				default:
 					String annc = "";
-					for (String arg : args)
-						annc = annc + arg + " ";
-
-					if (annc.length() > 0) {
-						annc = annc.substring(0, annc.length() - 1);
-					}
+					StringBuilder sb = new StringBuilder();
+					for (String arg : args) {
+						sb.append(arg+" ");
+				}
+					annc = sb.toString();
 
 					for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -68,28 +68,35 @@ public class StaffChat implements CommandExecutor {
 							case "HELPER":
 								player.sendMessage(F.GREEN +"Helper " +p.getName()+ " "+ F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "MODERATOR":
 								player.sendMessage(F.GOLD + "Mod " +p.getName()+ " "+ F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "ADMIN":
 								player.sendMessage(F.RED + "Admin " +p.getName()+ " "+ F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "OWNER":
 								player.sendMessage(F.DARK_RED + "Owner " +p.getName()+ " "+ F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "DEVELOPER":
 								player.sendMessage(F.LIGHT_PURPLE+ "Dev " +p.getName()+ " "+F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "BUILDER":
 								player.sendMessage(F.BLUE + "Builder " +p.getName()+ " "+ F.AQUA
 										+ annc);
+								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							default:
+								player.sendMessage(F.error("Permissions", "No permission!"));
 								return true;
 
 							}

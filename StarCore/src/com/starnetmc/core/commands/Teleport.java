@@ -16,8 +16,6 @@ public class Teleport implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("teleport")) {
 
-			
-			
 			if (!(sender instanceof Player)) {
 				sender.sendMessage("This command is only player executable!");
 				return true;
@@ -29,10 +27,8 @@ public class Teleport implements CommandExecutor {
 				sender.sendMessage(F.error("Commands", "Not enough arguments!"));
 				return true;
 			}
-			
-			Player teleportee = Bukkit.getPlayer(args[0]);
 
-			
+			Player teleportee = Bukkit.getPlayer(args[0]);
 
 			try {
 				switch (Manager.getRank(uuid)) {
@@ -52,11 +48,11 @@ public class Teleport implements CommandExecutor {
 				case "YOUTUBE":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-					
+
 				case "VIP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-					
+
 				case "MVP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
@@ -208,20 +204,71 @@ public class Teleport implements CommandExecutor {
 			String uuid = player.getUniqueId().toString();
 
 			try {
-				if (!Manager.getRank(uuid).equals("OWNER")) {
+
+				switch (Manager.getRank(uuid)) {
+
+				case "DEFAULT":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				} else if (Manager.getRank(uuid).equals("DEVELOPER")) {
+				case "VIP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
-				} else {
+					return true;
+				case "MVP":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+				case "HELPER":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+				case "MODERATOR":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+				case "ADMIN":
 					player.sendMessage(F.info("Teleport",
 							"Teleporting all players..."));
 					for (Player all : Bukkit.getOnlinePlayers()) {
 
 						all.teleport(player.getLocation());
-						
+						all.sendMessage(F.info(
+								"Teleport",
+								"You have been teleported to: "
+										+ player.getName()));
 					}
+					return false;
+				case "DEVELOPER":
+					player.sendMessage(F.info("Teleport",
+							"Teleporting all players..."));
+					for (Player all : Bukkit.getOnlinePlayers()) {
+
+						all.teleport(player.getLocation());
+						all.sendMessage(F.info(
+								"Teleport",
+								"You have been teleported to: "
+										+ player.getName()));
+
+					}
+					return false;
+				case "BUILDER":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+				case "YOUTUBE":
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
+				case "OWNER":
+					player.sendMessage(F.info("Teleport",
+							"Teleporting all players..."));
+					for (Player all : Bukkit.getOnlinePlayers()) {
+
+						all.teleport(player.getLocation());
+						all.sendMessage(F.info(
+								"Teleport",
+								"You have been teleported to: "
+										+ player.getName()));
+
+					}
+					return false;
+
 				}
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

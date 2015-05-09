@@ -1,6 +1,6 @@
-name: StarCore
+name: Core
 main: com.starnetmc.core.Main
-version: 0.1
+version: 0.8
 author: SparkWings
 
 commands:
@@ -44,3 +44,5 @@ commands:
         aliases: [tpall,teleportall]
     sc:
         aliases: [sc, staffchat]
+    a:
+        aliases: [a, broadcast, annc, b, announce]
