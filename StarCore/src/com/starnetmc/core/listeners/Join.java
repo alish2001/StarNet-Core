@@ -97,13 +97,19 @@ public class Join implements Listener {
 		}
 		else if(Manager.getRank(player.getUniqueId().toString()).equals("VIP")) {
 			
+			for(Player all : Bukkit.getOnlinePlayers()) {
+				
+				all.sendMessage(F.boldGold+"VIP "+player.getName()+" HAS JOINED THE SERVER!");
+				
+			}
+			
 			_partID = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 					Main.getPlugin(), new BukkitRunnable() {
 
 						@Override
 						public void run() {
 
-							ParticleEffect.PORTAL.display(0F, 0F,
+							ParticleEffect.CLOUD.display(0F, 0F,
 									0F, 0, 5, player.getLocation(), 1.0D);
 
 						}

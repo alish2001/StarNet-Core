@@ -36,7 +36,7 @@ public class News implements Module, Listener{
 	@EventHandler(priority = EventPriority.LOW)
 	public void onJoin(PlayerJoinEvent e) {
 		
-		sendNews(e.getPlayer(), F.GOLD+"~ New Stuff :D ~");
+		sendNews(e.getPlayer(), F.GOLD+"~ Play FFA! ~");
 		
 	}
 	

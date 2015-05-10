@@ -45,109 +45,71 @@ public class LScoreboard implements Module, Listener {
 			switch (Manager.getRank(player.getUniqueId().toString())) {
 
 			case "DEFAULT":
-				Score beg = obj.getScore(F.GREEN + "--------------");
-				beg.setScore(14);
-				Score whsp = obj.getScore(ChatColor.RESET.toString());
-				whsp.setScore(13);
 				Score rank1 = obj.getScore(F.boldYellow + "RANK:");
 				rank1.setScore(12);
-				Score rank = obj.getScore(F.BOLD + "> NO RANK");
+				Score rank = obj.getScore("> " + F.BOLD + "NO RANK");
 				rank.setScore(11);
 				break;
 			case "HELPER":
-				Score beg2 = obj.getScore(F.GREEN + "--------------");
-				beg2.setScore(14);
-				Score whsp2 = obj.getScore(ChatColor.RESET.toString());
-				whsp2.setScore(13);
 				Score rank2 = obj.getScore(F.boldYellow + "RANK:");
 				rank2.setScore(12);
-				Score rankh = obj.getScore(F.boldGreen + "> HELPER");
+				Score rankh = obj.getScore("> " + F.boldGreen + "HELPER");
 				rankh.setScore(11);
 				break;
 			case "MODERATOR":
-				Score beg3 = obj.getScore(F.GREEN + "--------------");
-				beg3.setScore(14);
-				Score whsp3 = obj.getScore(ChatColor.RESET.toString());
-				whsp3.setScore(13);
 				Score rank3 = obj.getScore(F.boldYellow + "RANK:");
 				rank3.setScore(12);
-				Score rankm = obj.getScore(F.boldGold + "> MOD");
+				Score rankm = obj.getScore("> " + F.boldGold + "MOD");
 				rankm.setScore(11);
 				break;
 			case "ADMIN":
-				Score beg4 = obj.getScore(F.GREEN + "--------------");
-				beg4.setScore(14);
-				Score whsp4 = obj.getScore(ChatColor.RESET.toString());
-				whsp4.setScore(13);
 				Score rank4 = obj.getScore(F.boldYellow + "RANK:");
 				rank4.setScore(12);
-				Score ranka = obj.getScore(F.boldRed + "> ADMIN");
+				Score ranka = obj.getScore("> " + F.boldRed + "ADMIN");
 				ranka.setScore(11);
 				break;
 			case "OWNER":
-				Score beg5 = obj.getScore(F.GREEN + "--------------");
-				beg5.setScore(14);
-				Score whsp5 = obj.getScore(ChatColor.RESET.toString());
-				whsp5.setScore(13);
 				Score rank5 = obj.getScore(F.boldYellow + "RANK:");
 				rank5.setScore(12);
-				Score ranko = obj.getScore(F.boldDR + "> OWNER");
+				Score ranko = obj.getScore("> " + F.boldDR + "OWNER");
 				ranko.setScore(11);
 				break;
 			case "DEVELOPER":
-				Score beg6 = obj.getScore(F.GREEN + "--------------");
-				beg6.setScore(14);
-				Score whsp6 = obj.getScore(ChatColor.RESET.toString());
-				whsp6.setScore(13);
 				Score rank6 = obj.getScore(F.boldYellow + "RANK:");
 				rank6.setScore(12);
-				Score rankd = obj.getScore(F.boldDA + "> DEV");
+				Score rankd = obj.getScore("> " + F.boldDP + "DEV");
 				rankd.setScore(11);
 				break;
 			case "YOUTUBE":
-				Score beg7 = obj.getScore(F.GREEN + "--------------");
-				beg7.setScore(14);
-				Score whsp7 = obj.getScore(ChatColor.RESET.toString());
-				whsp7.setScore(13);
 				Score rank7 = obj.getScore(F.boldYellow + "RANK:");
 				rank7.setScore(12);
-				Score ranky = obj.getScore(F.boldRed + "> YOUTUBER");
+				Score ranky = obj.getScore("> " + F.boldRed + "YOUTUBER");
 				ranky.setScore(11);
 				break;
 			case "BUILDER":
-				Score beg8 = obj.getScore(F.GREEN + "--------------");
-				beg8.setScore(14);
-				Score whsp8 = obj.getScore(ChatColor.RESET.toString());
-				whsp8.setScore(13);
 				Score rank8 = obj.getScore(F.boldYellow + "RANK:");
 				rank8.setScore(12);
-				Score rankb = obj.getScore(F.boldBlue + "> BUILDER");
+				Score rankb = obj.getScore("> " + F.boldBlue + "BUILDER");
 				rankb.setScore(11);
 				break;
 			case "VIP":
-				Score beg10 = obj.getScore(F.GREEN + "--------------");
-				beg10.setScore(14);
-				Score whsp10 = obj.getScore(ChatColor.RESET.toString());
-				whsp10.setScore(13);
 				Score rank10 = obj.getScore(F.boldYellow + "RANK:");
 				rank10.setScore(12);
-				Score rankv = obj.getScore(F.boldDA + "> VIP");
+				Score rankv = obj.getScore("> " + F.boldDA + "VIP");
 				rankv.setScore(11);
 				break;
 			case "MVP":
-				Score beg9 = obj.getScore(F.GREEN + "--------------");
-				beg9.setScore(14);
-				Score whsp9 = obj.getScore(ChatColor.RESET.toString());
-				whsp9.setScore(13);
 				Score rank9 = obj.getScore(F.boldYellow + "RANK:");
 				rank9.setScore(12);
-				Score rankmv = obj.getScore(F.boldAqua + "> MVP");
+				Score rankmv = obj.getScore("> " + F.boldAqua + "MVP");
 				rankmv.setScore(11);
 				break;
 
 			default:
-				Score ranke = obj.getScore(F.BOLD + "> NO RANK");
-				ranke.setScore(11);
+				Score ranke = obj.getScore(F.boldYellow + "RANK:");
+				ranke.setScore(12);
+				Score rankea = obj.getScore("> " + F.BOLD + "NO RANK");
+				rankea.setScore(12);
 				break;
 
 			}

@@ -5,11 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import com.starnetmc.core.Main;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
@@ -23,26 +18,9 @@ public class BlockCommands implements Listener {
 
 		if (e.getMessage().startsWith("/stop")) {
 
-			e.setCancelled(true);
 			Bukkit.broadcastMessage(F.error("Server",
 					"Server is going down for an update."));
-			for (Player player : Bukkit.getOnlinePlayers()) {
-
-				ByteArrayDataOutput out = ByteStreams.newDataOutput();
-				out.writeUTF("connect");
-				out.writeUTF("Hub");
-				player.sendPluginMessage(Main.getPlugin(), "BungeeCord",
-						out.toByteArray());
-			}
-
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-					Bukkit.shutdown();
-
-				}
-			}.runTaskLater(Main.getPlugin(), 100L);
+			
 		}
 		if (e.getMessage().startsWith("/help") || e.getMessage().startsWith("/?")) {
 
@@ -118,6 +96,8 @@ public class BlockCommands implements Listener {
 						+ "/sc"
 						+ F.AQUA
 						+ " - Allows you to send a message to all online staff.");
+				player.sendMessage(F.boldGold + "/b" + F.AQUA
+						+ " - Broadcasts a message to the whole server!");
 				player.sendMessage(F.boldGold + "/gm" + F.AQUA
 						+ " - Opens the Gamemode Management menu.");
 				player.sendMessage(F.boldGold + "/tp" + F.AQUA
@@ -145,6 +125,8 @@ public class BlockCommands implements Listener {
 						+ " - Allows you to send a message to all online staff.");
 				player.sendMessage(F.boldGold + "/gm" + F.AQUA
 						+ " - Opens the Gamemode Management menu.");
+				player.sendMessage(F.boldGold + "/b" + F.AQUA
+								+ " - Broadcasts a message to the whole server!");
 				player.sendMessage(F.boldGold + "/tp" + F.AQUA
 						+ " - Allows for you to teleport players!");
 				player.sendMessage(F.boldGold + "/tpall" + F.AQUA
@@ -184,6 +166,8 @@ public class BlockCommands implements Listener {
 						+ " - Allows you to send a message to all online staff.");
 				player.sendMessage(F.boldGold + "/gm" + F.AQUA
 						+ " - Opens the Gamemode Management menu.");
+				player.sendMessage(F.boldGold + "/b" + F.AQUA
+						+ " - Broadcasts a message to the whole server!");
 				player.sendMessage(F.boldGold + "/tp" + F.AQUA
 						+ " - Allows for you to teleport players!");
 				player.sendMessage(F.boldGold + "/tpall" + F.AQUA
@@ -219,6 +203,8 @@ public class BlockCommands implements Listener {
 						+ " - Allows you to send a message to all online staff.");
 				player.sendMessage(F.boldGold + "/gm" + F.AQUA
 						+ " - Opens the Gamemode Management menu.");
+				player.sendMessage(F.boldGold + "/b" + F.AQUA
+						+ " - Broadcasts a message to the whole server!");
 				player.sendMessage(F.boldGold + "/tp" + F.AQUA
 						+ " - Allows for you to teleport players!");
 				player.sendMessage(F.boldGold + "/tpall" + F.AQUA
