@@ -1,9 +1,14 @@
 package com.starnetmc.core.modules;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.util.F;
 
-public class Chat implements Module {
+public class Chat implements Module, Listener {
 
 	private String name;
 	private ModuleType mt;
@@ -31,27 +36,30 @@ public class Chat implements Module {
 
 	@Override
 	public void enable() {
-		setEnabled(true);
+		isEnabled = true;
 		System.out.println("<Chat> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		setEnabled(false);
+		isEnabled = false;
 		System.out.println("<Chat> "+getVersion()+" disabled.");
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
+	@EventHandler
+	public void silence(AsyncPlayerChatEvent e) {
+		
+		if(isEnabled = true) {
+			return;
+		}
+		if(isEnabled = false) {
+			e.setCancelled(true);
+			e.getPlayer().sendMessage(F.error("Chat", "Chat is currently silenced."));
+		}
+		
 	}
 
 }

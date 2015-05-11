@@ -35,34 +35,26 @@ public class Border implements Module, Listener {
 
 	@Override
 	public void enable() {
-		setEnabled(true);
+		isEnabled = true;
 		System.out.println("<World Border> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		setEnabled(false);
+		isEnabled = false;
 		System.out.println("<World Border> "+getVersion()+" disabled.");
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onCross(PlayerMoveEvent e) {
 
-		
+		if(isEnabled = true) {
 		
 		Player player = e.getPlayer();
 		Location _spawn = player.getWorld().getSpawnLocation();
@@ -73,6 +65,10 @@ public class Border implements Module, Listener {
 			return;
 		}
 
+		}
+		else {
+			return;
+		}
 	}
 
 }

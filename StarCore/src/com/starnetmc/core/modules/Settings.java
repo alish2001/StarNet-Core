@@ -219,28 +219,20 @@ public class Settings implements Module, Listener {
 	
 	@Override
 	public void enable() {
-		setEnabled(true);
+		isEnabled = true;
 		System.out.println("<Settings> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		setEnabled(false);
+		isEnabled = false;
 		System.out.println("<Settings> "+getVersion()+" disabled.");
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 
 }

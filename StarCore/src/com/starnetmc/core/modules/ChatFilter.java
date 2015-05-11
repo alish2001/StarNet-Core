@@ -19,7 +19,7 @@ public class ChatFilter implements Listener, Module {
 	@EventHandler
 	public void filterChat(AsyncPlayerChatEvent e) {
 
-		if (isEnabled()) {
+		if (isEnabled == true) {
 
 			String[] message = e.getMessage().toLowerCase().split(" ");
 			for (String s : message) {
@@ -59,7 +59,7 @@ public class ChatFilter implements Listener, Module {
 
 	@Override
 	public void enable() {
-		setEnabled(true);
+		isEnabled = true;
 		try {
 			_blockedWords = Manager.downloadFilter();
 		} catch (Exception e) {
@@ -72,21 +72,13 @@ public class ChatFilter implements Listener, Module {
 
 	@Override
 	public void disable() {
-		setEnabled(false);
+		isEnabled = false;
 		System.out.println("<Chat Filter> " + getVersion() + " disabled.");
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 
 }

@@ -104,18 +104,8 @@ public class NMS implements Module, Listener {
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-
-		return isEnabled() == arg0;
-
-	}
+	
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onRemoval(PlayerInteractEntityEvent e) throws Exception {

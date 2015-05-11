@@ -6,13 +6,15 @@ public class Gadget {
 
 	
 	boolean fireworks;
+	boolean eggs;
 	Player player;
 	
 	
-	public Gadget(Player player, boolean fireworks) {
+	public Gadget(Player player, boolean fireworks,boolean eggs) {
 		
 		this.player = player;
 		this.fireworks = fireworks;
+		this.eggs = eggs;
 		
 	}
 	
@@ -38,6 +40,23 @@ public class Gadget {
 	public void setFWEnabled(boolean endis) {
 		
 		fireworks = endis;
+		
+	}
+	
+	public boolean eggsEnabled() {
+		
+		if(eggs == true) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public void setEggsEnabled(boolean endis) {
+		
+		eggs = endis;
 		
 	}
 			

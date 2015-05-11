@@ -49,7 +49,7 @@ public class NPCCommand implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("npc")) {
 
-			if (nms.isEnabled()) {
+		
 
 				Player player = (Player) sender;
 				Location loc = player.getLocation();
@@ -145,11 +145,7 @@ public class NPCCommand implements CommandExecutor {
 					e.printStackTrace();
 				}
 			}
-		} else {
-			sender.sendMessage(F.error("NPC AI",
-					"This module is not currently enabled."));
-			return true;
-		}
+		
 
 		return false;
 	}

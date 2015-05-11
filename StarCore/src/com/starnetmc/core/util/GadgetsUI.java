@@ -24,8 +24,12 @@ public class GadgetsUI implements Listener {
 	@EventHandler
 	public void onInvClick(InventoryClickEvent e) {
 
+		
+		ItemStack fireworks = ItemFactory.createItem(Material.FIREWORK, F.AQUA+"FIREWORKS!!!", null, false);
+		ItemStack eggs = ItemFactory.createItem(Material.STICK, F.AQUA+"Egg Blaster 9001", null, false);
+		
 		if (e.getInventory().getName().equals(F.underRed + "Gadgets")) {
-			
+
 			e.setCancelled(true);
 
 			Player player = (Player) e.getWhoClicked();
@@ -39,20 +43,27 @@ public class GadgetsUI implements Listener {
 
 				if (Gadgets.getGadgets(player).fireworksEnabled() == false) {
 					Gadgets.getGadgets(player).setFWEnabled(true);
-					player.getInventory().addItem(
-							new ItemStack(Material.FIREWORK));
+					player.getInventory().addItem(fireworks);
 				} else {
 					Gadgets.getGadgets(player).setFWEnabled(false);
-					player.getInventory().remove(
-							new ItemStack(Material.FIREWORK));
+					player.getInventory().remove(fireworks);
 				}
 
+			} else if (e.getCurrentItem().getType() == Material.STICK) {
+				if (Gadgets.getGadgets(player).eggsEnabled() == false) {
+					Gadgets.getGadgets(player).setEggsEnabled(true);
+					player.getInventory()
+							.addItem(eggs);
+				} else {
+					Gadgets.getGadgets(player).setEggsEnabled(false);
+					player.getInventory().remove(eggs);
+				}
 			}
-		} else
-			return;
+		}
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 
@@ -87,31 +98,49 @@ public class GadgetsUI implements Listener {
 
 				int r1i = r.nextInt(5) + 1;
 				Color color = Color.RED;
-				
-				if(r1i == 1) {
+
+				if (r1i == 1) {
 					color = Color.AQUA;
-				}if(r1i == 2) {
+				}
+				if (r1i == 2) {
 					color = Color.FUCHSIA;
-				}if(r1i == 3) {
+				}
+				if (r1i == 3) {
 					color = Color.YELLOW;
-				}if(r1i == 4) {
+				}
+				if (r1i == 4) {
 					color = Color.GREEN;
-				}if(r1i == 5) {
+				}
+				if (r1i == 5) {
 					color = Color.RED;
 				}
-				
-				FireworkEffect effect = FireworkEffect.builder().withColor(color).with(type).build();
+
+				FireworkEffect effect = FireworkEffect.builder()
+						.withColor(color).with(type).build();
 				fwm.addEffect(effect);
 				fwm.setPower(1);
 				fw.setFireworkMeta(fwm);
-				
-				
+
+			} else if (e.getPlayer().getItemInHand().getType() == Material.STICK) {
+
+				Player player = e.getPlayer();
+				player.throwEgg();
+
 			} else
 				return;
 		}
 
-		else
-			return;
+		if(e.getAction() == Action.RIGHT_CLICK_AIR) {
+			
+			if (e.getPlayer().getItemInHand().getType() == Material.STICK) {
+
+				Player player = e.getPlayer();
+				player.throwEgg();
+
+			} else
+				return;
+			
+		}
 
 	}
 

@@ -16,31 +16,35 @@ import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 
-public class News implements Module, Listener{
+public class News implements Module, Listener {
 
-	
 	public static void sendNews(Player player, String sub) {
-		
-		 IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + F.boldAqua+"The Star Network" + "\"}");
-		    IChatBaseComponent chatSub = ChatSerializer.a("{\"text\": \"" + sub + "\"}");
-		    
-		    PacketPlayOutTitle pt = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
-		    PacketPlayOutTitle pst = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, chatSub);
-		    
-		    ((CraftPlayer)player).getHandle().playerConnection.sendPacket(pt);
-		    ((CraftPlayer)player).getHandle().playerConnection.sendPacket(pst);
-		
+
+		IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \""
+				+ F.boldAqua + "The Star Network" + "\"}");
+		IChatBaseComponent chatSub = ChatSerializer.a("{\"text\": \"" + sub
+				+ "\"}");
+
+		PacketPlayOutTitle pt = new PacketPlayOutTitle(EnumTitleAction.TITLE,
+				chatTitle);
+		PacketPlayOutTitle pst = new PacketPlayOutTitle(
+				EnumTitleAction.SUBTITLE, chatSub);
+
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(pt);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(pst);
+
 	}
-	
-	
+
 	@EventHandler(priority = EventPriority.LOW)
 	public void onJoin(PlayerJoinEvent e) {
-		
-		sendNews(e.getPlayer(), F.GOLD+"~ Play FFA! ~");
-		
+
+		if (isEnabled == true) {
+			sendNews(e.getPlayer(), F.GOLD + "~ Arcade coming soon!! ~");
+		} else {
+			return;
+		}
 	}
-	
-	
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -54,34 +58,24 @@ public class News implements Module, Listener{
 	}
 
 	public double getVersion() {
-		
+
 		return 1.0;
-		
+
 	}
-	
+
 	@Override
 	public void enable() {
-		setEnabled(true);
-		System.out.println("<News Manager> "+getVersion()+" enabled.");
+		isEnabled = true;
+		System.out.println("<News Manager> " + getVersion() + " enabled.");
 	}
 
 	@Override
 	public void disable() {
-		setEnabled(false);
-		System.out.println("<News Manager> "+getVersion()+" disabled.");
-		
+		isEnabled = false;
+		System.out.println("<News Manager> " + getVersion() + " disabled.");
+
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	public static boolean isEnabled;
 
 }

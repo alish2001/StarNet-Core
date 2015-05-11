@@ -175,26 +175,35 @@ public class LScoreboard implements Module, Listener {
 
 	@Override
 	public void enable() {
+		isEnabled = true;
+		try {
+			updateScoreboard();
+		}
+		catch(Exception e) {
+			
+		}
 		System.out.println("<Scoreboard> " + getVersion() + " enabled.");
+		
 
 	}
 
 	@Override
 	public void disable() {
+		isEnabled = false;
+		try {
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				player.setScoreboard(Bukkit.getScoreboardManager()
+						.getNewScoreboard());
+			}
+		} catch (Exception e) {
+
+		}
 		System.out.println("<Scoreboard> " + getVersion() + " disabled.");
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled = true;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 
 }

@@ -27,8 +27,14 @@ public class Settings implements CommandExecutor {
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(F.error("Commands",
 						"This command is only player-executable!"));
+
+			}
+			Player player = (Player) sender;
+			if (com.starnetmc.core.modules.Settings.isEnabled == false) {
+				player.sendMessage(F.error("Modules",
+						"Settings have been disabled by an owner."));
+				return true;
 			} else {
-				Player player = (Player) sender;
 
 				try {
 

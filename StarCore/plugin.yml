@@ -46,3 +46,5 @@ commands:
         aliases: [sc, staffchat]
     a:
         aliases: [a, broadcast, annc, b, announce]
+    enable:
+    disable:

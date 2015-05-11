@@ -19,7 +19,7 @@ public class Gadgets implements Module{
 
 	public static void createUserGadget(Player player) {
 
-		Gadget pf = new Gadget(player, false);
+		Gadget pf = new Gadget(player, false, false);
 		getUsers().put(player.getUniqueId().toString(), pf);
 	}
 
@@ -56,26 +56,20 @@ public class Gadgets implements Module{
 
 	@Override
 	public void enable() {
+		isEnabled = true;
 		System.out.println("<Gadgets> "+getVersion()+" enabled.");
 		
 	}
 
 	@Override
 	public void disable() {
+		isEnabled = false;
 		System.out.println("<Gadgets> "+getVersion()+" disabled.");
 		
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 
 }

@@ -19,43 +19,56 @@ import com.starnetmc.core.objects.ModuleType;
 
 public class DoubleJump implements Module, Listener {
 
-	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
-		Player player = event.getPlayer();
-		if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE) {
-			player.setFlying(false);
-			Location loc = player.getLocation().clone();
-			loc.setPitch(0.0F);
-			Vector vel = player.getVelocity().clone();
 
-			int strength = 5;
+		if (isEnabled == true) {
 
-			Vector jump = vel.multiply(0.1D).setY(0.20D * strength);
-			Vector look = loc.getDirection().normalize().multiply(1.5D);
+			Player player = event.getPlayer();
+			if (player.getGameMode() == GameMode.SURVIVAL
+					|| player.getGameMode() == GameMode.ADVENTURE) {
+				player.setFlying(false);
+				Location loc = player.getLocation().clone();
+				loc.setPitch(0.0F);
+				Vector vel = player.getVelocity().clone();
 
-			player.setVelocity(jump.add(look));
-			player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS, 1, 1);
-			player.setAllowFlight(false);
+				int strength = 5;
 
-			event.setCancelled(true);
+				Vector jump = vel.multiply(0.1D).setY(0.20D * strength);
+				Vector look = loc.getDirection().normalize().multiply(1.5D);
+
+				player.setVelocity(jump.add(look));
+				player.playSound(player.getLocation(), Sound.ENDERDRAGON_WINGS,
+						1, 1);
+				player.setAllowFlight(false);
+
+				event.setCancelled(true);
+			}
+		} else {
+			return;
 		}
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerMove(PlayerMoveEvent event) {
-		Player player = event.getPlayer();
-		if (player.getGameMode() == GameMode.SURVIVAL) {
-			if (!player.getAllowFlight()) {
-				Location loc = player.getLocation();
-				Block block = loc.getBlock().getRelative(BlockFace.DOWN);
-				if (block.getType() != Material.AIR) {
-					player.setAllowFlight(true);
+
+		if (isEnabled == true) {
+			Player player = event.getPlayer();
+			if (player.getGameMode() == GameMode.SURVIVAL) {
+				if (!player.getAllowFlight()) {
+					Location loc = player.getLocation();
+					Block block = loc.getBlock().getRelative(BlockFace.DOWN);
+					if (block.getType() != Material.AIR) {
+						player.setAllowFlight(true);
+					}
 				}
 			}
+		} else {
+			event.getPlayer().setAllowFlight(false);
+			event.getPlayer().setFlying(false);
 		}
 	}
-	
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -76,29 +89,20 @@ public class DoubleJump implements Module, Listener {
 
 	@Override
 	public void enable() {
-		setEnabled(true);
-		System.out.println("<Double Jump> version "+getVersion()+" enabled.");
-		
+		isEnabled = true;
+		System.out.println("<Double Jump> version " + getVersion()
+				+ " enabled.");
+
 	}
 
 	@Override
 	public void disable() {
+		isEnabled = false;
+		System.out.println("<Double Jump> version " + getVersion()
+				+ " disabled.");
 
-		setEnabled(false);
-		System.out.println("<Double Jump> version "+getVersion()+ " disabled.");
-		
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	public static boolean isEnabled;
 
 }

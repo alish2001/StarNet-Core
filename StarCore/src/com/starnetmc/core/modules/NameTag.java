@@ -123,7 +123,7 @@ public class NameTag implements Module, Listener {
 
 	@Override
 	public void enable() {
-		this.setEnabled(true);
+		isEnabled = true;
 		System.out.println("<Nametag Manager> " + getVersion() + " enabled.");
 
 	}
@@ -131,20 +131,12 @@ public class NameTag implements Module, Listener {
 	@Override
 	public void disable() {
 
-		this.setEnabled(false);
+		isEnabled = false;
 		System.out.println("<Nametag Manager> " + getVersion() + " disabled.");
 
 	}
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public static boolean isEnabled;
 
-	@Override
-	public boolean setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		return isEnabled() == arg0;
-	}
+	
 }

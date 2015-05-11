@@ -15,6 +15,7 @@ import com.starnetmc.core.commands.AFK;
 import com.starnetmc.core.commands.Broadcast;
 import com.starnetmc.core.commands.Gamemode;
 import com.starnetmc.core.commands.Message;
+import com.starnetmc.core.commands.ModuleControl;
 import com.starnetmc.core.commands.Settings;
 import com.starnetmc.core.commands.Spawn;
 import com.starnetmc.core.commands.StaffChat;
@@ -24,6 +25,7 @@ import com.starnetmc.core.commands.Time;
 import com.starnetmc.core.listeners.Block;
 import com.starnetmc.core.listeners.BlockCommands;
 import com.starnetmc.core.listeners.Damage;
+import com.starnetmc.core.listeners.GenericListener;
 import com.starnetmc.core.listeners.Join;
 import com.starnetmc.core.listeners.Quit;
 import com.starnetmc.core.listeners.Weather;
@@ -46,7 +48,6 @@ import com.starnetmc.core.util.GadgetsUI;
 import com.starnetmc.core.util.GamemodeUI;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.NMS;
-import com.starnetmc.core.util.Updater;
 
 /**
  * 
@@ -81,8 +82,6 @@ public class Main extends JavaPlugin {
 	News news = new News();
 	DoubleJump dj = new DoubleJump();
 	
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable() {
 
@@ -115,7 +114,6 @@ public class Main extends JavaPlugin {
 		registerCommands();
 		registerListeners();
 		enableModules();
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Updater(this), 1L, 1L);
 		getLogger().info(F.info("Plugin", "All modules enabled."));
 	}
 
@@ -151,6 +149,8 @@ public class Main extends JavaPlugin {
 		getCommand("afk").setExecutor(new AFK());
 		getCommand("sc").setExecutor(new StaffChat());
 		getCommand("a").setExecutor(new Broadcast());
+		getCommand("enable").setExecutor(new ModuleControl());
+		getCommand("disable").setExecutor(new ModuleControl());
 	}
 
 	private void registerListeners() {
@@ -161,6 +161,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new BlockCommands(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new News(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new DoubleJump(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new com.starnetmc.core.modules.Chat(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetsUI(), this);
 		Bukkit.getServer().getPluginManager()
@@ -180,6 +181,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new com.starnetmc.core.listeners.Chat(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new LScoreboard(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new GenericListener(), this);
 	}
 
 	private void enableModules() {

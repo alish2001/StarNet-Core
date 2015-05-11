@@ -20,26 +20,27 @@ public class BlockCommands implements Listener {
 
 			Bukkit.broadcastMessage(F.error("Server",
 					"Server is going down for an update."));
-			
+
 		}
-		if (e.getMessage().startsWith("/help") || e.getMessage().startsWith("/?")) {
+		if (e.getMessage().startsWith("/help")
+				|| e.getMessage().startsWith("/?")) {
 
 			e.setCancelled(true);
 			Player player = e.getPlayer();
 			switch (Manager.getRank(player.getUniqueId().toString())) {
 
 			case "DEFAULT":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/spawn" + F.AQUA
 						+ " - Teleports you to spawn.");
 				player.sendMessage(F.boldGold + "/msg" + F.AQUA
 						+ " - Allows you to message a player privately.");
 				player.sendMessage(F.boldGold + "/settings" + F.AQUA
 						+ " - Opens the settings menu.");
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "VIP":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/spawn" + F.AQUA
 						+ " - Teleports you to spawn.");
 				player.sendMessage(F.boldGold + "/msg" + F.AQUA
@@ -49,11 +50,11 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "MVP":
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/spawn" + F.AQUA
 						+ " - Teleports you to spawn.");
 				player.sendMessage(F.boldGold + "/msg" + F.AQUA
@@ -63,10 +64,10 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "HELPER":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/help" + F.AQUA
 						+ " - Shows this text.");
 				player.sendMessage(F.boldGold + "/punish" + F.AQUA
@@ -84,10 +85,10 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "MODERATOR":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/help" + F.AQUA
 						+ " - Shows this text.");
 				player.sendMessage(F.boldGold + "/punish" + F.AQUA
@@ -111,10 +112,10 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "ADMIN":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/help" + F.AQUA
 						+ " - Shows this text.");
 				player.sendMessage(F.boldGold + "/punish" + F.AQUA
@@ -126,7 +127,7 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/gm" + F.AQUA
 						+ " - Opens the Gamemode Management menu.");
 				player.sendMessage(F.boldGold + "/b" + F.AQUA
-								+ " - Broadcasts a message to the whole server!");
+						+ " - Broadcasts a message to the whole server!");
 				player.sendMessage(F.boldGold + "/tp" + F.AQUA
 						+ " - Allows for you to teleport players!");
 				player.sendMessage(F.boldGold + "/tpall" + F.AQUA
@@ -148,14 +149,18 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "OWNER":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/help" + F.AQUA
 						+ " - Shows this text.");
 				player.sendMessage(F.boldGold + "/punish" + F.AQUA
 						+ " - Opens the player punishment menu.");
+				player.sendMessage(F.boldGold + "/enable" + F.AQUA
+						+ " - Enables a specific module.");
+				player.sendMessage(F.boldGold + "/enable" + F.AQUA
+						+ " - Disables a specific module.");
 				player.sendMessage(F.boldGold + "/npc" + F.AQUA
 						+ " - Allows you to create an NPC.");
 				player.sendMessage(F.boldGold + "/chat <-n | -s | -a>" + F.AQUA
@@ -189,10 +194,10 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 			case "DEVELOPER":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/help" + F.AQUA
 						+ " - Shows this text.");
 				player.sendMessage(F.boldGold + "/punish" + F.AQUA
@@ -226,11 +231,11 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 
 			case "YOUTUBE":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/spawn" + F.AQUA
 						+ " - Teleports you to spawn.");
 				player.sendMessage(F.boldGold + "/msg" + F.AQUA
@@ -242,11 +247,11 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 
 			case "BUILDER":
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				player.sendMessage(F.boldGold + "/spawn" + F.AQUA
 						+ " - Teleports you to spawn.");
 				player.sendMessage(F.boldGold + "/msg" + F.AQUA
@@ -258,11 +263,15 @@ public class BlockCommands implements Listener {
 				player.sendMessage(F.boldGold + "/test" + F.AQUA
 						+ " - Does whatever Spark has put in it!");
 
-				player.sendMessage(F.strikeGreen +"=====");
+				player.sendMessage(F.strikeGreen + "=====");
 				break;
 
 			}
 
+		}
+		if(e.getMessage().startsWith("/me")) {
+			e.setCancelled(true);
+			e.getPlayer().sendMessage(F.error("Permissions", "Much deny permissions, so wow."));
 		}
 
 	}

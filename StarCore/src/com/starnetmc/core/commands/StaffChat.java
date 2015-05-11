@@ -58,6 +58,8 @@ public class StaffChat implements CommandExecutor {
 						sb.append(arg+" ");
 				}
 					annc = sb.toString();
+					
+				String rank = Manager.getRank(p.getUniqueId().toString())+" ";
 
 					for (Player player : Bukkit.getOnlinePlayers()) {
 
@@ -66,33 +68,27 @@ public class StaffChat implements CommandExecutor {
 									.toString())) {
 
 							case "HELPER":
-								player.sendMessage(F.GREEN +"Helper " +p.getName()+ " "+ F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "MODERATOR":
-								player.sendMessage(F.GOLD + "Mod " +p.getName()+ " "+ F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "ADMIN":
-								player.sendMessage(F.RED + "Admin " +p.getName()+ " "+ F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "OWNER":
-								player.sendMessage(F.DARK_RED + "Owner " +p.getName()+ " "+ F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "DEVELOPER":
-								player.sendMessage(F.LIGHT_PURPLE+ "Dev " +p.getName()+ " "+F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							case "BUILDER":
-								player.sendMessage(F.BLUE + "Builder " +p.getName()+ " "+ F.AQUA
-										+ annc);
+								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
 								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
 								return false;
 							default:

@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class MemoryFix {
 	private JavaPlugin _plugin;
 
+	Object tileEntity;
+	
 	public MemoryFix(JavaPlugin plugin) {
 		this._plugin = plugin;
 
@@ -28,8 +30,10 @@ public class MemoryFix {
 
 							localIterator2 = ((CraftWorld) world).getHandle().tileEntityList
 									.iterator();
-							Object tileEntity = localIterator2.next();
-							
+							if (localIterator2.hasNext()) {
+								tileEntity = localIterator2.next();
+								continue;
+							}
 							if ((tileEntity instanceof IInventory)) {
 								Iterator<HumanEntity> entityIterator = ((IInventory) tileEntity)
 										.getViewers().iterator();
@@ -42,6 +46,8 @@ public class MemoryFix {
 										entityIterator.remove();
 									}
 								}
+							} else {
+								return;
 							}
 						}
 					}
