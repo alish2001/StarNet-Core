@@ -1,7 +1,5 @@
 package com.starnetmc.core.commands;
 
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -11,10 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.StarMap;
 
 public class Message implements CommandExecutor {
 
-	public static HashMap<Player, Player> conversation = new HashMap<Player, Player>();
+	public static StarMap<Player, Player> conversation = new StarMap<Player, Player>();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {

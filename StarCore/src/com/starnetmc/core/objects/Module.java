@@ -28,7 +28,6 @@ public abstract class Module implements Listener {
 
 	private void onEnable() {
 		enable();
-		log("All modules enabled.");
 	}
 
 	public PluginManager getPluginManager() {

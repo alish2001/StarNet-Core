@@ -1,7 +1,5 @@
 package com.starnetmc.core.listeners;
 
-import java.util.HashMap;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,10 +8,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.StarMap;
 
 public class Chat implements Listener {
 
-	public static HashMap<String, String> _playerLastMessage = new HashMap<String, String>();
+	public static StarMap<String, String> _playerLastMessage = new StarMap<String, String>();
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void listenToChat(AsyncPlayerChatEvent e) throws Exception {

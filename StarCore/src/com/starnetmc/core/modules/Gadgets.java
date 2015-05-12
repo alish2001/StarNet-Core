@@ -1,19 +1,18 @@
 package com.starnetmc.core.modules;
 
-import java.util.HashMap;
-
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.Gadget;
+import com.starnetmc.core.util.StarMap;
 
 public class Gadgets extends Module {
 	
 	
 	
-	private static HashMap<String, Gadget> playergadgets = new HashMap<String, Gadget>();
+	private static StarMap<String, Gadget> playergadgets = new StarMap<String, Gadget>();
 	
 	public Gadgets(JavaPlugin plugin) {
 		super("Gadgets",0.6,ModuleType.SERVER,plugin);
@@ -30,7 +29,7 @@ public class Gadgets extends Module {
 		getUsers().put(player.getUniqueId().toString(), pf);
 	}
 
-	public static HashMap<String, Gadget> getUsers() {
+	public static StarMap<String, Gadget> getUsers() {
 
 		return playergadgets;
 	}

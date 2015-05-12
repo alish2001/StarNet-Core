@@ -1,7 +1,6 @@
 package com.starnetmc.core.modules;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -16,10 +15,11 @@ import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Setting;
 import com.starnetmc.core.util.SettingsGUI;
+import com.starnetmc.core.util.StarMap;
 
 public class Settings extends Module {
 
-	public static HashMap<String, Setting> playerPrefs_ = new HashMap<String, Setting>();
+	public static StarMap<String, Setting> playerPrefs_ = new StarMap<String, Setting>();
 	private static List<String> invisPlayers_ = new ArrayList<String>();
 
 	public Settings(JavaPlugin plugin) {
@@ -37,7 +37,7 @@ public class Settings extends Module {
 		getUsers().put(player.getUniqueId().toString(), pf);
 	}
 
-	public static HashMap<String, Setting> getUsers() {
+	public static StarMap<String, Setting> getUsers() {
 
 		return playerPrefs_;
 	}

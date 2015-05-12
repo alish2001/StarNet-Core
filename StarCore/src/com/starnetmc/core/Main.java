@@ -53,9 +53,16 @@ import com.starnetmc.core.util.NMS;
 /**
  * 
  * @author SparkWings
- * <p><b>This plugin is intended for use by The Star Network ONLY.</b></p>
- * <p><b>Unauthorized use or access to this plugin will result in immediate legal action.</b></p>
- * <p>Copyright 2015 ©StarNetwork.LTD</p>
+ *         <p>
+ *         <b>This plugin is intended for use by The Star Network ONLY.</b>
+ *         </p>
+ *         <p>
+ *         <b>Unauthorized use or access to this plugin will result in immediate
+ *         legal action.</b>
+ *         </p>
+ *         <p>
+ *         Copyright 2015 ©StarNetwork.LTD
+ *         </p>
  *
  */
 
@@ -65,30 +72,10 @@ public class Main extends JavaPlugin {
 	private static Main plugin;
 	public Manager mysql = new Manager(this);
 
-	// Modules
-	/**
-	 * @param Modules
-	 *            from the plugin. They are enabled below
-	 * @see java.lang.Object
-	 */
-
-	Chat chat = new Chat(this);
-	Tutorial tutorial = new Tutorial(this);
-	ChatFilter filter = new ChatFilter(this);
-	NMS nms = new NMS(this);
-	com.starnetmc.core.modules.Settings settings = new com.starnetmc.core.modules.Settings(this);
-	Gadgets gadgets = new Gadgets(this);
-	Border border = new Border(this);
-	LScoreboard sb = new LScoreboard(this);
-	News news = new News(this);
-	DoubleJump dj = new DoubleJump(this);
-	
 	@Override
 	public void onEnable() {
 
 		plugin = this;
-		
-
 
 		try {
 			this.mysql.setupDB();
@@ -98,23 +85,37 @@ public class Main extends JavaPlugin {
 					.info(F.error("Database", "Unable to connect to MySQL."));
 			e.printStackTrace();
 		}
-		
-		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
+		getServer().getMessenger().registerOutgoingPluginChannel(this,
+				"BungeeCord");
+
+		// Modules
+		new Chat(this);
+		new Tutorial(this);
+		new ChatFilter(this);
+		new NMS(this);
+		new com.starnetmc.core.modules.Settings(this);
+		new Gadgets(this);
+		new Border(this);
+		new LScoreboard(this);
+		new News(this);
+		new DoubleJump(this);
+
+		//Registering NPCs
 		new NMS(this).registerEntity("Zombie", 54, EntityZombie.class,
 				NPCZombie.class);
 		new NMS(this).registerEntity("Skeleton", 51, EntitySkeleton.class,
 				NPCSkeleton.class);
 		new NMS(this).registerEntity("Villager", 120, EntityVillager.class,
 				NPCVillager.class);
-		new NMS(this)
-				.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
+		new NMS(this).registerEntity("Slime", 55, EntitySlime.class,
+				NPCSlime.class);
 		new NMS(this).registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
 
+		//Other
 		getConfig().options().copyDefaults(true);
 		registerCommands();
 		registerListeners();
-		enableModules();
 		new MemoryFix(this);
 		getLogger().info(F.info("Plugin", "All modules enabled."));
 	}
@@ -122,14 +123,13 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 
-		disableModules();
-		saveDefaultConfig();
 		getLogger()
 				.info(F.info("Plugin",
-						"All modules disabled. Plugin shutting down."));
+						"All modules disabled, Plugin shutting down."));
 
 	}
 
+	//Registers plugin commands, xD
 	private void registerCommands() {
 		getCommand("npc").setExecutor(new NPCCommand(this));
 		getCommand("chat").setExecutor(
@@ -155,11 +155,13 @@ public class Main extends JavaPlugin {
 		getCommand("disable").setExecutor(new ModuleControl());
 	}
 
+	//registers listeners which are NOT modules
 	private void registerListeners() {
 		Bukkit.getServer().getPluginManager().registerEvents(new Join(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Quit(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Block(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new BlockCommands(), this);
+		Bukkit.getServer().getPluginManager()
+				.registerEvents(new BlockCommands(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetsUI(), this);
 		Bukkit.getServer().getPluginManager()
@@ -172,38 +174,9 @@ public class Main extends JavaPlugin {
 				.registerEvents(new Damage(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new com.starnetmc.core.listeners.Chat(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new GenericListener(), this);
+		Bukkit.getServer().getPluginManager()
+				.registerEvents(new GenericListener(), this);
 	}
-
-	private void enableModules() {
-
-		chat.enable();
-		settings.enable();
-		filter.enable();
-		gadgets.enable();
-		border.enable();
-		tutorial.enable();
-		sb.enable();
-		news.enable();
-		dj.enable();
-		nms.enable();
-
-	}
-
-	private void disableModules() {
-
-		chat.disable();
-		settings.disable();
-		filter.disable();
-		gadgets.disable();
-		border.disable();
-		tutorial.disable();
-		nms.disable();
-		sb.disable();
-		news.disable();
-		dj.disable();
-	}
-
 
 	public static Main getPlugin() {
 		return Main.plugin;
