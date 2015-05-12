@@ -9,15 +9,20 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
-public class DoubleJump implements Module, Listener {
+public class DoubleJump extends Module {
+
+	public DoubleJump(JavaPlugin plugin) {
+		super("DoubleJump Manager",1.0,ModuleType.SERVER,plugin);
+		// TODO Auto-generated constructor stub
+	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
@@ -70,36 +75,16 @@ public class DoubleJump implements Module, Listener {
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Double Jump";
-	}
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.SERVER;
-	}
-
-	@Override
-	public double getVersion() {
-		// TODO Auto-generated method stub
-		return 0.1;
-	}
-
-	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<Double Jump> version " + getVersion()
-				+ " enabled.");
+		log("Enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<Double Jump> version " + getVersion()
-				+ " disabled.");
+		log("Disabled.");
 
 	}
 

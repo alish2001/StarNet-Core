@@ -5,9 +5,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -19,8 +19,15 @@ import com.starnetmc.core.objects.OfflinePlayerCache;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
-public class LScoreboard implements Module, Listener {
+public class LScoreboard extends Module {
 
+	
+	public LScoreboard(JavaPlugin plugin) {
+		
+		super("Hub Scoreboard",1.0,ModuleType.INFO,plugin);
+		
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onStaffJoin(PlayerJoinEvent e) throws Exception {
 
@@ -154,24 +161,7 @@ public class LScoreboard implements Module, Listener {
 
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Scoreboard Manager";
-	}
 
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.INFO;
-	}
-
-	@Override
-	public double getVersion() {
-
-		return 1.0;
-
-	}
 
 	@Override
 	public void enable() {
@@ -182,7 +172,7 @@ public class LScoreboard implements Module, Listener {
 		catch(Exception e) {
 			
 		}
-		System.out.println("<Scoreboard> " + getVersion() + " enabled.");
+		log("Enabled.");
 		
 
 	}
@@ -198,7 +188,7 @@ public class LScoreboard implements Module, Listener {
 		} catch (Exception e) {
 
 		}
-		System.out.println("<Scoreboard> " + getVersion() + " disabled.");
+		log("Disabled.");
 
 	}
 

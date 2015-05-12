@@ -11,8 +11,8 @@ import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -21,15 +21,22 @@ import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
-public class NameTag implements Module, Listener {
+public class NameTag extends Module {
 
+	
+	public NameTag(JavaPlugin plugin) {
+		super("Nametag Manager",0.0,ModuleType.INFO,plugin);
+	}
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) throws Exception {
 
 		setNametag(e.getPlayer());
 		@SuppressWarnings("unused")
-		EntityPlayer ep = new EntityPlayer(null, null, makeProfile("",e.getPlayer().getUniqueId(), null), ((CraftPlayer) e.getPlayer()).getHandle().playerInteractManager);
-		
+		EntityPlayer ep = new EntityPlayer(null, null, makeProfile("", e
+				.getPlayer().getUniqueId(), null),
+				((CraftPlayer) e.getPlayer()).getHandle().playerInteractManager);
+
 	}
 
 	public static void setNametag(Player player) throws Exception {
@@ -68,18 +75,19 @@ public class NameTag implements Module, Listener {
 		case "YOUTUBE":
 			ep.displayName = F.BOLD + "YOU" + F.RED + "" + F.BOLD + "TUBE "
 					+ player.getName();
-			break;	
+			break;
 
 		}
-		
-		for(Player all : Bukkit.getOnlinePlayers()) {
-			
-			if(all != player) {
-				
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(ep));
-				
+
+		for (Player all : Bukkit.getOnlinePlayers()) {
+
+			if (all != player) {
+
+				((CraftPlayer) player).getHandle().playerConnection
+						.sendPacket(new PacketPlayOutNamedEntitySpawn(ep));
+
 			}
-			
+
 		}
 		ep.displayName = _prevName;
 
@@ -103,28 +111,11 @@ public class NameTag implements Module, Listener {
 		return profile;
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Nametag Manager";
-	}
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.INFO;
-	}
-
-	@Override
-	public double getVersion() {
-		// TODO Auto-generated method stub
-		return 0.1;
-	}
 
 	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<Nametag Manager> " + getVersion() + " enabled.");
+		log("Enabled.");
 
 	}
 
@@ -132,11 +123,10 @@ public class NameTag implements Module, Listener {
 	public void disable() {
 
 		isEnabled = false;
-		System.out.println("<Nametag Manager> " + getVersion() + " disabled.");
+		log("Disabled.");
 
 	}
 
 	public static boolean isEnabled;
 
-	
 }

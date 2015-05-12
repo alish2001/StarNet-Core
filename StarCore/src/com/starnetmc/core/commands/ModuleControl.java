@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.Main;
 import com.starnetmc.core.events.ModuleStateChangeEvent;
 import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.ChatFilter;
@@ -20,15 +21,15 @@ import com.starnetmc.core.util.Manager;
 
 public class ModuleControl implements CommandExecutor {
 
-	Border border = new Border();
-	ChatFilter cf = new ChatFilter();
-	DoubleJump dj = new DoubleJump();
-	Gadgets gadgets = new Gadgets();
-	LScoreboard sc = new LScoreboard();
-	News news = new News();
-	com.starnetmc.core.modules.Settings set = new com.starnetmc.core.modules.Settings();
-	Tutorial tut = new Tutorial();
-	com.starnetmc.core.modules.Chat c = new com.starnetmc.core.modules.Chat();
+	Border border = new Border(Main.getPlugin());
+	ChatFilter cf = new ChatFilter(Main.getPlugin());
+	DoubleJump dj = new DoubleJump(Main.getPlugin());
+	Gadgets gadgets = new Gadgets(Main.getPlugin());
+	LScoreboard sc = new LScoreboard(Main.getPlugin());
+	News news = new News(Main.getPlugin());
+	com.starnetmc.core.modules.Settings set = new com.starnetmc.core.modules.Settings(Main.getPlugin());
+	Tutorial tut = new Tutorial(Main.getPlugin());
+	com.starnetmc.core.modules.Chat c = new com.starnetmc.core.modules.Chat(Main.getPlugin());
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {

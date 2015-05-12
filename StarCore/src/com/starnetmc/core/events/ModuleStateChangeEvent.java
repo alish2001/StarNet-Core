@@ -59,12 +59,5 @@ public class ModuleStateChangeEvent extends Event implements Cancellable {
 		return mt;
 	}
 
-	public String getName() {
-		return module.getName();
-	}
-
-	public double getModuleVersion() {
-		return module.getVersion();
-	}
 
 }

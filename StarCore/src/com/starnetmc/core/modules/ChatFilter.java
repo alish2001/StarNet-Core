@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
-public class ChatFilter implements Listener, Module {
+public class ChatFilter extends Module {
 
 	private static List<String> _blockedWords = new ArrayList<String>();
 
+	public ChatFilter(JavaPlugin plugin) {
+		super("Chat Filter",1.0,ModuleType.INFO,plugin);
+	}
+	
 	@EventHandler
 	public void filterChat(AsyncPlayerChatEvent e) {
 
@@ -39,25 +43,6 @@ public class ChatFilter implements Listener, Module {
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Chat Filter";
-	}
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.CHAT;
-	}
-
-	@Override
-	public double getVersion() {
-
-		return 0.7;
-
-	}
-
-	@Override
 	public void enable() {
 		isEnabled = true;
 		try {
@@ -66,14 +51,14 @@ public class ChatFilter implements Listener, Module {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("<Chat Filter> " + getVersion() + " enabled.");
+		log("Enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<Chat Filter> " + getVersion() + " disabled.");
+		log("Disabled.");
 
 	}
 

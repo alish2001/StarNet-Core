@@ -8,8 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
@@ -17,11 +17,15 @@ import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Setting;
 import com.starnetmc.core.util.SettingsGUI;
 
-public class Settings implements Module, Listener {
+public class Settings extends Module {
 
 	public static HashMap<String, Setting> playerPrefs_ = new HashMap<String, Setting>();
 	private static List<String> invisPlayers_ = new ArrayList<String>();
 
+	public Settings(JavaPlugin plugin) {
+		super("Settings",1.0,ModuleType.SERVER,plugin);
+	}
+	
 	public static Setting getPrefs(Player player) {
 
 		return playerPrefs_.get(player.getUniqueId().toString());
@@ -197,38 +201,18 @@ public class Settings implements Module, Listener {
 
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Settings Manager";
-	}
 
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.SERVER;
-	}
-
-
-	public double getVersion() {
-		
-		return 1.0;
-		
-	}
 	
 	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<Settings> "+getVersion()+" enabled.");
-
+		log("Enabled.");
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<Settings> "+getVersion()+" disabled.");
-
+		log("Disabled.");
 	}
 
 	public static boolean isEnabled;

@@ -4,46 +4,29 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
-public class Border implements Module, Listener {
+public class Border extends Module {
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "World Border";
+	public Border(JavaPlugin plugin) {
+		super("World Border",1.0,ModuleType.SERVER,plugin);
 	}
-
 	
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.SERVER;
-	}
-
-	@Override
-	public double getVersion() {
-		
-		return 1.0;
-		
-	}
 
 	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<World Border> "+getVersion()+" enabled.");
-
+		log("enabled.");
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<World Border> "+getVersion()+" disabled.");
+		log("disabled.");
 
 	}
 

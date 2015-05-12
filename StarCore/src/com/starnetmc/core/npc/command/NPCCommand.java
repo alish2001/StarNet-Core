@@ -23,14 +23,11 @@ import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
-import com.starnetmc.core.util.NMS;
-
 public class NPCCommand implements CommandExecutor {
 
 	public NPCCommand(Main main) {
 	}
 
-	NMS nms = new NMS();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd,

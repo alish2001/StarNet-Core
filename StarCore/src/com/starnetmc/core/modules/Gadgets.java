@@ -3,14 +3,21 @@ package com.starnetmc.core.modules;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.Gadget;
 
-public class Gadgets implements Module{
+public class Gadgets extends Module {
+	
+	
 	
 	private static HashMap<String, Gadget> playergadgets = new HashMap<String, Gadget>();
+	
+	public Gadgets(JavaPlugin plugin) {
+		super("Gadgets",0.6,ModuleType.SERVER,plugin);
+	}
 	
 	public static Gadget getGadgets(Player player) {
 
@@ -34,38 +41,18 @@ public class Gadgets implements Module{
 
 	}
 	
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Gadget Manager";
-	}
-
-	
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.SERVER;
-	}
-
-	@Override
-	public double getVersion() {
-		
-		return 0.9;
-		
-	}
 
 	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<Gadgets> "+getVersion()+" enabled.");
+		log("Enabled.");
 		
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<Gadgets> "+getVersion()+" disabled.");
-		
+		log("Disabled.");
 	}
 
 	public static boolean isEnabled;

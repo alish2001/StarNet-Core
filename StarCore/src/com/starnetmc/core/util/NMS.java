@@ -22,9 +22,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.events.NPCRemoveEvent;
 import com.starnetmc.core.events.NPCSpawnEvent;
@@ -33,11 +33,18 @@ import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
-public class NMS implements Module, Listener {
+public class NMS extends Module{
 
 	public static LinkedHashMap<String, Location> npcs = new LinkedHashMap<String,Location>();
 	static Villager b;
+
+	public NMS(JavaPlugin plugin) {
+		
+		super("NPC Manager",2.0,ModuleType.SERVER,plugin);
+		
+	}
 	
+
 	public void registerEntity(String name, int id, Class<?> class1,
 			Class<? extends EntityInsentient> customClass) {
 		try {
@@ -85,24 +92,7 @@ public class NMS implements Module, Listener {
 		}
 	}
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "NPC Manager";
-	}
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.SERVER;
-	}
-
-	public double getVersion() {
-
-		return 0.6;
-		
-	}
-
+	
 	@Override
 	public void enable() {
 		
@@ -114,14 +104,13 @@ public class NMS implements Module, Listener {
 			e.printStackTrace();
 		}
 		
-		
-		System.out.println("<NPC Manager> "+getVersion()+" enabled.");
+		log("Enabled.");
 
 	}
 
 	@Override
 	public void disable() {
-		System.out.println("<NPC Manager> "+getVersion()+" disabled.");
+		log("Disabled");
 
 	}
 

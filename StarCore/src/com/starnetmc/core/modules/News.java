@@ -9,14 +9,19 @@ import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 
-public class News implements Module, Listener {
+public class News extends Module {
+
+	public News(JavaPlugin plugin) {
+		super("News Manager", 1.0, ModuleType.INFO, plugin);
+
+	}
 
 	public static void sendNews(Player player, String sub) {
 
@@ -46,34 +51,15 @@ public class News implements Module, Listener {
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "News Manager";
-	}
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return ModuleType.INFO;
-	}
-
-	public double getVersion() {
-
-		return 1.0;
-
-	}
-
-	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<News Manager> " + getVersion() + " enabled.");
+		log("Enabled.");
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<News Manager> " + getVersion() + " disabled.");
-
+		log("Disabled.");
 	}
 
 	public static boolean isEnabled;

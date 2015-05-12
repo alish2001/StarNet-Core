@@ -12,7 +12,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.starnetmc.core.Main;
 import com.starnetmc.core.modules.Gadgets;
 import com.starnetmc.core.modules.Settings;
-import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.objects.OfflinePlayerCache;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
@@ -20,7 +19,6 @@ import com.starnetmc.core.util.ParticleEffect;
 
 public class Join implements Listener {
 
-	Tutorial tutorial = new Tutorial();
 	
 	public static int _partID;
 

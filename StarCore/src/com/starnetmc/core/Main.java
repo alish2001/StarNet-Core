@@ -47,6 +47,7 @@ import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.GadgetsUI;
 import com.starnetmc.core.util.GamemodeUI;
 import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.MemoryFix;
 import com.starnetmc.core.util.NMS;
 
 /**
@@ -71,16 +72,16 @@ public class Main extends JavaPlugin {
 	 * @see java.lang.Object
 	 */
 
-	Chat chat = new Chat();
-	Tutorial tutorial = new Tutorial();
-	ChatFilter filter = new ChatFilter();
-	NMS nms = new NMS();
-	com.starnetmc.core.modules.Settings settings = new com.starnetmc.core.modules.Settings();
-	Gadgets gadgets = new Gadgets();
-	Border border = new Border();
-	LScoreboard sb = new LScoreboard();
-	News news = new News();
-	DoubleJump dj = new DoubleJump();
+	Chat chat = new Chat(this);
+	Tutorial tutorial = new Tutorial(this);
+	ChatFilter filter = new ChatFilter(this);
+	NMS nms = new NMS(this);
+	com.starnetmc.core.modules.Settings settings = new com.starnetmc.core.modules.Settings(this);
+	Gadgets gadgets = new Gadgets(this);
+	Border border = new Border(this);
+	LScoreboard sb = new LScoreboard(this);
+	News news = new News(this);
+	DoubleJump dj = new DoubleJump(this);
 	
 	@Override
 	public void onEnable() {
@@ -100,20 +101,21 @@ public class Main extends JavaPlugin {
 		
 		getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
-		new NMS().registerEntity("Zombie", 54, EntityZombie.class,
+		new NMS(this).registerEntity("Zombie", 54, EntityZombie.class,
 				NPCZombie.class);
-		new NMS().registerEntity("Skeleton", 51, EntitySkeleton.class,
+		new NMS(this).registerEntity("Skeleton", 51, EntitySkeleton.class,
 				NPCSkeleton.class);
-		new NMS().registerEntity("Villager", 120, EntityVillager.class,
+		new NMS(this).registerEntity("Villager", 120, EntityVillager.class,
 				NPCVillager.class);
-		new NMS()
+		new NMS(this)
 				.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
-		new NMS().registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
+		new NMS(this).registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
 
 		getConfig().options().copyDefaults(true);
 		registerCommands();
 		registerListeners();
 		enableModules();
+		new MemoryFix(this);
 		getLogger().info(F.info("Plugin", "All modules enabled."));
 	}
 
@@ -157,11 +159,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new Join(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Quit(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Block(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new Border(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new BlockCommands(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new News(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new DoubleJump(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new com.starnetmc.core.modules.Chat(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetsUI(), this);
 		Bukkit.getServer().getPluginManager()
@@ -170,17 +168,10 @@ public class Main extends JavaPlugin {
 				.registerEvents(new Weather(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new com.starnetmc.core.util.Time(), this);
-		Bukkit.getServer()
-				.getPluginManager()
-				.registerEvents(new com.starnetmc.core.modules.Settings(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new Damage(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new NMS(), this);
-		Bukkit.getServer().getPluginManager()
-				.registerEvents(new ChatFilter(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new com.starnetmc.core.listeners.Chat(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new LScoreboard(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new GenericListener(), this);
 	}
 

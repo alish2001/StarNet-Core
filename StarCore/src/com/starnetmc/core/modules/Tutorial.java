@@ -3,6 +3,7 @@ package com.starnetmc.core.modules;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.starnetmc.core.Main;
@@ -10,42 +11,21 @@ import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 
-public class Tutorial implements Module {
+public class Tutorial extends Module {
 
-	ModuleType mt = ModuleType.INFO;
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Tutorial";
+	public Tutorial(JavaPlugin plugin) {
+		super("Tutorial",1.0,ModuleType.INFO,plugin);
 	}
 
-	
-
-	@Override
-	public ModuleType getType(ModuleType mt) {
-		// TODO Auto-generated method stub
-		return this.mt;
-	}
-
-	@Override
-	public double getVersion(){
-		
-		return 1.0;
-		
-	}
-	
 	@Override
 	public void enable() {
 		isEnabled = true;
-		System.out.println("<Tutorial> "+getVersion()+" enabled.");
 
 	}
 
 	@Override
 	public void disable() {
 		isEnabled = false;
-		System.out.println("<Tutorial> "+getVersion()+" disabled.");
 
 	}
 
@@ -440,7 +420,5 @@ public class Tutorial implements Module {
 	}
 
 	public static boolean isEnabled;
-
-	
 
 }
