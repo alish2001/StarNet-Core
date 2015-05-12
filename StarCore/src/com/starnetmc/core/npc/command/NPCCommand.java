@@ -1,5 +1,6 @@
 package com.starnetmc.core.npc.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Zombie;
 
 import com.starnetmc.core.Main;
+import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
@@ -49,103 +51,119 @@ public class NPCCommand implements CommandExecutor {
 
 		if (cmd.getName().equalsIgnoreCase("npc")) {
 
-		
+			Player player = (Player) sender;
+			Location loc = player.getLocation();
+			if (args.length < 2) {
+				player.sendMessage(F
+						.error("Commands",
+								"Invalid Syntax. Please use /npc <skeleton | zombie | zombiebaby | villager | villagerbaby | slime | pig | pigbaby | skeletonwither> <name>"));
+				return true;
+			}
 
-				Player player = (Player) sender;
-				Location loc = player.getLocation();
-				if (args.length < 2) {
-					player.sendMessage(F
-							.error("Commands",
-									"Invalid Syntax. Please use /npc <skeleton | zombie | zombiebaby | villager | villagerbaby | slime | pig | pigbaby | skeletonwither> <name>"));
-					return true;
-				}
+			try {
+				if (Manager.getRank(player.getUniqueId().toString()).equals(
+						"OWNER")) {
 
-				try {
-					if (Manager.getRank(player.getUniqueId().toString())
-							.equals("OWNER")) {
+					if (args[0].equalsIgnoreCase("zombie")) {
+						Zombie b = NPCZombie.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+					}
+					if (args[0].equalsIgnoreCase("skeleton")) {
+						Skeleton b = NPCSkeleton.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
 
-						if (args[0].equalsIgnoreCase("zombie")) {
-							Zombie b = NPCZombie.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("skeleton")) {
-							Skeleton b = NPCSkeleton.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("skeletonwither")) {
-							Skeleton b = NPCSkeleton.spawn(loc);
-							b.setSkeletonType(SkeletonType.WITHER);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("villager")) {
-							Villager b = NPCVillager.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("zombiebaby")) {
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+					}
+					if (args[0].equalsIgnoreCase("skeletonwither")) {
+						Skeleton b = NPCSkeleton.spawn(loc);
+						b.setSkeletonType(SkeletonType.WITHER);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
 
-							Zombie b = NPCZombie.spawn(loc);
-							b.setBaby(true);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+					}
+					if (args[0].equalsIgnoreCase("villager")) {
+						Villager b = NPCVillager.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
 
-						}
-						if (args[0].equalsIgnoreCase("villagerbaby")) {
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+					}
+					if (args[0].equalsIgnoreCase("zombiebaby")) {
 
-							Villager b = NPCVillager.spawn(loc);
-							b.setBaby();
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
+						Zombie b = NPCZombie.spawn(loc);
+						b.setBaby(true);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
 
-						}
+					}
+					if (args[0].equalsIgnoreCase("villagerbaby")) {
 
-						if (args[0].equalsIgnoreCase("slime")) {
-							Slime b = NPCSlime.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("pig")) {
-							Pig b = NPCPig.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-						}
-						if (args[0].equalsIgnoreCase("pigbaby")) {
-							Pig b = NPCPig.spawn(loc);
-							b.setCustomName(ChatColor.GOLD + " " + s);
-							b.setCustomNameVisible(true);
-							b.setBaby();
-							player.sendMessage(F.info("NPC",
-									"NPC Summoned Successfully"));
-							return true;
-						}
-					} else {
+						Villager b = NPCVillager.spawn(loc);
+						b.setBaby();
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+
+					}
+
+					if (args[0].equalsIgnoreCase("slime")) {
+						Slime b = NPCSlime.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
+					}
+					if (args[0].equalsIgnoreCase("pig")) {
+						Pig b = NPCPig.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+					}
+					if (args[0].equalsIgnoreCase("pigbaby")) {
+						Pig b = NPCPig.spawn(loc);
+						b.setCustomName(ChatColor.GOLD + " " + s);
+						b.setCustomNameVisible(true);
+						b.setBaby();
+						player.sendMessage(F.info("NPC",
+								"NPC Summoned Successfully"));
+						Bukkit.getServer().getPluginManager()
+								.callEvent(new NPCSpawnEvent(b, s, loc));
 						return true;
 					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} else {
+					return true;
 				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		
+		}
 
 		return false;
 	}

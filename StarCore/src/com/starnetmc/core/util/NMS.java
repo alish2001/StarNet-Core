@@ -3,6 +3,7 @@ package com.starnetmc.core.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,12 @@ import net.minecraft.server.v1_8_R1.BiomeMeta;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityTypes;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -21,12 +26,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import com.starnetmc.core.events.NPCRemoveEvent;
+import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.modules.Tutorial;
+import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
 public class NMS implements Module, Listener {
 
+	public static LinkedHashMap<String, Location> npcs = new LinkedHashMap<String,Location>();
+	static Villager b;
+	
 	public void registerEntity(String name, int id, Class<?> class1,
 			Class<? extends EntityInsentient> customClass) {
 		try {
@@ -94,6 +105,16 @@ public class NMS implements Module, Listener {
 
 	@Override
 	public void enable() {
+		
+		try {
+			npcs = Manager.downloadNPCs();
+			spawnNPCS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		System.out.println("<NPC Manager> "+getVersion()+" enabled.");
 
 	}
@@ -125,6 +146,7 @@ public class NMS implements Module, Listener {
 					en.remove();
 				}
 				player.sendMessage(F.info("NPC", "NPC Removed Successfully"));
+				Bukkit.getServer().getPluginManager().callEvent(new NPCRemoveEvent((LivingEntity) en, en.getCustomName(), en.getLocation()));
 
 			} else {
 				return;
@@ -136,6 +158,13 @@ public class NMS implements Module, Listener {
 
 	}
 
+	@EventHandler
+	public void onRemove(NPCRemoveEvent e) throws Exception {
+		
+		Manager.deleteNPC(e.getName());
+		
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInteract(PlayerInteractEntityEvent e) {
 
@@ -253,4 +282,27 @@ public class NMS implements Module, Listener {
 			return;
 
 	}
+	
+	@EventHandler(priority = EventPriority.LOW)
+	public void onSpawn(NPCSpawnEvent e) throws Exception {
+		
+		Manager.createNPC(e.getName(), e.getLocation());
+		
+	}
+	
+	public static void spawnNPCS() {
+		
+		for(String s : npcs.keySet()) {
+			b = NPCVillager.spawn(npcs.get(s));
+			b.setCustomName(ChatColor.GOLD + " " + s);
+			b.setCustomNameVisible(true);
+		}
+		
+	}
+}
+
+enum NPCType {
+	
+	VILLAGER,SKELETON,PIG,SLIME,SKELETONWITHER,PIGBABY,VILLAGERBABY,ZOMBIE,ZOMBIEBABY;
+	
 }

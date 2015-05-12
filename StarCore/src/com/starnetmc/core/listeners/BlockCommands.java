@@ -1,10 +1,13 @@
 package com.starnetmc.core.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
@@ -13,11 +16,26 @@ public class BlockCommands implements Listener {
 	@EventHandler
 	public void blockStop(PlayerCommandPreprocessEvent e) throws Exception {
 
-		if (!e.getPlayer().isOp())
-			return;
 
 		if (e.getMessage().startsWith("/stop")) {
 
+			
+			for(Entity en : e.getPlayer().getWorld().getEntities()) {
+				
+				if(en instanceof LivingEntity) {
+					if(en instanceof Player) {
+						return;
+					}
+					else {
+					en.remove();
+					}
+				}
+				else {
+					return;
+				}
+				
+			}
+			
 			Bukkit.broadcastMessage(F.error("Server",
 					"Server is going down for an update."));
 

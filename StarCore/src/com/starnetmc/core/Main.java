@@ -192,10 +192,10 @@ public class Main extends JavaPlugin {
 		gadgets.enable();
 		border.enable();
 		tutorial.enable();
-		nms.enable();
 		sb.enable();
 		news.enable();
 		dj.enable();
+		nms.enable();
 
 	}
 

@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.events.ModuleStateChangeEvent;
 import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.DoubleJump;
@@ -46,6 +47,7 @@ public class ModuleControl implements CommandExecutor {
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
 				} else {
+					Bukkit.getServer().getPluginManager().callEvent(new ModuleStateChangeEvent());
 
 					if (args.length == 0) {
 						player.sendMessage(F.error("Commands",

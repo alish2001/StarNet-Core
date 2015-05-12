@@ -4,8 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.Main;
@@ -35,8 +38,10 @@ public class Manager {
 
 		Statement sf = db.getConnection().createStatement();
 		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
-		
-		
+
+		Statement n = db.getConnection().createStatement();
+		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCManager` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `NPCType` varchar(32), `World` varchar(32),`x` INT, `y` INT, `z` INT, PRIMARY KEY (`id`));");
+
 	}
 
 	public static boolean hasAccount(String uuid) throws Exception {
@@ -141,27 +146,80 @@ public class Manager {
 				+ uuid + "';");
 	}
 
-	public static List<String> downloadFilter() throws Exception{
+	public static List<String> downloadFilter() throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		List<String> words = new ArrayList<String>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM `Filter`");
+
+		while (rs.next()) {
+
+			words.add(rs.getString("Word"));
+
+		}
+
+		return words;
+
+	}
+
+	// Start NPC Code
+	public static LinkedHashMap<String, Location> downloadNPCs()
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM `NPCManager`");
+
+		while (rs.next()) {
+			npcs.put(
+					rs.getString("Name"),
+					new Location(Bukkit.getWorld(rs.getString("World")), rs
+							.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+		}
+
+		return npcs;
+
+	}
+
+	public static void createNPC(String name, Location loc) throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		Statement s = db.getConnection().createStatement();
+		s.execute("INSERT INTO `NPCManager` (`Name`,`NPCType`,`World`,`x`,`y`,`z`) VALUES ('"
+				+ name
+				+ "','VILLAGER','"
+				+ loc.getWorld().getName()
+				+ "','"
+				+ loc.getBlockX()
+				+ "','"
+				+ loc.getBlockY()
+				+ "','"
+				+ loc.getBlockZ() + "');");
+
+	}
+
+	public static void deleteNPC(String name) throws Exception {
 		
-		if(!db.checkConnection()) {
+		if (!db.checkConnection()) {
 			db.openConnection();
 		}
 		
-		List<String> words = new ArrayList<String>();
-		
 		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Filter`");
-		
-		while(rs.next()) {
-			
-			words.add(rs.getString("Word"));
-			
-		}
-		
-		return words;
+		s.executeUpdate("DELETE FROM `NPCManager` WHERE `Name`='"+name+"';");
 		
 	}
-
-			
 	
 }
