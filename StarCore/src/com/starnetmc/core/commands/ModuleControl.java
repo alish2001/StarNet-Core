@@ -112,7 +112,7 @@ public class ModuleControl implements CommandExecutor {
 							news.enable();
 							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
 									+ F.boldGreen
-									+ "The NEWS modules has been enabled by "
+									+ "The NEWS module has been enabled by "
 									+ player.getName());
 						} else {
 							player.sendMessage(F.error("Modules",
