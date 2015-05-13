@@ -11,6 +11,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import com.starnetmc.core.events.ShardPickupEvent;
 import com.starnetmc.core.events.UpdateEvent;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
@@ -39,6 +40,11 @@ public class LScoreboard extends Module {
 		if(e.getType() == UpdateType.SHORT) {
 			updateScoreboard();
 		}
+	}
+	
+	@EventHandler
+	public void updateOnShard(ShardPickupEvent e) throws Exception {
+		updateScoreboard();
 	}
 	
 	private void updateScoreboard() throws Exception {

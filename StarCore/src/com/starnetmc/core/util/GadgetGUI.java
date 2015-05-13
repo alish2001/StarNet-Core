@@ -17,9 +17,12 @@ public class GadgetGUI {
 		
 		ItemStack fireworks = ItemFactory.createItem(Material.FIREWORK, F.AQUA+"FIREWORKS!!!", Arrays.asList("",F.GOLD+"Feel like celebrating?",F.GOLD+"Set off these bad boys!"), true);
 		ItemStack eggs = ItemFactory.createItem(Material.STICK, F.AQUA+"EGG BLASTER 9001", Arrays.asList(F.GOLD+"All the eggs!"), true);
+		ItemStack shard = ItemFactory.createItem(Material.NETHER_STAR, F.AQUA+"SHARD SHOOTER", Arrays.asList(F.GOLD+"Feel like giving away some shards?",F.GOLD+"Use this badboy to fire them off!",F.boldRed+"THIS COSTS 20 SHARDS PER USE"), true);
+		
 
-		gui.setItem(3, fireworks);
-		gui.setItem(5, eggs);
+		gui.setItem(2, fireworks);
+		gui.setItem(4, eggs);
+		gui.setItem(6, shard);
 		player.openInventory(gui);
 	}
 	

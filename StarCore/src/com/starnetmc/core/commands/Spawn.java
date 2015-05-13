@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
@@ -23,6 +24,10 @@ public class Spawn implements CommandExecutor {
 					return true;
 				}
 
+				if(Tutorial.intut.contains(player.getName())) {
+					return true;
+				}
+				
 				player.teleport(player.getWorld().getSpawnLocation());
 				player.sendMessage(F.info("World",
 						"You were teleported to spawn."));

@@ -7,14 +7,16 @@ public class Gadget {
 	
 	boolean fireworks;
 	boolean eggs;
+	boolean shard;
 	Player player;
 	
 	
-	public Gadget(Player player, boolean fireworks,boolean eggs) {
+	public Gadget(Player player, boolean fireworks,boolean eggs, boolean shard) {
 		
 		this.player = player;
 		this.fireworks = fireworks;
 		this.eggs = eggs;
+		this.shard = shard;
 		
 	}
 	
@@ -57,6 +59,21 @@ public class Gadget {
 	public void setEggsEnabled(boolean endis) {
 		
 		eggs = endis;
+		
+	}
+	
+	public boolean isShardEnabled() {
+		if(shard == true) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void setShardEnabled(boolean endis) {
+		
+		shard = endis;
 		
 	}
 			

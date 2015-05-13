@@ -1,5 +1,8 @@
 package com.starnetmc.core.modules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,6 +17,8 @@ import com.starnetmc.core.util.Manager;
 
 public class Tutorial extends Module {
 
+	public static List<String> intut = new ArrayList<String>();
+	
 	public Tutorial(JavaPlugin plugin) {
 		super("Tutorial", 1.0, ModuleType.INFO, plugin);
 	}
@@ -34,6 +39,7 @@ public class Tutorial extends Module {
 
 		Location tutLoc = new Location(player.getWorld(), 144, 100, -27);
 
+		intut.add(player.getName());
 		Settings.getPrefs(player).setPlayersVisible(false);
 		player.teleport(tutLoc);
 
@@ -414,6 +420,9 @@ public class Tutorial extends Module {
 				for (int i = 0; i < 150; i++) {
 					player.sendMessage("   \n");
 				}
+				
+				intut.remove(player.getName());
+				
 				try {
 					if (!Manager.hasTutorial(player.getUniqueId().toString())) {
 						Manager.setHasTutorial(player.getUniqueId().toString());

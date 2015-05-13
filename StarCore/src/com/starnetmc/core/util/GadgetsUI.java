@@ -2,6 +2,7 @@ package com.starnetmc.core.util;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import com.starnetmc.core.events.ShardFireEvent;
 import com.starnetmc.core.modules.Gadgets;
 
 public class GadgetsUI implements Listener {
@@ -24,10 +26,12 @@ public class GadgetsUI implements Listener {
 	@EventHandler
 	public void onInvClick(InventoryClickEvent e) {
 
-		
-		ItemStack fireworks = ItemFactory.createItem(Material.FIREWORK, F.AQUA+"FIREWORKS!!!", null, false);
-		ItemStack eggs = ItemFactory.createItem(Material.STICK, F.AQUA+"Egg Blaster 9001", null, false);
-		
+		ItemStack fireworks = ItemFactory.createItem(Material.FIREWORK, F.AQUA
+				+ "FIREWORKS!!!", null, false);
+		ItemStack eggs = ItemFactory.createItem(Material.STICK, F.AQUA
+				+ "Egg Blaster 9001", null, false);
+		ItemStack item = ItemFactory.createItem(Material.NETHER_STAR, F.AQUA
+				+ "SHARD SHOOTER", null, false);
 		if (e.getInventory().getName().equals(F.underRed + "Gadgets")) {
 
 			e.setCancelled(true);
@@ -52,11 +56,19 @@ public class GadgetsUI implements Listener {
 			} else if (e.getCurrentItem().getType() == Material.STICK) {
 				if (Gadgets.getGadgets(player).eggsEnabled() == false) {
 					Gadgets.getGadgets(player).setEggsEnabled(true);
-					player.getInventory()
-							.addItem(eggs);
+					player.getInventory().addItem(eggs);
 				} else {
 					Gadgets.getGadgets(player).setEggsEnabled(false);
 					player.getInventory().remove(eggs);
+				}
+			} else if (e.getCurrentItem().getType() == Material.NETHER_STAR) {
+				if (Gadgets.getGadgets(player).isShardEnabled() == false) {
+					Gadgets.getGadgets(player).setShardEnabled(true);
+					player.getInventory().addItem(item);
+
+				} else {
+					Gadgets.getGadgets(player).setShardEnabled(false);
+					player.getInventory().remove(item);
 				}
 			}
 		}
@@ -65,7 +77,7 @@ public class GadgetsUI implements Listener {
 
 	@SuppressWarnings("deprecation")
 	@EventHandler
-	public void onInteract(PlayerInteractEvent e) {
+	public void onInteract(PlayerInteractEvent e) throws Exception {
 
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (e.getPlayer().getItemInHand().getType() == Material.FIREWORK) {
@@ -130,16 +142,24 @@ public class GadgetsUI implements Listener {
 				return;
 		}
 
-		if(e.getAction() == Action.RIGHT_CLICK_AIR) {
-			
+		if (e.getAction() == Action.RIGHT_CLICK_AIR) {
+
 			if (e.getPlayer().getItemInHand().getType() == Material.STICK) {
 
 				Player player = e.getPlayer();
 				player.throwEgg();
 
-			} else
-				return;
-			
+			} else if (e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
+
+				Player player = e.getPlayer();
+
+				
+
+				Bukkit.getServer().getPluginManager().callEvent(new ShardFireEvent(player));
+				
+				
+			}
+
 		}
 
 	}

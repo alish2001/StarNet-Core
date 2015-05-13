@@ -35,6 +35,7 @@ import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.Gadgets;
+import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
 import com.starnetmc.core.modules.Settings;
@@ -103,6 +104,7 @@ public class Main extends JavaPlugin {
 		new LScoreboard(this);
 		new News(this);
 		new DoubleJump(this);
+		new HubInventory(this);
 
 		// Registering NPCs
 		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
