@@ -28,53 +28,46 @@ public class AFK implements CommandExecutor {
 			Player player = (Player) sender;
 
 			try {
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"DEFAULT")) {
+				switch (Manager.getRank(player.getUniqueId().toString())) {
+
+				case "DEFAULT":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				}
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"HELPER")) {
+
+				case "VIP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				}
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"MODERATOR")) {
+				case "MVP":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				}
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"BUILDER")) {
+				case "HELPER":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				}
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"VIP")) {
+				case "MODERATOR":
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
-				}
-				if (Manager.getRank(player.getUniqueId().toString()).equals(
-						"MVP")) {
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
+
+				default:
+					if (afkplayer.contains(player.getName())) {
+						afkplayer.remove(player.getName());
+						player.setGameMode(GameMode.SURVIVAL);
+						player.setPlayerListName(player.getDisplayName());
+
+					} else {
+						afkplayer.add(player.getName());
+						player.setGameMode(GameMode.SPECTATOR);
+						player.setPlayerListName(F.GRAY + "AFK "
+								+ player.getName());
+
+						return true;
+					}
+					return false;
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			if (afkplayer.contains(player.getName())) {
-				afkplayer.remove(player.getName());
-				player.setGameMode(GameMode.SURVIVAL);
-				player.setPlayerListName(player.getDisplayName());
-
-			} else {
-				afkplayer.add(player.getName());
-				player.setGameMode(GameMode.SPECTATOR);
-				player.setPlayerListName(F.GRAY + "AFK " + player.getName());
-
-				return true;
-			}
 		}
 		return false;
 	}

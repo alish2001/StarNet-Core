@@ -33,30 +33,6 @@ public class Teleport implements CommandExecutor {
 			try {
 				switch (Manager.getRank(uuid)) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "NULL":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "YOUTUBE":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "VIP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
 				case "MODERATOR":
 					if (args[0].equalsIgnoreCase(player.getName())
 							&& args.length == 1) {
@@ -182,6 +158,9 @@ public class Teleport implements CommandExecutor {
 						return false;
 					}
 					return false;
+				default:
+					player.sendMessage(F.error("Permissions", "No permission!"));
+					return true;
 
 				}
 			} catch (Exception e) {

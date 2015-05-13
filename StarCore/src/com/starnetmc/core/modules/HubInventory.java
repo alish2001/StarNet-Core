@@ -74,10 +74,22 @@ public class HubInventory extends Module {
 					player.sendMessage(F.info("Arcade", "Coming soon!"));
 				} else if (player.getItemInHand().getType() == Material.ENDER_CHEST) {
 					e.setCancelled(true);
+					
+					if(Gadgets.isEnabled == false) {
+						player.sendMessage(F.error("Modules", "Gadgets have been disabled by an owner."));
+						return;
+					}
+					
+					
 					GadgetGUI.openGadgetInventory(player);
 				} else if (player.getItemInHand().getType() == Material.SLIME_BALL) {
 					e.setCancelled(true);
 
+					if(Settings.isEnabled == false) {
+						player.sendMessage(F.error("Modules", "Settings have been disabled by an owner."));
+						return;
+					}
+					
 					switch (Manager.getRank(player.getUniqueId().toString())) {
 
 					case "ADMIN":

@@ -25,35 +25,6 @@ public class Time implements CommandExecutor {
 				try {
 					switch (Manager.getRank(player.getUniqueId().toString())) {
 
-					case "DEFAULT":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "MVP":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "VIP":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "HELPER":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "MODERATOR":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "YOUTUBE":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-					case "BUILDER":
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-
 					case "ADMIN":
 						com.starnetmc.core.util.Time.openTimeGUI(player);
 						return false;

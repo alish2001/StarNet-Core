@@ -40,24 +40,6 @@ public class SettingsCommand implements CommandExecutor {
 
 					switch (Manager.getRank(player.getUniqueId().toString())) {
 
-					case "DEFAULT":
-						SettingsGUI.openSettingsGUI(player);
-						break;
-					case "MVP":
-						SettingsGUI.openSettingsGUI(player);
-						break;
-					case "VIP":
-						SettingsGUI.openSettingsGUI(player);
-						break;
-					case "HELPER":
-						SettingsGUI.openSettingsGUI(player);
-						break;
-					case "MODERATOR":
-						SettingsGUI.openSettingsGUI(player);
-						break;
-					case "YOUTUBE":
-						SettingsGUI.openSettingsGUI(player);
-						break;
 					case "BUILDER":
 						SettingsGUI.openSettingsAGUI(player);
 						break;
@@ -69,6 +51,9 @@ public class SettingsCommand implements CommandExecutor {
 						break;
 					case "DEVELOPER":
 						SettingsGUI.openSettingsAGUI(player);
+						break;
+					default:
+						SettingsGUI.openSettingsGUI(player);
 						break;
 
 					}

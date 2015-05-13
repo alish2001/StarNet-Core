@@ -30,18 +30,7 @@ public class Gamemode implements CommandExecutor {
 			try {
 				switch (Manager.getRank(player.getUniqueId().toString())) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "VIP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
+	
 				case "MODERATOR":
 					GamemodeUI.openGMGUI(player);
 					return false;
@@ -86,18 +75,6 @@ public class Gamemode implements CommandExecutor {
 			try {
 				switch (Manager.getRank(player.getUniqueId().toString())) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVPPLUS":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
 				case "MODERATOR":
 					player.setGameMode(GameMode.SURVIVAL);
 					player.sendMessage(F.info("Gamemode",
@@ -154,18 +131,6 @@ public class Gamemode implements CommandExecutor {
 			try {
 				switch (Manager.getRank(player.getUniqueId().toString())) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVPPLUS":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
 				case "MODERATOR":
 					player.setGameMode(GameMode.CREATIVE);
 					player.sendMessage(F.info("Gamemode",
@@ -222,18 +187,6 @@ public class Gamemode implements CommandExecutor {
 			try {
 				switch (Manager.getRank(player.getUniqueId().toString())) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVPPLUS":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
 				case "MODERATOR":
 					player.setGameMode(GameMode.ADVENTURE);
 					player.sendMessage(F.info("Gamemode",
@@ -286,18 +239,6 @@ public class Gamemode implements CommandExecutor {
 			try {
 				switch (Manager.getRank(player.getUniqueId().toString())) {
 
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVPPLUS":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
 				case "MODERATOR":
 					player.setGameMode(GameMode.SPECTATOR);
 					player.sendMessage(F.info("Gamemode",

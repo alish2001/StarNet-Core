@@ -62,7 +62,7 @@ public class Message implements CommandExecutor {
 
 				if (Settings.getPrefs(target).canRecMsg() == false) {
 					player.sendMessage(F.error("Message", target.getName()
-							+ " cannot currently recieve private messages."));
+							+ " has private messaging turned off."));
 					return true;
 				}
 
