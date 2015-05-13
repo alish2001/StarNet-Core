@@ -2,18 +2,18 @@ package com.starnetmc.core.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import com.starnetmc.core.Main;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 
 public class BlockCommands implements Listener {
 
+	
+	
 	@EventHandler
 	public void blockStop(PlayerCommandPreprocessEvent e) throws Exception {
 
@@ -21,36 +21,28 @@ public class BlockCommands implements Listener {
 		if (e.getMessage().startsWith("/stop")) {
 
 			e.setCancelled(true);
+			Bukkit.broadcastMessage(F.error("Server",
+					"Server is going down for an update."));
+			try {
+				for(Entity en : e.getPlayer().getWorld().getEntities()) {
 			
-			for(Entity en : e.getPlayer().getWorld().getEntities()) {
 				
-				if(en instanceof LivingEntity) {
 					if(en instanceof Player) {
 						return;
 					}
-					else {
+					
 					en.remove();
-					}
-				}
-				else {
-					return;
-				}
-				
-			}
-			
-			Bukkit.broadcastMessage(F.error("Server",
-					"Server is going down for an update."));
-
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
 					
 				}
-			});
-			
+			}
+			finally{
+				Bukkit.getServer().shutdown();
+			}
+
 		}
+			
+	
+		
 		if (e.getMessage().startsWith("/help")
 				|| e.getMessage().startsWith("/?")) {
 

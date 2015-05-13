@@ -44,6 +44,15 @@ public class SettingsGUI {
 				Arrays.asList(" ", " ", F.RED + "Click to " + F.GREEN
 						+ "ENABLE"), true);
 
+
+		ItemStack msge = ItemFactory.createItem(Material.PAPER, F.boldGreen
+				+ "Private Messaging ENABLED", Arrays.asList("", "", F.GREEN
+				+ "Click to " + F.RED + "DISABLE"), true);
+		
+		ItemStack msgd = ItemFactory.createItem(Material.PAPER, F.boldRed
+						+ "Private Messaging DISABLED", Arrays.asList("", "", F.RED
+								+ "Click to " + F.GREEN + "ENABLE"), true);
+		
 		if (Settings.getPrefs(player).canChat() == true) {
 
 			sgui.setItem(20, chat);
@@ -59,6 +68,13 @@ public class SettingsGUI {
 			sgui.setItem(22, visd);
 		}
 
+		if(Settings.getPrefs(player).canRecMsg() == true) {
+			sgui.setItem(24, msge);
+		}
+		else {
+			sgui.setItem(24, msgd);
+		}
+		
 		player.openInventory(sgui);
 
 	}
@@ -106,27 +122,42 @@ public class SettingsGUI {
 				Arrays.asList(" ", " ", F.RED + "Click to " + F.GREEN
 						+ "ENABLE"), true);
 
+		ItemStack msge = ItemFactory.createItem(Material.PAPER, F.boldGreen
+				+ "Private Messaging ENABLED", Arrays.asList("", "", F.GREEN
+				+ "Click to " + F.RED + "DISABLE"), true);
+		
+		ItemStack msgd = ItemFactory.createItem(Material.PAPER, F.boldRed
+						+ "Private Messaging DISABLED", Arrays.asList("", "", F.RED
+								+ "Click to " + F.GREEN + "ENABLE"), true);
+
 		if (Settings.getPrefs(player).canChat() == true) {
 
-			agui.setItem(20, chat);
+			agui.setItem(19, chat);
 
 		} else {
-			agui.setItem(20, chatd);
+			agui.setItem(19, chatd);
 		}
 
 		if (Settings.getPrefs(player).playersVisible() == true) {
-			agui.setItem(22, vise);
+			agui.setItem(21, vise);
 
 		} else {
-			agui.setItem(22, visd);
+			agui.setItem(21, visd);
 		}
 
 		if (Settings.getPrefs(player).getBuildMode() == true) {
 
-			agui.setItem(24, bme);
+			agui.setItem(23, bme);
 
 		} else {
-			agui.setItem(24, bmd);
+			agui.setItem(23, bmd);
+		}
+		
+		if(Settings.getPrefs(player).canRecMsg() == true) {
+			agui.setItem(25, msge);
+		}
+		else {
+			agui.setItem(25, msgd);
 		}
 
 		player.openInventory(agui);

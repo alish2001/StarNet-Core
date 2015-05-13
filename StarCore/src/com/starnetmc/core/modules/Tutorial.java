@@ -10,11 +10,12 @@ import com.starnetmc.core.Main;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.Manager;
 
 public class Tutorial extends Module {
 
 	public Tutorial(JavaPlugin plugin) {
-		super("Tutorial",1.0,ModuleType.INFO,plugin);
+		super("Tutorial", 1.0, ModuleType.INFO, plugin);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class Tutorial extends Module {
 
 	}
 
-	public static void sendTutorial(final Player player) {
+	public static void sendTutorial(final Player player) throws Exception {
 
 		Location tutLoc = new Location(player.getWorld(), 144, 100, -27);
 
@@ -412,6 +413,20 @@ public class Tutorial extends Module {
 
 				for (int i = 0; i < 150; i++) {
 					player.sendMessage("   \n");
+				}
+				try {
+					if (!Manager.hasTutorial(player.getUniqueId().toString())) {
+						Manager.setHasTutorial(player.getUniqueId().toString());
+						Manager.setShards(player.getUniqueId().toString(), 100);
+						player.sendMessage(F.info("Economy",
+								"100 shards have been added to your account."));
+
+					} else {
+						return;
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			}

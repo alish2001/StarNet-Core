@@ -12,7 +12,7 @@ public class Updater extends BukkitRunnable {
 	public Updater(JavaPlugin plugin) {
 		this._plugin = plugin;
 		this._plugin.getServer().getScheduler()
-				.scheduleSyncRepeatingTask(this._plugin, this, 0L, 1L);
+				.scheduleSyncRepeatingTask(this._plugin, this, 0L, 100L);
 	}
 
 	public void run() {

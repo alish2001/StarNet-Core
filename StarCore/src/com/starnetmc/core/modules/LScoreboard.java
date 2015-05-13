@@ -4,20 +4,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
+import com.starnetmc.core.events.UpdateEvent;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.objects.OfflinePlayerCache;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.UpdateType;
 
 public class LScoreboard extends Module {
 
@@ -26,20 +26,21 @@ public class LScoreboard extends Module {
 		
 		super("Hub Scoreboard",1.0,ModuleType.INFO,plugin);
 		
+		
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onStaffJoin(PlayerJoinEvent e) throws Exception {
-
-		updateScoreboard();
-
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onStaffLeave(PlayerQuitEvent e) throws Exception {
+	@EventHandler
+	public void updateJoin(PlayerJoinEvent e) throws Exception {
 		updateScoreboard();
 	}
-
+	
+	@EventHandler
+	public void update(UpdateEvent e) throws Exception {
+		if(e.getType() == UpdateType.SHORT) {
+			updateScoreboard();
+		}
+	}
+	
 	private void updateScoreboard() throws Exception {
 
 		for (Player player : Bukkit.getOnlinePlayers()) {
@@ -172,6 +173,7 @@ public class LScoreboard extends Module {
 		catch(Exception e) {
 			
 		}
+		
 		log("Enabled.");
 		
 

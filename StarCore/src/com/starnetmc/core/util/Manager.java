@@ -28,7 +28,7 @@ public class Manager {
 		Manager.db.openConnection();
 
 		Statement a = db.getConnection().createStatement();
-		a.executeUpdate("CREATE TABLE IF NOT EXISTS `Accounts` (`id` INT NOT NULL AUTO_INCREMENT,`Name` varchar(64),`UUID` MEDIUMTEXT, `Shards` INT, `Rank` varchar(32), `firstLogin` LONG, `lastLogin` LONG, `totalPlayTime` INT, PRIMARY KEY (`id`));");
+		a.executeUpdate("CREATE TABLE IF NOT EXISTS `Accounts` (`id` INT NOT NULL AUTO_INCREMENT,`Name` varchar(64),`UUID` MEDIUMTEXT, `Shards` INT, `Rank` varchar(32), `firstLogin` LONG, `lastLogin` LONG, `totalPlayTime` INT, `tutorial` TINYINT(1),PRIMARY KEY (`id`));");
 
 		Statement p = db.getConnection().createStatement();
 		p.executeUpdate("CREATE TABLE IF NOT EXISTS `Punishments` (`id` INT NOT NULL AUTO_INCREMENT,`UUID` MEDIUMTEXT, `PunishType` varchar(32), `PunishReason` MEDIUMTEXT,`PunishPerm` BOOL, `PunishExpire` LONG, PRIMARY KEY (`id`));");
@@ -40,7 +40,7 @@ public class Manager {
 		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
 
 		Statement n = db.getConnection().createStatement();
-		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCManager` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `NPCType` varchar(32), `World` varchar(32),`x` INT, `y` INT, `z` INT, PRIMARY KEY (`id`));");
+		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCManager` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `NPCType` varchar(32), `World` varchar(32),`x` DECIMAL, `y` DECIMAL, `z` DECIMAL, PRIMARY KEY (`id`));");
 
 	}
 
@@ -146,6 +146,36 @@ public class Manager {
 				+ uuid + "';");
 	}
 
+	public static boolean hasTutorial(String uuid) throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s.executeQuery("SELECT * FROM `Accounts` WHERE `UUID`='"
+				+ uuid + "'");
+
+		if (!rs.next()) {
+			return false;
+		} else {
+			return rs.getBoolean("tutorial");
+		}
+
+	}
+
+	public static void setHasTutorial(String uuid) throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		Statement s = db.getConnection().createStatement();
+		s.executeUpdate("UPDATE `Accounts` SET `tutorial`='1' WHERE `UUID`='"
+				+ uuid + "';");
+
+	}
+
 	public static List<String> downloadFilter() throws Exception {
 
 		if (!db.checkConnection()) {
@@ -203,23 +233,20 @@ public class Manager {
 				+ "','VILLAGER','"
 				+ loc.getWorld().getName()
 				+ "','"
-				+ loc.getBlockX()
-				+ "','"
-				+ loc.getBlockY()
-				+ "','"
-				+ loc.getBlockZ() + "');");
+				+ loc.getX() + "','" + loc.getY() + "','" + loc.getZ() + "');");
 
 	}
 
 	public static void deleteNPC(String name) throws Exception {
-		
+
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
-		
+
 		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("DELETE FROM `NPCManager` WHERE `Name`='"+name+"';");
-		
+		s.executeUpdate("DELETE FROM `NPCManager` WHERE `Name`='" + name
+				+ " ';");
+
 	}
-	
+
 }

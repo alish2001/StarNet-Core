@@ -13,10 +13,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.commands.AFK;
 import com.starnetmc.core.commands.Broadcast;
+import com.starnetmc.core.commands.GadgetCommand;
 import com.starnetmc.core.commands.Gamemode;
 import com.starnetmc.core.commands.Message;
 import com.starnetmc.core.commands.ModuleControl;
-import com.starnetmc.core.commands.Settings;
+import com.starnetmc.core.commands.SettingsCommand;
 import com.starnetmc.core.commands.Spawn;
 import com.starnetmc.core.commands.StaffChat;
 import com.starnetmc.core.commands.Teleport;
@@ -36,6 +37,7 @@ import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.Gadgets;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
+import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
@@ -49,6 +51,7 @@ import com.starnetmc.core.util.GamemodeUI;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.MemoryFix;
 import com.starnetmc.core.util.NMS;
+import com.starnetmc.core.util.Updater;
 
 /**
  * 
@@ -94,29 +97,28 @@ public class Main extends JavaPlugin {
 		new Tutorial(this);
 		new ChatFilter(this);
 		new NMS(this);
-		new com.starnetmc.core.modules.Settings(this);
+		new Settings(this);
 		new Gadgets(this);
 		new Border(this);
 		new LScoreboard(this);
 		new News(this);
 		new DoubleJump(this);
 
-		//Registering NPCs
-		new NMS(this).registerEntity("Zombie", 54, EntityZombie.class,
-				NPCZombie.class);
-		new NMS(this).registerEntity("Skeleton", 51, EntitySkeleton.class,
+		// Registering NPCs
+		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
+		NMS.registerEntity("Skeleton", 51, EntitySkeleton.class,
 				NPCSkeleton.class);
-		new NMS(this).registerEntity("Villager", 120, EntityVillager.class,
+		NMS.registerEntity("Villager", 120, EntityVillager.class,
 				NPCVillager.class);
-		new NMS(this).registerEntity("Slime", 55, EntitySlime.class,
-				NPCSlime.class);
-		new NMS(this).registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
+		NMS.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
+		NMS.registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
 
-		//Other
+		// Other
 		getConfig().options().copyDefaults(true);
 		registerCommands();
 		registerListeners();
 		new MemoryFix(this);
+		new Updater(this);
 		getLogger().info(F.info("Plugin", "All modules enabled."));
 	}
 
@@ -129,12 +131,12 @@ public class Main extends JavaPlugin {
 
 	}
 
-	//Registers plugin commands, xD
+	// Registers plugin commands, xD
 	private void registerCommands() {
 		getCommand("npc").setExecutor(new NPCCommand(this));
 		getCommand("chat").setExecutor(
 				new com.starnetmc.core.commands.Chat(this));
-		getCommand("settings").setExecutor(new Settings(this));
+		getCommand("settings").setExecutor(new SettingsCommand(this));
 		getCommand("spawn").setExecutor(new Spawn());
 		getCommand("setspawn").setExecutor(new Spawn());
 		getCommand("test").setExecutor(new Test());
@@ -153,9 +155,10 @@ public class Main extends JavaPlugin {
 		getCommand("a").setExecutor(new Broadcast());
 		getCommand("enable").setExecutor(new ModuleControl());
 		getCommand("disable").setExecutor(new ModuleControl());
+		getCommand("gadgets").setExecutor(new GadgetCommand());
 	}
 
-	//registers listeners which are NOT modules
+	// registers listeners which are NOT modules
 	private void registerListeners() {
 		Bukkit.getServer().getPluginManager().registerEvents(new Join(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Quit(), this);

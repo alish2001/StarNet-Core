@@ -7,13 +7,15 @@ public class Setting {
 	boolean chat;
 	boolean build;
 	boolean vis;
+	boolean msg;
 	Player player;
 
-	public Setting(Player player, boolean chat, boolean build, boolean vis) {
+	public Setting(Player player, boolean chat, boolean build, boolean vis, boolean msg) {
 
 		this.chat = chat;
 		this.build = build;
 		this.vis = vis;
+		this.msg = msg;
 		this.player = player;
 
 	}
@@ -32,6 +34,14 @@ public class Setting {
 		chat = endis;
 	}
 
+	public boolean canRecMsg() {
+		return msg;
+	}
+	
+	public void setCanRecMsg(boolean endis) {
+		msg = endis;
+	}
+	
 	public boolean getBuildMode() {
 
 		return build;

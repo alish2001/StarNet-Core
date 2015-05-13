@@ -10,9 +10,9 @@ import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.SettingsGUI;
 
-public class Settings implements CommandExecutor {
+public class SettingsCommand implements CommandExecutor {
 
-	public Settings(Main main) {
+	public SettingsCommand(Main main) {
 		// TODO Auto-generated constructor stub
 	}
 

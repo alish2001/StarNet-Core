@@ -23,9 +23,9 @@ public class Settings extends Module {
 	private static List<String> invisPlayers_ = new ArrayList<String>();
 
 	public Settings(JavaPlugin plugin) {
-		super("Settings",1.0,ModuleType.SERVER,plugin);
+		super("Settings", 1.0, ModuleType.SERVER, plugin);
 	}
-	
+
 	public static Setting getPrefs(Player player) {
 
 		return playerPrefs_.get(player.getUniqueId().toString());
@@ -33,7 +33,7 @@ public class Settings extends Module {
 
 	public static void createUserPrefs(Player player) {
 
-		Setting pf = new Setting(player, true, false, true);
+		Setting pf = new Setting(player, true, false, true,true);
 		getUsers().put(player.getUniqueId().toString(), pf);
 	}
 
@@ -109,10 +109,39 @@ public class Settings extends Module {
 					player.showPlayer(p);
 
 				}
+
 				player.closeInventory();
 				SettingsGUI.openSettingsGUI(player);
 
 			}
+
+			if (e.getCurrentItem().getType() == Material.PAPER
+					&& e.getCurrentItem()
+							.getItemMeta()
+							.getDisplayName()
+							.equalsIgnoreCase(
+									F.boldGreen + "Private Messaging ENABLED")) {
+
+				e.setCancelled(true);
+				Settings.getPrefs(player).setCanRecMsg(false);
+				player.closeInventory();
+				SettingsGUI.openSettingsGUI(player);
+				
+			}
+			if (e.getCurrentItem().getType() == Material.PAPER
+					&& e.getCurrentItem()
+							.getItemMeta()
+							.getDisplayName()
+							.equalsIgnoreCase(
+									F.boldRed + "Private Messaging DISABLED")) {
+
+				e.setCancelled(true);
+				Settings.getPrefs(player).setCanRecMsg(true);
+				player.closeInventory();
+				SettingsGUI.openSettingsGUI(player);
+				
+			}
+			
 
 		}
 		if (e.getInventory().getName()
@@ -196,13 +225,39 @@ public class Settings extends Module {
 				SettingsGUI.openSettingsAGUI(player);
 
 			}
+			
+			if (e.getCurrentItem().getType() == Material.PAPER
+					&& e.getCurrentItem()
+							.getItemMeta()
+							.getDisplayName()
+							.equalsIgnoreCase(
+									F.boldGreen + "Private Messaging ENABLED")) {
+
+				e.setCancelled(true);
+				Settings.getPrefs(player).setCanRecMsg(false);
+				player.closeInventory();
+				SettingsGUI.openSettingsAGUI(player);
+				
+			}
+			if (e.getCurrentItem().getType() == Material.PAPER
+					&& e.getCurrentItem()
+							.getItemMeta()
+							.getDisplayName()
+							.equalsIgnoreCase(
+									F.boldRed + "Private Messaging DISABLED")) {
+
+				e.setCancelled(true);
+				Settings.getPrefs(player).setCanRecMsg(true);
+				player.closeInventory();
+				SettingsGUI.openSettingsAGUI(player);
+				
+			}
+			
 
 		}
 
 	}
 
-
-	
 	@Override
 	public void enable() {
 		isEnabled = true;
@@ -216,7 +271,5 @@ public class Settings extends Module {
 	}
 
 	public static boolean isEnabled;
-
-	
 
 }

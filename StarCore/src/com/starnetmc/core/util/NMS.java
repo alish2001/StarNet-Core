@@ -33,19 +33,17 @@ import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
-public class NMS extends Module{
+public class NMS extends Module {
 
-	public static LinkedHashMap<String, Location> npcs = new LinkedHashMap<String,Location>();
-	static Villager b;
+	public static LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
 
 	public NMS(JavaPlugin plugin) {
-		
-		super("NPC Manager",2.0,ModuleType.SERVER,plugin);
-		
-	}
-	
 
-	public void registerEntity(String name, int id, Class<?> class1,
+		super("NPC Manager", 2.0, ModuleType.SERVER, plugin);
+
+	}
+
+	public static void registerEntity(String name, int id, Class<?> class1,
 			Class<? extends EntityInsentient> customClass) {
 		try {
 			List<Map<?, ?>> dataMaps = new ArrayList<Map<?, ?>>();
@@ -92,18 +90,15 @@ public class NMS extends Module{
 		}
 	}
 
-	
 	@Override
 	public void enable() {
-		
 		try {
 			npcs = Manager.downloadNPCs();
-			spawnNPCS();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		spawnNPCS();
 		log("Enabled.");
 
 	}
@@ -114,10 +109,7 @@ public class NMS extends Module{
 
 	}
 
-
-	
-
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onRemoval(PlayerInteractEntityEvent e) throws Exception {
 
 		e.setCancelled(true);
@@ -133,9 +125,14 @@ public class NMS extends Module{
 					return;
 				} else {
 					en.remove();
+					player.sendMessage(F
+							.info("NPC", "NPC Removed Successfully"));
 				}
-				player.sendMessage(F.info("NPC", "NPC Removed Successfully"));
-				Bukkit.getServer().getPluginManager().callEvent(new NPCRemoveEvent((LivingEntity) en, en.getCustomName(), en.getLocation()));
+				Bukkit.getServer()
+						.getPluginManager()
+						.callEvent(
+								new NPCRemoveEvent((LivingEntity) en, en
+										.getCustomName(), en.getLocation()));
 
 			} else {
 				return;
@@ -149,13 +146,13 @@ public class NMS extends Module{
 
 	@EventHandler
 	public void onRemove(NPCRemoveEvent e) throws Exception {
-		
+
 		Manager.deleteNPC(e.getName());
-		
+
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onInteract(PlayerInteractEntityEvent e) {
+	public void onInteract(PlayerInteractEntityEvent e) throws Exception {
 
 		Player player = e.getPlayer();
 		Entity en = e.getRightClicked();
@@ -212,7 +209,7 @@ public class NMS extends Module{
 	}
 
 	@EventHandler
-	public void onHitInteract(EntityDamageByEntityEvent e) {
+	public void onHitInteract(EntityDamageByEntityEvent e) throws Exception {
 
 		if (e.getDamager() instanceof Player) {
 
@@ -271,27 +268,30 @@ public class NMS extends Module{
 			return;
 
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOW)
 	public void onSpawn(NPCSpawnEvent e) throws Exception {
-		
+
 		Manager.createNPC(e.getName(), e.getLocation());
-		
+
 	}
-	
+
 	public static void spawnNPCS() {
-		
-		for(String s : npcs.keySet()) {
-			b = NPCVillager.spawn(npcs.get(s));
+
+		for (String s : npcs.keySet()) {
+
+			Villager b = NPCVillager.spawn(npcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 		}
-		
+
 	}
+
+	
 }
 
 enum NPCType {
-	
-	VILLAGER,SKELETON,PIG,SLIME,SKELETONWITHER,PIGBABY,VILLAGERBABY,ZOMBIE,ZOMBIEBABY;
-	
+
+	VILLAGER, SKELETON, PIG, SLIME, SKELETONWITHER, PIGBABY, VILLAGERBABY, ZOMBIE, ZOMBIEBABY;
+
 }

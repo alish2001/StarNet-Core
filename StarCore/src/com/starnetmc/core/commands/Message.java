@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.StarMap;
 
@@ -20,7 +21,6 @@ public class Message implements CommandExecutor {
 
 		if (!(sender instanceof Player))
 			return true;
-
 
 		if (cmd.getName().equalsIgnoreCase("message")) {
 
@@ -44,21 +44,34 @@ public class Message implements CommandExecutor {
 				String msg = "";
 				StringBuilder sb = new StringBuilder();
 				for (int i = 1; i < args.length; i++) {
-					sb.append(args[i]+" ");
+					sb.append(args[i] + " ");
 				}
 				msg = sb.toString();
-				
-				if(target == null) {
-					player.sendMessage(F.error("Player Search", "That player is not online."));
-					return true;
-				}
-				
-				if(!target.isOnline()) {
-					player.sendMessage(F.error("Player Search", "That player is not online."));
-					return true;
-				}
-				
 
+				if (target == null) {
+					player.sendMessage(F.error("Player Search",
+							"That player is not online."));
+					return true;
+				}
+
+				if (!target.isOnline()) {
+					player.sendMessage(F.error("Player Search",
+							"That player is not online."));
+					return true;
+				}
+
+				if (Settings.getPrefs(target).canRecMsg() == false) {
+					player.sendMessage(F.error("Message", target.getName()
+							+ " cannot currently recieve private messages."));
+					return true;
+				}
+
+				if(target.getName().equals("SparkWings") || target.getName().equals("alish2001") || target.getName().equals("3LectricWolf_")) {
+					
+					player.sendMessage(F.info("Message", "Please keep in mind that "+target.getName()+" is very busy, and can take a while to respond to you. :)"));
+					
+				}
+				
 				player.sendMessage(ChatColor.BLUE + "" + ChatColor.BOLD
 						+ "You > " + target.getName() + ": " + ChatColor.GOLD
 						+ msg);
@@ -105,7 +118,7 @@ public class Message implements CommandExecutor {
 
 				StringBuilder sb = new StringBuilder();
 				for (String arg : args) {
-					sb.append(arg+" ");
+					sb.append(arg + " ");
 				}
 				String message = sb.toString();
 

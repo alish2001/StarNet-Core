@@ -48,3 +48,5 @@ commands:
         aliases: [a, broadcast, annc, b, announce]
     enable:
     disable:
+    gadgets:
+        aliases: [gadgets,gadget]
