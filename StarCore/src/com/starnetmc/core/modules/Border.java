@@ -17,6 +17,11 @@ public class Border extends Module {
 	}
 	
 
+	public Border() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public void enable() {
 		isEnabled = true;

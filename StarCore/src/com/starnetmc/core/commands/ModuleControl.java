@@ -21,16 +21,16 @@ import com.starnetmc.core.util.Manager;
 
 public class ModuleControl implements CommandExecutor {
 
-	Border border;
-	ChatFilter cf;
-	DoubleJump dj;
-	Gadgets gadgets;
-	LScoreboard sc;
-	News news;
-	com.starnetmc.core.modules.Settings set;
-	Tutorial tut;
-	com.starnetmc.core.modules.Chat c;
-	HubInventory h;
+	Border border = new Border();
+	ChatFilter cf = new ChatFilter();
+	DoubleJump dj = new DoubleJump();
+	Gadgets gadgets = new Gadgets();
+	LScoreboard sc = new LScoreboard();
+	News news = new News();
+	Settings set = new Settings();
+	Tutorial tut = new Tutorial();
+	com.starnetmc.core.modules.Chat c = new com.starnetmc.core.modules.Chat();
+	HubInventory h = new HubInventory();
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
@@ -49,7 +49,8 @@ public class ModuleControl implements CommandExecutor {
 					player.sendMessage(F.error("Permissions", "No permission!"));
 					return true;
 				} else {
-					Bukkit.getServer().getPluginManager().callEvent(new ModuleStateChangeEvent());
+					Bukkit.getServer().getPluginManager()
+							.callEvent(new ModuleStateChangeEvent());
 
 					if (args.length == 0) {
 						player.sendMessage(F.error("Commands",
@@ -78,13 +79,12 @@ public class ModuleControl implements CommandExecutor {
 						}
 
 						return false;
-						
+
 					case "chat":
 						if (com.starnetmc.core.modules.Chat.isEnabled == true) {
 							c.enable();
 							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
-									+ F.boldRed
-									+ "CHAT has been enabled by "
+									+ F.boldRed + "CHAT has been enabled by "
 									+ player.getName());
 						} else {
 							player.sendMessage(F.error("Modules",
@@ -93,7 +93,6 @@ public class ModuleControl implements CommandExecutor {
 						}
 
 						return false;
-						
 
 					case "doublejump":
 						if (DoubleJump.isEnabled == false) {
@@ -108,26 +107,12 @@ public class ModuleControl implements CommandExecutor {
 							return true;
 						}
 						return false;
-					case "scoreboard":
-						if (LScoreboard.isEnabled == false) {
-							sc.enable();
-							Bukkit.broadcastMessage(F.BOLD
-									+ "<SERVER> "
-									+ F.boldGreen
-									+ "The SCOREBOARD has been enabled by "
-									+ player.getName());
-						} else {
-							player.sendMessage(F.error("Modules",
-									"That module is already enabled."));
-							return true;
-						}
-						return false;
 					case "news":
 						if (News.isEnabled == false) {
 							news.enable();
 							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
 									+ F.boldGreen
-									+ "The NEWS MODULE has been enabled by "
+									+ "The NEWS modules has been enabled by "
 									+ player.getName());
 						} else {
 							player.sendMessage(F.error("Modules",
@@ -148,6 +133,19 @@ public class ModuleControl implements CommandExecutor {
 							return true;
 						}
 						return false;
+					case "inventory":
+						if (HubInventory.isEnabled == false) {
+							h.enable();
+							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
+									+ F.boldGreen
+									+ "INVENTORY ITEMS have been enabled by "
+									+ player.getName());
+						} else {
+							player.sendMessage(F.error("Modules",
+									"That module is already enabled."));
+							return true;
+						}
+						return false;
 					case "gadgets":
 						if (Gadgets.isEnabled == false) {
 							gadgets.enable();
@@ -161,19 +159,9 @@ public class ModuleControl implements CommandExecutor {
 							return true;
 						}
 						return false;
-					case "inventory":
-						if(HubInventory.isEnabled == false) {
-							h.enable();
-							Bukkit.broadcastMessage(F.BOLD+"<SERVER> "+F.boldGreen+"INVENTORY ITEMS have been enabled by "+player.getName());
-						}
-						else {
-							player.sendMessage(F.error("Modules", "That module is already enabled."));
-							return true;
-						}
-						return false;
 					default:
 						player.sendMessage(F.error("Modules",
-								"Modules not recognized."));
+								"Module not recognized."));
 						return true;
 					}
 
@@ -205,8 +193,7 @@ public class ModuleControl implements CommandExecutor {
 						return true;
 					}
 
-					String module = args[0];
-					switch (module) {
+					switch (args[0]) {
 					case "filter":
 						if (ChatFilter.isEnabled == true) {
 							cf.disable();
@@ -221,20 +208,19 @@ public class ModuleControl implements CommandExecutor {
 						}
 
 						return false;
-						case "chat":
-							if (com.starnetmc.core.modules.Chat.isEnabled == true) {
-								c.disable();
-								Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
-										+ F.boldRed
-										+ "CHAT has been disabled by "
-										+ player.getName());
-							} else {
-								player.sendMessage(F.error("Modules",
-										"That module is already disabled."));
-								return true;
-							}
+					case "chat":
+						if (com.starnetmc.core.modules.Chat.isEnabled == true) {
+							c.disable();
+							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
+									+ F.boldRed + "CHAT has been disabled by "
+									+ player.getName());
+						} else {
+							player.sendMessage(F.error("Modules",
+									"That module is already disabled."));
+							return true;
+						}
 
-							return false;
+						return false;
 
 					case "doublejump":
 						if (DoubleJump.isEnabled == true) {
@@ -242,20 +228,6 @@ public class ModuleControl implements CommandExecutor {
 							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
 									+ F.boldRed
 									+ "DOUBLE JUMP has been disabled by "
-									+ player.getName());
-						} else {
-							player.sendMessage(F.error("Modules",
-									"That module is already disabled."));
-							return true;
-						}
-						return false;
-					case "scoreboard":
-						if (LScoreboard.isEnabled == true) {
-							sc.disable();
-							Bukkit.broadcastMessage(F.BOLD
-									+ "<SERVER> "
-									+ F.boldRed
-									+ "The SCOREBOARD has been disabled by "
 									+ player.getName());
 						} else {
 							player.sendMessage(F.error("Modules",
@@ -303,12 +275,15 @@ public class ModuleControl implements CommandExecutor {
 						}
 						return false;
 					case "inventory":
-						if(HubInventory.isEnabled == true) {
+						if (HubInventory.isEnabled == true) {
 							h.disable();
-							Bukkit.broadcastMessage(F.BOLD+"<SERVER> "+F.boldRed+"INVENTORY ITEMS have been disabled by "+player.getName());
-						}
-						else {
-							player.sendMessage(F.error("Modules", "That module is already disabled."));
+							Bukkit.broadcastMessage(F.BOLD + "<SERVER> "
+									+ F.boldRed
+									+ "INVENTORY ITEMS have been disabled by "
+									+ player.getName());
+						} else {
+							player.sendMessage(F.error("Modules",
+									"That module is already disabled."));
 							return true;
 						}
 						return false;

@@ -26,6 +26,10 @@ public abstract class Module implements Listener {
 
 	}
 
+	public Module() {
+		
+	}
+	
 	private void onEnable() {
 		enable();
 	}

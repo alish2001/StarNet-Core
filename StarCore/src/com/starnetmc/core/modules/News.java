@@ -23,6 +23,10 @@ public class News extends Module {
 
 	}
 
+	public News() {
+		
+	}
+	
 	public static void sendNews(Player player, String sub) {
 
 		IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \""

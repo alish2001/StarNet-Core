@@ -16,7 +16,10 @@ public class Chat extends Module implements Listener {
 		// TODO Auto-generated constructor stub
 	}
 
-
+public Chat() {
+	
+}
+	
 	@Override
 	public void enable() {
 		isEnabled = true;

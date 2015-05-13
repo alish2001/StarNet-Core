@@ -24,6 +24,10 @@ public class DoubleJump extends Module {
 		// TODO Auto-generated constructor stub
 	}
 
+	public DoubleJump() {
+		
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
 

@@ -26,6 +26,10 @@ public class Settings extends Module {
 		super("Settings", 1.0, ModuleType.SERVER, plugin);
 	}
 
+	public Settings() {
+		
+	}
+	
 	public static Setting getPrefs(Player player) {
 
 		return playerPrefs_.get(player.getUniqueId().toString());

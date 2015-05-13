@@ -23,6 +23,10 @@ public class Tutorial extends Module {
 		super("Tutorial", 1.0, ModuleType.INFO, plugin);
 	}
 
+	public Tutorial() {
+		
+	}
+	
 	@Override
 	public void enable() {
 		isEnabled = true;

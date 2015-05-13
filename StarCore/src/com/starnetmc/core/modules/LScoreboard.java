@@ -30,6 +30,10 @@ public class LScoreboard extends Module {
 		
 	}
 	
+	public LScoreboard() {
+		
+	}
+	
 	@EventHandler
 	public void updateJoin(PlayerJoinEvent e) throws Exception {
 		updateScoreboard();
@@ -172,7 +176,6 @@ public class LScoreboard extends Module {
 
 	@Override
 	public void enable() {
-		isEnabled = true;
 		try {
 			updateScoreboard();
 		}
@@ -187,7 +190,6 @@ public class LScoreboard extends Module {
 
 	@Override
 	public void disable() {
-		isEnabled = false;
 		try {
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				player.setScoreboard(Bukkit.getScoreboardManager()
@@ -200,7 +202,6 @@ public class LScoreboard extends Module {
 
 	}
 
-	public static boolean isEnabled = true;
 
 	
 

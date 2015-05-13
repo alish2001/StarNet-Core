@@ -28,6 +28,10 @@ public class NameTag extends Module {
 		super("Nametag Manager",0.0,ModuleType.INFO,plugin);
 	}
 	
+	public NameTag() {
+		
+	}
+	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) throws Exception {
 

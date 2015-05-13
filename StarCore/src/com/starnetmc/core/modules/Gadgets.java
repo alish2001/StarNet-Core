@@ -28,6 +28,10 @@ public class Gadgets extends Module {
 		super("Gadgets", 0.6, ModuleType.SERVER, plugin);
 	}
 
+	public Gadgets() {
+		
+	}
+	
 	public static Gadget getGadgets(Player player) {
 
 		return playergadgets.get(player.getUniqueId().toString());

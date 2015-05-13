@@ -21,8 +21,14 @@ public class HubInventory extends Module {
 
 	public HubInventory(JavaPlugin plugin) {
 		super("Hub Inventory Manager", 0.1, ModuleType.SERVER, plugin);
+		isEnabled = true;
 	}
 
+	
+	public HubInventory() {
+		
+	}
+	
 	public static void giveInventory(Player player) {
 
 		ItemStack arcade = ItemFactory.createItem(Material.COMPASS, F.boldGreen
@@ -32,9 +38,6 @@ public class HubInventory extends Module {
 		ItemStack prefs = ItemFactory.createItem(Material.SLIME_BALL,
 				F.boldGold + "SETTINGS", null, false);
 
-		// 27
-		// 31
-		// 35
 		player.getInventory().setItem(0, arcade);
 		player.getInventory().setItem(4, gadgets);
 		player.getInventory().setItem(8, prefs);
@@ -101,7 +104,7 @@ public class HubInventory extends Module {
 
 			}
 		} else {
-			return;
+			player.sendMessage(F.error("Modules", "Inventory Items have been disabled by an owner."));;
 		}
 
 	}

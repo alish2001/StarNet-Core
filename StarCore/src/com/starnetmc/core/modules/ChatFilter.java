@@ -19,6 +19,10 @@ public class ChatFilter extends Module {
 	public ChatFilter(JavaPlugin plugin) {
 		super("Chat Filter",1.0,ModuleType.INFO,plugin);
 	}
+
+	public ChatFilter() {
+		
+	}
 	
 	@EventHandler
 	public void filterChat(AsyncPlayerChatEvent e) {
