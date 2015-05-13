@@ -27,10 +27,10 @@ public class HubInventory extends Module {
 
 		ItemStack arcade = ItemFactory.createItem(Material.COMPASS, F.boldGreen
 				+ "GAMES", null, false);
-		ItemStack gadgets = ItemFactory.createItem(Material.ENDER_CHEST, F.boldRed
-				+ "GADGETS", null, false);
-		ItemStack prefs = ItemFactory.createItem(Material.SLIME_BALL, F.boldGold
-				+ "SETTINGS", null, false);
+		ItemStack gadgets = ItemFactory.createItem(Material.ENDER_CHEST,
+				F.boldRed + "GADGETS", null, false);
+		ItemStack prefs = ItemFactory.createItem(Material.SLIME_BALL,
+				F.boldGold + "SETTINGS", null, false);
 
 		// 27
 		// 31
@@ -41,47 +41,67 @@ public class HubInventory extends Module {
 
 	}
 
+	@Override
+	public void enable() {
+		isEnabled = true;
+		log("Enabled.");
+	}
+
+	@Override
+	public void disable() {
+		isEnabled = false;
+		log("Disabled.");
+
+	}
+
+	public static boolean isEnabled;
+
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) throws Exception {
 
 		Player player = e.getPlayer();
 
-		if (e.getAction() == Action.RIGHT_CLICK_AIR
-				|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if (isEnabled == true) {
 
-			if (player.getItemInHand().getType() == Material.COMPASS) {
-				e.setCancelled(true);
-				player.sendMessage(F.info("Arcade", "Coming soon!"));
-			} else if (player.getItemInHand().getType() == Material.ENDER_CHEST) {
-				e.setCancelled(true);
-				GadgetGUI.openGadgetInventory(player);
-			} else if (player.getItemInHand().getType() == Material.SLIME_BALL) {
-				e.setCancelled(true);
+			if (e.getAction() == Action.RIGHT_CLICK_AIR
+					|| e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-				switch (Manager.getRank(player.getUniqueId().toString())) {
+				if (player.getItemInHand().getType() == Material.COMPASS) {
+					e.setCancelled(true);
+					player.sendMessage(F.info("Arcade", "Coming soon!"));
+				} else if (player.getItemInHand().getType() == Material.ENDER_CHEST) {
+					e.setCancelled(true);
+					GadgetGUI.openGadgetInventory(player);
+				} else if (player.getItemInHand().getType() == Material.SLIME_BALL) {
+					e.setCancelled(true);
 
-				case "ADMIN":
-					SettingsGUI.openSettingsAGUI(player);
-					break;
-				case "OWNER":
-					SettingsGUI.openSettingsAGUI(player);
-					break;
-				case "DEVELOPER":
-					SettingsGUI.openSettingsAGUI(player);
-					break;
-				case "BUILDER":
-					SettingsGUI.openSettingsAGUI(player);
-					break;
-				case "YOUTUBE":
-					SettingsGUI.openSettingsAGUI(player);
-					break;
-				default:
-					SettingsGUI.openSettingsGUI(player);
-					break;
+					switch (Manager.getRank(player.getUniqueId().toString())) {
 
+					case "ADMIN":
+						SettingsGUI.openSettingsAGUI(player);
+						break;
+					case "OWNER":
+						SettingsGUI.openSettingsAGUI(player);
+						break;
+					case "DEVELOPER":
+						SettingsGUI.openSettingsAGUI(player);
+						break;
+					case "BUILDER":
+						SettingsGUI.openSettingsAGUI(player);
+						break;
+					case "YOUTUBE":
+						SettingsGUI.openSettingsAGUI(player);
+						break;
+					default:
+						SettingsGUI.openSettingsGUI(player);
+						break;
+
+					}
 				}
-			}
 
+			}
+		} else {
+			return;
 		}
 
 	}

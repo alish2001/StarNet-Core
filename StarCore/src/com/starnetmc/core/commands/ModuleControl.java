@@ -11,6 +11,7 @@ import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.Gadgets;
+import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
 import com.starnetmc.core.modules.Settings;
@@ -29,6 +30,7 @@ public class ModuleControl implements CommandExecutor {
 	com.starnetmc.core.modules.Settings set;
 	Tutorial tut;
 	com.starnetmc.core.modules.Chat c;
+	HubInventory h;
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
@@ -156,6 +158,16 @@ public class ModuleControl implements CommandExecutor {
 						} else {
 							player.sendMessage(F.error("Modules",
 									"That module is already enabled."));
+							return true;
+						}
+						return false;
+					case "inventory":
+						if(HubInventory.isEnabled == false) {
+							h.enable();
+							Bukkit.broadcastMessage(F.BOLD+"<SERVER> "+F.boldGreen+"INVENTORY ITEMS have been enabled by "+player.getName());
+						}
+						else {
+							player.sendMessage(F.error("Modules", "That module is already enabled."));
 							return true;
 						}
 						return false;
@@ -287,6 +299,16 @@ public class ModuleControl implements CommandExecutor {
 						} else {
 							player.sendMessage(F.error("Modules",
 									"That module is already disabled."));
+							return true;
+						}
+						return false;
+					case "inventory":
+						if(HubInventory.isEnabled == true) {
+							h.disable();
+							Bukkit.broadcastMessage(F.BOLD+"<SERVER> "+F.boldRed+"INVENTORY ITEMS have been disabled by "+player.getName());
+						}
+						else {
+							player.sendMessage(F.error("Modules", "That module is already disabled."));
 							return true;
 						}
 						return false;
