@@ -10,12 +10,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import com.starnetmc.core.commands.GadgetCommand;
 import com.starnetmc.core.events.ShardFireEvent;
 import com.starnetmc.core.events.ShardPickupEvent;
+import com.starnetmc.core.gadgets.Gadget;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Gadget;
 import com.starnetmc.core.util.ItemFactory;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.StarMap;
@@ -61,6 +62,12 @@ public class Gadgets extends Module {
 
 	}
 
+	@Override
+	public void addCommands() {
+		// TODO Auto-generated method stub
+		addCommand(new GadgetCommand(this));
+	}
+	
 	@Override
 	public void disable() {
 		isEnabled = false;

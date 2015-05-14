@@ -1,31 +1,25 @@
 package com.starnetmc.core.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+
 import org.bukkit.entity.Player;
 
-import com.starnetmc.core.util.F;
+import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.modules.Chat;
+import com.starnetmc.core.util.Rank;
 
-public class Test implements CommandExecutor{
+public class Test extends CommandBase<Chat>{
+
+	public Test(Chat plugin) {
+		super(plugin, Rank.VIP, new String[] {"test"});
+		// TODO Auto-generated constructor stub
+	}
 
 	public static int ID;
 	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public void execute(Player player, String[] args) {
 		
-		if(cmd.getName().equalsIgnoreCase("test")) {
-			if(!(sender instanceof Player)) {
-				return true;
-			}
-			
-			final Player player = (Player) sender;
-			
-			player.sendMessage(F.error("Test Command", "Nothing to test right now! Come back later! - Spark"));
-			
-			
-		}
+		//Nothing right now! :D
 		
-		return false;
 	}
 	
 }

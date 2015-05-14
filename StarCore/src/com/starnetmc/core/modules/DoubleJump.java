@@ -20,16 +20,21 @@ import com.starnetmc.core.objects.ModuleType;
 public class DoubleJump extends Module {
 
 	public DoubleJump(JavaPlugin plugin) {
-		super("DoubleJump Manager",1.0,ModuleType.SERVER,plugin);
+		super("DoubleJump Manager", 1.0, ModuleType.SERVER, plugin);
 		// TODO Auto-generated constructor stub
 	}
 
 	public DoubleJump() {
-		
+
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
+
+		if (event.getPlayer().getGameMode() == GameMode.CREATIVE
+				|| event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
+			return;
+		}
 
 		if (isEnabled == true) {
 

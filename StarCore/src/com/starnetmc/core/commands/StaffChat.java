@@ -2,114 +2,83 @@ package com.starnetmc.core.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.Rank;
 
-public class StaffChat implements CommandExecutor {
+public class StaffChat extends CommandBase<Chat> {
 
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args) {
+	public StaffChat(Chat plugin) {
+		super(plugin, Rank.HELPER, new String[] { "staffchat", "sc" });
+		// TODO Auto-generated constructor stub
+	}
 
-		if (!(sender instanceof Player)) {
-			sender.sendMessage(F.error("Command",
-					"This command is only for player use!"));
-			return true;
+	public void execute(Player player, String[] args) {
+
+		if (args.length == 0) {
+			player.sendMessage(F.error("Commands", "Please use: /sc <Message>"));
+			return;
 		}
 
-		Player p = (Player) sender;
+		String annc = "";
+		StringBuilder sb = new StringBuilder();
+		for (String arg : args) {
+			sb.append(arg + " ");
+		}
+		annc = sb.toString();
 
-		if (cmd.getName().equalsIgnoreCase("sc")) {
-			if (args.length == 0) {
-				p.sendMessage(F.error("Commands", "Please use: /sc <Message>"));
-				return true;
-			}
+		try {
+			String rank = Manager.getRank(player.getUniqueId().toString())
+					+ " ";
 
-			try {
-				switch (Manager.getRank(p.getUniqueId().toString())) {
-				case "DEFAULT":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "VIP":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "BUILDER":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "YOUTUBE":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "(NULL)":
-					p.sendMessage(F.error("Permissions", "No permission!"));
-					p.kickPlayer(F.error("Server",
-							"Err... Something went wrong?"));
-					return true;
+			for (Player all : Bukkit.getOnlinePlayers()) {
+
+				switch (Manager.getRank(player.getUniqueId().toString())) {
+
+				case HELPER:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
+				case MODERATOR:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
+				case ADMIN:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
+				case OWNER:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
+				case DEVELOPER:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
+				case BUILDER:
+					all.sendMessage(F.GOLD + rank + player.getName() + " "
+							+ annc);
+					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
+					return;
 				default:
-					String annc = "";
-					StringBuilder sb = new StringBuilder();
-					for (String arg : args) {
-						sb.append(arg+" ");
+					break;
+
 				}
-					annc = sb.toString();
-					
-				String rank = Manager.getRank(p.getUniqueId().toString())+" ";
-
-					for (Player player : Bukkit.getOnlinePlayers()) {
-
-						try {
-							switch (Manager.getRank(player.getUniqueId()
-									.toString())) {
-
-							case "HELPER":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							case "MODERATOR":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							case "ADMIN":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							case "OWNER":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							case "DEVELOPER":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							case "BUILDER":
-								player.sendMessage(F.GOLD+rank+p.getName()+" "+annc);
-								player.playSound(player.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-								return false;
-							default:
-								player.sendMessage(F.error("Permissions", "No permission!"));
-								return true;
-
-							}
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-
-			} catch (Exception e) {
-
 			}
-
-			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return false;
+
 	}
 
 }

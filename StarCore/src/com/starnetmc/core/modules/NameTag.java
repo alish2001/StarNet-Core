@@ -49,34 +49,34 @@ public class NameTag extends Module {
 		EntityPlayer ep = ((CraftPlayer) player).getHandle();
 		switch (Manager.getRank(player.getUniqueId().toString())) {
 
-		case "DEFAULT":
+		case DEFAULT:
 			ep.displayName = player.getName();
 			break;
-		case "VIP":
+		case VIP:
 			ep.displayName = F.boldDA + "VIP " + player.getName();
 			break;
-		case "MVP":
+		case MVP:
 			ep.displayName = F.boldAqua + "MVP " + player.getName();
 			break;
-		case "HELPER":
+		case HELPER:
 			ep.displayName = F.boldGreen + "HELPER " + player.getName();
 			break;
-		case "MODERATOR":
+		case MODERATOR:
 			ep.displayName = F.boldGold + "MOD " + player.getName();
 			break;
-		case "ADMIN":
+		case ADMIN:
 			ep.displayName = F.boldRed + "ADMIN " + player.getName();
 			break;
-		case "DEVELOPER":
+		case DEVELOPER:
 			ep.displayName = F.boldDP + "DEV " + player.getName();
 			break;
-		case "BUILDER":
+		case BUILDER:
 			ep.displayName = F.boldBlue + "BUILDER " + player.getName();
 			break;
-		case "OWNER":
+		case OWNER:
 			ep.displayName = F.boldDR + "OWNER " + player.getName();
 			break;
-		case "YOUTUBE":
+		case YOUTUBE:
 			ep.displayName = F.BOLD + "YOU" + F.RED + "" + F.BOLD + "TUBE "
 					+ player.getName();
 			break;

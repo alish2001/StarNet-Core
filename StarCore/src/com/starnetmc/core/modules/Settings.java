@@ -10,11 +10,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.commands.SettingsCommand;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.settings.Setting;
+import com.starnetmc.core.settings.SettingsGUI;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Setting;
-import com.starnetmc.core.util.SettingsGUI;
 import com.starnetmc.core.util.StarMap;
 
 public class Settings extends Module {
@@ -27,9 +28,9 @@ public class Settings extends Module {
 	}
 
 	public Settings() {
-		
+
 	}
-	
+
 	public static Setting getPrefs(Player player) {
 
 		return playerPrefs_.get(player.getUniqueId().toString());
@@ -37,7 +38,7 @@ public class Settings extends Module {
 
 	public static void createUserPrefs(Player player) {
 
-		Setting pf = new Setting(player, true, false, true,true);
+		Setting pf = new Setting(player, true, false, true, true);
 		getUsers().put(player.getUniqueId().toString(), pf);
 	}
 
@@ -130,7 +131,7 @@ public class Settings extends Module {
 				Settings.getPrefs(player).setCanRecMsg(false);
 				player.closeInventory();
 				SettingsGUI.openSettingsGUI(player);
-				
+
 			}
 			if (e.getCurrentItem().getType() == Material.PAPER
 					&& e.getCurrentItem()
@@ -143,9 +144,8 @@ public class Settings extends Module {
 				Settings.getPrefs(player).setCanRecMsg(true);
 				player.closeInventory();
 				SettingsGUI.openSettingsGUI(player);
-				
+
 			}
-			
 
 		}
 		if (e.getInventory().getName()
@@ -229,7 +229,7 @@ public class Settings extends Module {
 				SettingsGUI.openSettingsAGUI(player);
 
 			}
-			
+
 			if (e.getCurrentItem().getType() == Material.PAPER
 					&& e.getCurrentItem()
 							.getItemMeta()
@@ -241,7 +241,7 @@ public class Settings extends Module {
 				Settings.getPrefs(player).setCanRecMsg(false);
 				player.closeInventory();
 				SettingsGUI.openSettingsAGUI(player);
-				
+
 			}
 			if (e.getCurrentItem().getType() == Material.PAPER
 					&& e.getCurrentItem()
@@ -254,9 +254,8 @@ public class Settings extends Module {
 				Settings.getPrefs(player).setCanRecMsg(true);
 				player.closeInventory();
 				SettingsGUI.openSettingsAGUI(player);
-				
+
 			}
-			
 
 		}
 
@@ -272,6 +271,11 @@ public class Settings extends Module {
 	public void disable() {
 		isEnabled = false;
 		log("Disabled.");
+	}
+
+	@Override
+	public void addCommands() {
+		addCommand(new SettingsCommand(this));
 	}
 
 	public static boolean isEnabled;

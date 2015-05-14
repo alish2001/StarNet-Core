@@ -4,31 +4,26 @@ import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Chat;
-import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Rank;
 
-public class Spawn extends CommandBase<Chat> {
+public class SetSpawn extends CommandBase<Chat> {
 
-	public Spawn(Chat plugin) {
-		super(plugin, Rank.DEFAULT, new String[] { "spawn", "spanw" });
+	public SetSpawn(Chat plugin) {
+		super(plugin, Rank.ADMIN, new String[] { "setspawn", "ss" });
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void execute(Player player, String[] args) {
 
 		if (args.length != 0) {
 			player.sendMessage(F.error("Commands", "Too many arguments!"));
-			return;
 		}
 
-		if (Tutorial.intut.contains(player.getName())) {
-			return;
-		}
-
-		player.teleport(player.getWorld().getSpawnLocation());
-		player.sendMessage(F.info("World", "You were teleported to spawn."));
+		player.getWorld().setSpawnLocation(player.getLocation().getBlockX(),
+				(player.getLocation().getBlockY() + 2),
+				player.getLocation().getBlockZ());
+		player.sendMessage(F.info("World", "Spawn updated."));
 
 	}
 }

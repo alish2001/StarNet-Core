@@ -6,7 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.starnetmc.core.commands.Message;
+import com.starnetmc.core.commands.message.Message;
 import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.objects.OfflinePlayerCache;
 import com.starnetmc.core.util.F;

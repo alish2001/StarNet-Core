@@ -1,4 +1,4 @@
-package com.starnetmc.core.util;
+package com.starnetmc.core.gadgets;
 
 import org.bukkit.entity.Player;
 

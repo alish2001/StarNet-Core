@@ -62,61 +62,61 @@ public class LScoreboard extends Module {
 
 			switch (Manager.getRank(player.getUniqueId().toString())) {
 
-			case "DEFAULT":
+			case DEFAULT:
 				Score rank1 = obj.getScore(F.boldYellow + "RANK:");
 				rank1.setScore(12);
 				Score rank = obj.getScore("> " + F.BOLD + "NO RANK");
 				rank.setScore(11);
 				break;
-			case "HELPER":
+			case HELPER:
 				Score rank2 = obj.getScore(F.boldYellow + "RANK:");
 				rank2.setScore(12);
 				Score rankh = obj.getScore("> " + F.boldGreen + "HELPER");
 				rankh.setScore(11);
 				break;
-			case "MODERATOR":
+			case MODERATOR:
 				Score rank3 = obj.getScore(F.boldYellow + "RANK:");
 				rank3.setScore(12);
 				Score rankm = obj.getScore("> " + F.boldGold + "MOD");
 				rankm.setScore(11);
 				break;
-			case "ADMIN":
+			case ADMIN:
 				Score rank4 = obj.getScore(F.boldYellow + "RANK:");
 				rank4.setScore(12);
 				Score ranka = obj.getScore("> " + F.boldRed + "ADMIN");
 				ranka.setScore(11);
 				break;
-			case "OWNER":
+			case OWNER:
 				Score rank5 = obj.getScore(F.boldYellow + "RANK:");
 				rank5.setScore(12);
 				Score ranko = obj.getScore("> " + F.boldDR + "OWNER");
 				ranko.setScore(11);
 				break;
-			case "DEVELOPER":
+			case DEVELOPER:
 				Score rank6 = obj.getScore(F.boldYellow + "RANK:");
 				rank6.setScore(12);
 				Score rankd = obj.getScore("> " + F.boldDP + "DEV");
 				rankd.setScore(11);
 				break;
-			case "YOUTUBE":
+			case YOUTUBE:
 				Score rank7 = obj.getScore(F.boldYellow + "RANK:");
 				rank7.setScore(12);
 				Score ranky = obj.getScore("> " + F.boldRed + "YOUTUBER");
 				ranky.setScore(11);
 				break;
-			case "BUILDER":
+			case BUILDER:
 				Score rank8 = obj.getScore(F.boldYellow + "RANK:");
 				rank8.setScore(12);
 				Score rankb = obj.getScore("> " + F.boldBlue + "BUILDER");
 				rankb.setScore(11);
 				break;
-			case "VIP":
+			case VIP:
 				Score rank10 = obj.getScore(F.boldYellow + "RANK:");
 				rank10.setScore(12);
 				Score rankv = obj.getScore("> " + F.boldDA + "VIP");
 				rankv.setScore(11);
 				break;
-			case "MVP":
+			case MVP:
 				Score rank9 = obj.getScore(F.boldYellow + "RANK:");
 				rank9.setScore(12);
 				Score rankmv = obj.getScore("> " + F.boldAqua + "MVP");

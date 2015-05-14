@@ -9,13 +9,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.gadgets.GadgetGUI;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.settings.SettingsGUI;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.GadgetGUI;
 import com.starnetmc.core.util.ItemFactory;
 import com.starnetmc.core.util.Manager;
-import com.starnetmc.core.util.SettingsGUI;
 
 public class HubInventory extends Module {
 
@@ -92,19 +92,19 @@ public class HubInventory extends Module {
 					
 					switch (Manager.getRank(player.getUniqueId().toString())) {
 
-					case "ADMIN":
+					case ADMIN:
 						SettingsGUI.openSettingsAGUI(player);
 						break;
-					case "OWNER":
+					case OWNER:
 						SettingsGUI.openSettingsAGUI(player);
 						break;
-					case "DEVELOPER":
+					case DEVELOPER:
 						SettingsGUI.openSettingsAGUI(player);
 						break;
-					case "BUILDER":
+					case BUILDER:
 						SettingsGUI.openSettingsAGUI(player);
 						break;
-					case "YOUTUBE":
+					case YOUTUBE:
 						SettingsGUI.openSettingsAGUI(player);
 						break;
 					default:

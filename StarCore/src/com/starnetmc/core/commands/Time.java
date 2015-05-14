@@ -1,56 +1,24 @@
 package com.starnetmc.core.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.modules.Chat;
+import com.starnetmc.core.util.Rank;
 
-public class Time implements CommandExecutor {
+public class Time extends CommandBase<Chat> {
 
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+	public Time(Chat plugin) {
+		super(plugin, Rank.ADMIN, new String[] {"t"});
+		// TODO Auto-generated constructor stub
+	}
 
-		if (cmd.getName().equalsIgnoreCase("t")) {
 
-			if (!(sender instanceof Player)) {
-				return true;
-			}
-
-			Player player = (Player) sender;
-
-			if (args.length == 0) {
-				try {
-					switch (Manager.getRank(player.getUniqueId().toString())) {
-
-					case "ADMIN":
-						com.starnetmc.core.util.Time.openTimeGUI(player);
-						return false;
-					case "OWNER":
-						com.starnetmc.core.util.Time.openTimeGUI(player);
-						return false;
-					case "DEVELOPER":
-						com.starnetmc.core.util.Time.openTimeGUI(player);
-						return false;
-					default:
-						player.sendMessage(F.error("Permissions",
-								"No permission!"));
-						return true;
-
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					return true;
-				}
-			} else
-				return true;
-
-		}
-
-		return false;
-
+	@Override
+	public void execute(Player player, String[] args) {
+		
+		com.starnetmc.core.commands.util.Time.openTimeGUI(player);
+		
 	}
 
 }

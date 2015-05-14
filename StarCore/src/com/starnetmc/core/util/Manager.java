@@ -77,7 +77,7 @@ public class Manager {
 
 	}
 
-	public static String getRank(String uuid) throws Exception {
+	public static Rank getRank(String uuid) throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();
@@ -88,9 +88,9 @@ public class Manager {
 				+ uuid + "';");
 
 		if (!rs.next()) {
-			return "DEFAULT";
+			return Rank.DEFAULT;
 		}
-		return rs.getString("Rank");
+		return Rank.valueOf(rs.getString("Rank"));
 
 	}
 

@@ -1,4 +1,4 @@
-package com.starnetmc.core.util;
+package com.starnetmc.core.settings;
 
 import java.util.Arrays;
 
@@ -10,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.starnetmc.core.modules.Settings;
+import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.ItemFactory;
 
 public class SettingsGUI {
 

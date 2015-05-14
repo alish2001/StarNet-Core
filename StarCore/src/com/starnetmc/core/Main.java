@@ -11,18 +11,9 @@ import net.minecraft.server.v1_8_R1.EntityZombie;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.commands.AFK;
-import com.starnetmc.core.commands.Broadcast;
-import com.starnetmc.core.commands.GadgetCommand;
-import com.starnetmc.core.commands.Gamemode;
-import com.starnetmc.core.commands.Message;
-import com.starnetmc.core.commands.ModuleControl;
-import com.starnetmc.core.commands.SettingsCommand;
-import com.starnetmc.core.commands.Spawn;
-import com.starnetmc.core.commands.StaffChat;
-import com.starnetmc.core.commands.Teleport;
-import com.starnetmc.core.commands.Test;
-import com.starnetmc.core.commands.Time;
+import com.starnetmc.core.commands.util.CommandCenter;
+import com.starnetmc.core.gadgets.GadgetsUI;
+import com.starnetmc.core.gamemode.GamemodeUI;
 import com.starnetmc.core.listeners.Block;
 import com.starnetmc.core.listeners.BlockCommands;
 import com.starnetmc.core.listeners.Damage;
@@ -45,10 +36,7 @@ import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
-import com.starnetmc.core.npc.command.NPCCommand;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.GadgetsUI;
-import com.starnetmc.core.util.GamemodeUI;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.MemoryFix;
 import com.starnetmc.core.util.NMS;
@@ -93,6 +81,8 @@ public class Main extends JavaPlugin {
 		getServer().getMessenger().registerOutgoingPluginChannel(this,
 				"BungeeCord");
 
+		CommandCenter.init(this);
+		
 		// Modules
 		new Chat(this);
 		new Tutorial(this);
@@ -117,7 +107,6 @@ public class Main extends JavaPlugin {
 
 		// Other
 		getConfig().options().copyDefaults(true);
-		registerCommands();
 		registerListeners();
 		new MemoryFix(this);
 		new Updater(this);
@@ -133,32 +122,6 @@ public class Main extends JavaPlugin {
 
 	}
 
-	// Registers plugin commands, xD
-	private void registerCommands() {
-		getCommand("npc").setExecutor(new NPCCommand(this));
-		getCommand("chat").setExecutor(
-				new com.starnetmc.core.commands.Chat(this));
-		getCommand("settings").setExecutor(new SettingsCommand(this));
-		getCommand("spawn").setExecutor(new Spawn());
-		getCommand("setspawn").setExecutor(new Spawn());
-		getCommand("test").setExecutor(new Test());
-		getCommand("gm").setExecutor(new Gamemode());
-		getCommand("gms").setExecutor(new Gamemode());
-		getCommand("gma").setExecutor(new Gamemode());
-		getCommand("gmc").setExecutor(new Gamemode());
-		getCommand("gmsp").setExecutor(new Gamemode());
-		getCommand("t").setExecutor(new Time());
-		getCommand("message").setExecutor(new Message());
-		getCommand("reply").setExecutor(new Message());
-		getCommand("teleport").setExecutor(new Teleport());
-		getCommand("tpall").setExecutor(new Teleport());
-		getCommand("afk").setExecutor(new AFK());
-		getCommand("sc").setExecutor(new StaffChat());
-		getCommand("a").setExecutor(new Broadcast());
-		getCommand("enable").setExecutor(new ModuleControl());
-		getCommand("disable").setExecutor(new ModuleControl());
-		getCommand("gadgets").setExecutor(new GadgetCommand());
-	}
 
 	// registers listeners which are NOT modules
 	private void registerListeners() {
@@ -174,7 +137,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new Weather(), this);
 		Bukkit.getServer().getPluginManager()
-				.registerEvents(new com.starnetmc.core.util.Time(), this);
+				.registerEvents(new com.starnetmc.core.commands.util.Time(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new Damage(), this);
 		Bukkit.getServer().getPluginManager()

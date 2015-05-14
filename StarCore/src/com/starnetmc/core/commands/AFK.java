@@ -4,72 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.Rank;
 
-public class AFK implements CommandExecutor {
+public class AFK extends CommandBase<Chat> {
+
+	public AFK(Chat plugin) {
+		super(plugin, Rank.ADMIN, new String[] { "afk" });
+		// TODO Auto-generated constructor stub
+	}
 
 	private static List<String> afkplayer = new ArrayList<String>();
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+	public void execute(Player player, String[] args) {
 
-		if (cmd.getName().equalsIgnoreCase("afk")) {
+		if (afkplayer.contains(player.getName())) {
+			afkplayer.remove(player.getName());
+			player.setGameMode(GameMode.SURVIVAL);
+			player.setPlayerListName(player.getDisplayName());
 
-			if (!(sender instanceof Player))
-				return true;
-
-			Player player = (Player) sender;
-
-			try {
-				switch (Manager.getRank(player.getUniqueId().toString())) {
-
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				case "VIP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MVP":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "HELPER":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-				case "MODERATOR":
-					player.sendMessage(F.error("Permissions", "No permission!"));
-					return true;
-
-				default:
-					if (afkplayer.contains(player.getName())) {
-						afkplayer.remove(player.getName());
-						player.setGameMode(GameMode.SURVIVAL);
-						player.setPlayerListName(player.getDisplayName());
-
-					} else {
-						afkplayer.add(player.getName());
-						player.setGameMode(GameMode.SPECTATOR);
-						player.setPlayerListName(F.GRAY + "AFK "
-								+ player.getName());
-
-						return true;
-					}
-					return false;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} else {
+			afkplayer.add(player.getName());
+			player.setGameMode(GameMode.SPECTATOR);
+			player.setFlying(true);
+			player.setPlayerListName(F.GRAY + "AFK " + player.getName());
 
 		}
-		return false;
 	}
 
 }

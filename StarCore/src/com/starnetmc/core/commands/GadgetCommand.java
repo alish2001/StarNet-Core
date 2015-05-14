@@ -1,48 +1,24 @@
 package com.starnetmc.core.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.GadgetGUI;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.gadgets.GadgetGUI;
+import com.starnetmc.core.modules.Gadgets;
+import com.starnetmc.core.util.Rank;
 
-public class GadgetCommand implements CommandExecutor{
+public class GadgetCommand extends CommandBase<Gadgets> {
+
+	public GadgetCommand(Gadgets plugin) {
+		super(plugin, Rank.VIP, new String[] { "gadgets", "gadget" });
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
-		
-		if(cmd.getName().equalsIgnoreCase("gadgets")) {
-			
-			if(!(sender instanceof Player)) {
-				return true;
-			}
-			
-			final Player player = (Player) sender;
-			
-			try {
-				switch(Manager.getRank(player.getUniqueId().toString())) {
-				
-				case "DEFAULT":
-					player.sendMessage(F.error("Permissions", "No permission! Buy VIP to get early access to beta features!"));
-					return true;
-					
-				default:					
-						GadgetGUI.openGadgetInventory(player);
-						return false;
-				
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return false;
+	public void execute(Player player, String[] args) {
+
+		GadgetGUI.openGadgetInventory(player);
+
 	}
 
 }

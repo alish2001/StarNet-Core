@@ -119,7 +119,7 @@ public class NMS extends Module {
 		if (player.getItemInHand().getType() == Material.BLAZE_ROD) {
 
 			if (Manager.getRank(player.getUniqueId().toString())
-					.equalsIgnoreCase("OWNER")) {
+					.equals(Rank.OWNER)) {
 
 				if (en instanceof Player) {
 					return;

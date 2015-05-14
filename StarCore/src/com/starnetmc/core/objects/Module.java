@@ -5,6 +5,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.commands.util.CommandCenter;
+import com.starnetmc.core.commands.util.ICommand;
 import com.starnetmc.core.util.F;
 
 public abstract class Module implements Listener {
@@ -27,11 +29,12 @@ public abstract class Module implements Listener {
 	}
 
 	public Module() {
-		
+
 	}
-	
+
 	private void onEnable() {
 		enable();
+		addCommands();
 	}
 
 	public PluginManager getPluginManager() {
@@ -50,8 +53,20 @@ public abstract class Module implements Listener {
 
 	}
 
+	public void addCommands() {
+
+	}
+
 	public void registerListener(Listener listener) {
 		Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
+	}
+
+	public final void addCommand(ICommand command) {
+		CommandCenter.cc.addCommand(command);
+	}
+
+	public final void removeCommand(ICommand command) {
+		CommandCenter.cc.removeCommand(command);
 	}
 
 	protected void log(String message) {

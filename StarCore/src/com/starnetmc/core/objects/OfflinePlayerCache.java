@@ -7,18 +7,19 @@ import org.bukkit.entity.Player;
 
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.Rank;
 
 public class OfflinePlayerCache extends java.lang.Object {
 
 	static Player player;
 	static String uuid;
-	static String rank;
+	static Rank rank;
 	static int shards;
 
 	public static List<OfflinePlayerCache> players = new ArrayList<OfflinePlayerCache>();
 	public static List<String> staff = new ArrayList<String>();
 
-	public OfflinePlayerCache(Player player, String uuid, String rank,
+	public OfflinePlayerCache(Player player, String uuid, Rank rank,
 			int shards) {
 
 		OfflinePlayerCache.player = player;
@@ -38,7 +39,7 @@ public class OfflinePlayerCache extends java.lang.Object {
 		players.add(e);
 	}
 
-	public static String getRank(Player player) throws Exception {
+	public static Rank getRank(Player player) throws Exception {
 
 		return rank;
 
@@ -48,14 +49,14 @@ public class OfflinePlayerCache extends java.lang.Object {
 
 		switch (Manager.getRank(player.getUniqueId().toString())) {
 
-		case "DEFAULT":
+		case DEFAULT:
 
 			player.setDisplayName(F.YELLOW + player.getName());
 			player.setPlayerListName(player.getDisplayName());
 
 			break;
 
-		case "HELPER":
+		case HELPER:
 
 			staff.add(player.getName());
 			player.setDisplayName(F.GREEN + "" + F.BOLD + "HELPER " + F.YELLOW
@@ -63,7 +64,7 @@ public class OfflinePlayerCache extends java.lang.Object {
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "MODERATOR":
+		case MODERATOR:
 
 			staff.add(player.getName());
 			player.setDisplayName(F.GOLD + "" + F.BOLD + "MOD " + F.YELLOW
@@ -71,7 +72,7 @@ public class OfflinePlayerCache extends java.lang.Object {
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "ADMIN":
+		case ADMIN:
 
 			staff.add(player.getName());
 			player.setDisplayName(F.RED + "" + F.BOLD + "ADMIN " + F.YELLOW
@@ -79,7 +80,7 @@ public class OfflinePlayerCache extends java.lang.Object {
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "OWNER":
+		case OWNER:
 
 			staff.add(player.getName());
 			player.setDisplayName(F.DARK_RED + "" + F.BOLD + "OWNER "
@@ -87,19 +88,19 @@ public class OfflinePlayerCache extends java.lang.Object {
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "YOUTUBE":
+		case YOUTUBE:
 			player.setDisplayName(F.BOLD + "YOU" + F.RED + "" + F.BOLD
 					+ "[TUBE] " + F.YELLOW + player.getName());
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "BUILDER":
+		case BUILDER:
 			player.setDisplayName(F.BLUE + "" + F.BOLD + "BUILDER " + F.YELLOW
 					+ player.getName());
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "DEVELOPER":
+		case DEVELOPER:
 
 			staff.add(player.getName());
 			player.setDisplayName(F.DARK_PURPLE + "" + F.BOLD + "DEV "
@@ -107,29 +108,17 @@ public class OfflinePlayerCache extends java.lang.Object {
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "VIP":
+		case VIP:
 
 			player.setDisplayName(F.boldDA + "VIP " + F.YELLOW
 					+ player.getName());
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
-		case "MVP":
+		case MVP:
 
 			player.setDisplayName(F.AQUA + "" + F.BOLD + "MVP " + F.YELLOW
 					+ player.getName());
-			player.setPlayerListName(player.getDisplayName());
-			break;
-
-		case "NULL":
-			player.setDisplayName(F.YELLOW + player.getName() + F.GRAY);
-			Manager.createAccount(player);
-			player.setPlayerListName(player.getDisplayName());
-			break;
-
-		case "(NULL)":
-			player.setDisplayName(F.YELLOW + player.getName() + F.GRAY);
-			Manager.createAccount(player);
 			player.setPlayerListName(player.getDisplayName());
 			break;
 
