@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.events.GamemodeChangeEvent;
 import com.starnetmc.core.modules.Gamemode;
-import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Rank;
 
 public class GamemodeCommand extends CommandBase<Gamemode> {
@@ -16,14 +15,11 @@ public class GamemodeCommand extends CommandBase<Gamemode> {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public void execute(Player player, String[] args) {
-		
-		Bukkit.getServer().getPluginManager().callEvent(new GamemodeChangeEvent(player));
-		
-		if (args.length != 0) {
-			player.sendMessage(F.error("Commands", "Too many arguments!"));
-			return;
-		}
+
+		Bukkit.getServer().getPluginManager()
+				.callEvent(new GamemodeChangeEvent(player));
 
 		GamemodeUI.openGMGUI(player);
 

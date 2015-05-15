@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 public enum Rank {
 
-	OWNER, DEVELOPER, ADMIN, BUILDER, YOUTUBE, MODERATOR, HELPER, MVP, VIP, DEFAULT;
+	OWNER, DEVELOPER, ADMIN, YOUTUBE, BUILDER, MODERATOR, HELPER, MVP, VIP, DEFAULT;
 
 	public boolean has(Rank rt) {
 		return has(null, rt);
@@ -14,13 +14,9 @@ public enum Rank {
 
 		if (compareTo(rt) <= 0) {
 			return true;
-		} else {
-			player.sendMessage(F.error("Permissions", "No permission!"));
-			return false;
 		}
+		return false;
 
 	}
 
-
-	
 }

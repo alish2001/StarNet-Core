@@ -26,10 +26,12 @@ import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.Gadgets;
+import com.starnetmc.core.modules.Gamemode;
 import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
 import com.starnetmc.core.modules.Settings;
+import com.starnetmc.core.modules.Teleport;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
@@ -82,7 +84,7 @@ public class Main extends JavaPlugin {
 				"BungeeCord");
 
 		CommandCenter.init(this);
-		
+
 		// Modules
 		new Chat(this);
 		new Tutorial(this);
@@ -95,6 +97,8 @@ public class Main extends JavaPlugin {
 		new News(this);
 		new DoubleJump(this);
 		new HubInventory(this);
+		new Gamemode(this);
+		new Teleport(this);
 
 		// Registering NPCs
 		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
@@ -122,7 +126,6 @@ public class Main extends JavaPlugin {
 
 	}
 
-
 	// registers listeners which are NOT modules
 	private void registerListeners() {
 		Bukkit.getServer().getPluginManager().registerEvents(new Join(), this);
@@ -136,12 +139,12 @@ public class Main extends JavaPlugin {
 				.registerEvents(new GamemodeUI(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new Weather(), this);
-		Bukkit.getServer().getPluginManager()
-				.registerEvents(new com.starnetmc.core.commands.util.Time(), this);
+		Bukkit.getServer()
+				.getPluginManager()
+				.registerEvents(new com.starnetmc.core.commands.util.Time(),
+						this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new Damage(), this);
-		Bukkit.getServer().getPluginManager()
-				.registerEvents(new com.starnetmc.core.listeners.Chat(), this);
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GenericListener(), this);
 	}

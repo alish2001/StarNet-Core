@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 import com.starnetmc.core.util.StarMap;
@@ -45,8 +46,13 @@ public class CommandCenter implements Listener {
 		ICommand command = (ICommand) this.commands.get(commandName
 				.toLowerCase());
 
-		if (command != null && getRank(e.getPlayer()).has(command.getRequiredRank())) {
+		if (command != null) {
 
+			if(!getRank(e.getPlayer()).has(command.getRequiredRank())) {
+				e.getPlayer().sendMessage(F.error("Permissions", "No permission!"));
+				return;
+			}
+			
 			command.setAliasUsed(commandName.toLowerCase());
 			command.execute(e.getPlayer(), args);
 

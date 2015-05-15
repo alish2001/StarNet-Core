@@ -7,6 +7,7 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -45,6 +46,8 @@ public class GadgetsUI implements Listener {
 			if (e.getCurrentItem().getType() == Material.AIR)
 				return;
 
+			player.playSound(player.getLocation(), Sound.ORB_PICKUP, 7F, 1F);
+			
 			if (e.getCurrentItem().getType() == Material.FIREWORK) {
 
 				if (Gadgets.getGadgets(player).fireworksEnabled() == false) {

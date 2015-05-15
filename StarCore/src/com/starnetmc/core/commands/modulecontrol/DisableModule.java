@@ -1,9 +1,11 @@
 package com.starnetmc.core.commands.modulecontrol;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.events.ModuleStateChangeEvent;
 import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
@@ -35,13 +37,21 @@ public class DisableModule extends CommandBase<Chat> {
 	Teleport tp = new Teleport();
 
 	public DisableModule(Chat plugin) {
-		super(plugin, Rank.OWNER, new String[] { "disable" });
+		super(plugin, Rank.DEVELOPER, new String[] { "disable" });
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(Player player, String[] args) {
 
+		Bukkit.getServer().getPluginManager()
+		.callEvent(new ModuleStateChangeEvent());
+		
+		for(Player allp : Bukkit.getOnlinePlayers()) {
+			allp.playSound(allp.getLocation(), Sound.ENDERDRAGON_GROWL, 10F, 1F);
+		}
+		
+		
 		switch (args[0]) {
 		case "filter":
 			if (ChatFilter.isEnabled == true) {
@@ -130,8 +140,8 @@ public class DisableModule extends CommandBase<Chat> {
 		case "gamemode":
 			if (Gamemode.isEnabled == true) {
 				gm.enable();
-				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldGreen
-						+ "GAMEMODE CHANGING has been enabled by "
+				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
+						+ "GAMEMODE CHANGING has been disabled by "
 						+ player.getName());
 				return;
 			} else {
@@ -140,10 +150,10 @@ public class DisableModule extends CommandBase<Chat> {
 				return;
 			}
 		case "tp":
-			if (Teleport.isEnabled == false) {
-				tp.enable();
-				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldGreen
-						+ "TELEPORTATION has been enabled by "
+			if (Teleport.isEnabled == true) {
+				tp.disable();
+				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
+						+ "TELEPORTATION has been disabled by "
 						+ player.getName());
 				return;
 			} else {

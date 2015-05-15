@@ -7,12 +7,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import com.starnetmc.core.commands.HelpCommand;
 import com.starnetmc.core.util.F;
 
 public class BlockCommands implements Listener {
 
-	
-	
 	@EventHandler
 	public void blockCommands(PlayerCommandPreprocessEvent e) throws Exception {
 
@@ -23,28 +22,29 @@ public class BlockCommands implements Listener {
 			Bukkit.broadcastMessage(F.error("Server",
 					"Server is going down for an update."));
 			try {
-				for(Entity en : e.getPlayer().getWorld().getEntities()) {
-			
-				
-					if(en instanceof Player) {
+				for (Entity en : e.getPlayer().getWorld().getEntities()) {
+
+					if (en instanceof Player) {
 						return;
 					}
-					
+
 					en.remove();
-					
+
 				}
-			}
-			finally{
+			} finally {
 				Bukkit.getServer().shutdown();
 			}
 
 		}
-			
-	
-		
-				if(e.getMessage().startsWith("/me")) {
+
+		if (e.getMessage().startsWith("/me")) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(F.error("Permissions", "Much deny permissions, so wow."));
+			e.getPlayer().sendMessage(
+					F.error("Permissions", "Much deny permissions, so wow."));
+		}
+		
+		if(e.getMessage().startsWith("/help") || e.getMessage().startsWith("/?")) {
+			HelpCommand.sendHelp(e.getPlayer());
 		}
 
 	}

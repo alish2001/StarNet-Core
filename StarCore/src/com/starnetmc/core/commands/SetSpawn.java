@@ -10,15 +10,12 @@ import com.starnetmc.core.util.Rank;
 public class SetSpawn extends CommandBase<Chat> {
 
 	public SetSpawn(Chat plugin) {
-		super(plugin, Rank.ADMIN, new String[] { "setspawn", "ss" });
+		super(plugin, Rank.ADMIN, new String[] {"setspawn","ss"});
 		// TODO Auto-generated constructor stub
 	}
 
 	public void execute(Player player, String[] args) {
 
-		if (args.length != 0) {
-			player.sendMessage(F.error("Commands", "Too many arguments!"));
-		}
 
 		player.getWorld().setSpawnLocation(player.getLocation().getBlockX(),
 				(player.getLocation().getBlockY() + 2),

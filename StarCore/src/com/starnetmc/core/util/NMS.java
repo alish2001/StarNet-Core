@@ -30,6 +30,7 @@ import com.starnetmc.core.events.NPCRemoveEvent;
 import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.npc.NPCVillager;
+import com.starnetmc.core.npc.command.NPCCommand;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
@@ -90,6 +91,11 @@ public class NMS extends Module {
 		}
 	}
 
+	@Override
+	public void addCommands() {
+		addCommand(new NPCCommand(this));
+	}
+	
 	@Override
 	public void enable() {
 		try {

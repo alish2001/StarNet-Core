@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -72,6 +73,8 @@ public class GamemodeUI implements Listener {
 		Player player = (Player) e.getWhoClicked();
 		
 
+		player.playSound(player.getLocation(), Sound.ORB_PICKUP, 7F, 1F);
+		
 		if (e.getCurrentItem().getType() == Material.WOOD_SWORD) {
 
 			player.setGameMode(GameMode.SURVIVAL);

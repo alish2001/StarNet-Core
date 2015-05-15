@@ -81,8 +81,6 @@ public class Gadgets extends Module {
 
 		Player player = e.getPlayer();
 		Manager.setShards(player.getUniqueId().toString(), 2);
-		player.sendMessage(F.info("Economy",
-				"2 shards have been added to your account."));
 
 		e.getItem().remove();
 

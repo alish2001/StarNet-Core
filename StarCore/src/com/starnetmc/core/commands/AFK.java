@@ -14,7 +14,7 @@ import com.starnetmc.core.util.Rank;
 public class AFK extends CommandBase<Chat> {
 
 	public AFK(Chat plugin) {
-		super(plugin, Rank.ADMIN, new String[] { "afk" });
+		super(plugin, Rank.DEVELOPER, new String[] { "afk" });
 		// TODO Auto-generated constructor stub
 	}
 

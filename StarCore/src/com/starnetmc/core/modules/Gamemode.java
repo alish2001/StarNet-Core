@@ -20,6 +20,7 @@ public class Gamemode extends Module {
 		
 	}
 	
+	@Override
 	public void addCommands() {
 		addCommand(new GamemodeCommand(this));
 	}

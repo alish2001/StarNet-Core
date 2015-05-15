@@ -1,6 +1,7 @@
 package com.starnetmc.core.commands.modulecontrol;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
@@ -23,7 +24,7 @@ import com.starnetmc.core.util.Rank;
 public class EnableModule extends CommandBase<Chat> {
 
 	public EnableModule(Chat plugin) {
-		super(plugin, Rank.OWNER, new String[] { "enable" });
+		super(plugin, Rank.DEVELOPER, new String[] { "enable" });
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,6 +46,10 @@ public class EnableModule extends CommandBase<Chat> {
 		Bukkit.getServer().getPluginManager()
 				.callEvent(new ModuleStateChangeEvent());
 
+		for(Player allp : Bukkit.getOnlinePlayers()) {
+			allp.playSound(allp.getLocation(), Sound.ENDERDRAGON_GROWL, 10F, 1F);
+		}
+		
 		if (args.length == 0) {
 			player.sendMessage(F.error("Commands", "Not enough arguments!"));
 			return;
