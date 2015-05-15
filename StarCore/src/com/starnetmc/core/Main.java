@@ -41,6 +41,7 @@ import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
+import com.starnetmc.core.punish.Punish;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.MemoryFix;
@@ -103,6 +104,7 @@ public class Main extends JavaPlugin {
 		new Gamemode(this);
 		new Teleport(this);
 		new Portal(this);
+		new Punish(this);
 
 		// Registering NPCs
 		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);

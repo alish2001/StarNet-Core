@@ -52,8 +52,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 		}
 		if (args[0].equalsIgnoreCase("skeleton")) {
 			Skeleton b = NPCSkeleton.spawn(loc);
@@ -61,8 +63,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
 
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 		}
 		if (args[0].equalsIgnoreCase("skeletonwither")) {
 			Skeleton b = NPCSkeleton.spawn(loc);
@@ -71,8 +75,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
 
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, "SKELETON", loc));
 		}
 		if (args[0].equalsIgnoreCase("villager")) {
 			Villager b = NPCVillager.spawn(loc);
@@ -80,8 +86,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
 
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 		}
 		if (args[0].equalsIgnoreCase("zombiebaby")) {
 
@@ -90,8 +98,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 
 		}
 		if (args[0].equalsIgnoreCase("villagerbaby")) {
@@ -101,8 +111,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, "VILLAGER", loc));
 
 		}
 
@@ -111,14 +123,20 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 		}
 		if (args[0].equalsIgnoreCase("pig")) {
 			Pig b = NPCPig.spawn(loc);
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, args[0].toUpperCase(), loc));
 		}
 		if (args[0].equalsIgnoreCase("pigbaby")) {
 			Pig b = NPCPig.spawn(loc);
@@ -126,8 +144,10 @@ public class NPCCommand extends CommandBase<NMS> {
 			b.setCustomNameVisible(true);
 			b.setBaby();
 			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
-			Bukkit.getServer().getPluginManager()
-					.callEvent(new NPCSpawnEvent(b, s, loc));
+			Bukkit.getServer()
+					.getPluginManager()
+					.callEvent(
+							new NPCSpawnEvent(b, s, "PIG", loc));
 			return;
 		}
 	}

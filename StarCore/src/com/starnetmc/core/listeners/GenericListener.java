@@ -5,8 +5,10 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -57,6 +59,20 @@ public class GenericListener implements Listener {
 
 		if (e.getSpawnReason() == SpawnReason.EGG) {
 			e.setCancelled(true);
+		}
+
+	}
+
+	@EventHandler
+	public void onNonWhitelistLogin(AsyncPlayerPreLoginEvent e) {
+
+		if (e.getLoginResult() == Result.KICK_WHITELIST) {
+
+			e.disallow(
+					Result.KICK_WHITELIST,
+					F.error("Server",
+							"The server is currently in private mode. Buy VIP to bypass this feature!"));
+
 		}
 
 	}

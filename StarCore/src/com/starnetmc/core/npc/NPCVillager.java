@@ -23,6 +23,14 @@ public class NPCVillager extends EntityVillager {
 	}
 	
 	@Override
+	public void makeSound(String s, float f, float f1) {
+		
+		this.world.makeSound(this, s, 0F, 0F);
+		
+	}
+
+	
+	@Override
 	public void g(double d0, double d1, double d2) {
 		return;
 	}

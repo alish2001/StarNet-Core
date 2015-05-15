@@ -12,13 +12,15 @@ public class NPCSpawnEvent extends Event implements Cancellable{
 	private static final HandlerList handlers = new HandlerList();
 	private String name;
 	private Location location;
+	private String type;
 	
 	
-	public NPCSpawnEvent(LivingEntity en, String name, Location location) {
+	public NPCSpawnEvent(LivingEntity en, String name,String type, Location location) {
 		
 		this.en = en;
 		this.name = name;
 		this.location = location;
+		this.type = type;
 		
 	}
 	
@@ -59,6 +61,10 @@ public class NPCSpawnEvent extends Event implements Cancellable{
 		
 		return location;
 		
+	}
+	
+	public String getType() {
+		return type;
 	}
 	
 }

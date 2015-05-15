@@ -22,6 +22,12 @@ public class NPCSkeleton extends EntitySkeleton {
 	}
 
 
+	@Override
+	public void makeSound(String s, float f, float f1) {
+		
+		this.world.makeSound(this, s, 0F, 0F);
+		
+	}
 
 	
 

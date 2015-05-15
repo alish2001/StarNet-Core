@@ -1,7 +1,8 @@
 package com.starnetmc.core.commands;
 
+
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
@@ -19,7 +20,7 @@ public class StaffChat extends CommandBase<Chat> {
 
 	public void execute(Player player, String[] args) {
 
-		if (args.length == 0) {
+		if (args.length < 1) {
 			player.sendMessage(F.error("Commands", "Please use: /sc <Message>"));
 			return;
 		}
@@ -31,48 +32,22 @@ public class StaffChat extends CommandBase<Chat> {
 		}
 		annc = sb.toString();
 
+		
+		
+		
 		try {
-			String rank = Manager.getRank(player.getUniqueId().toString())
-					+ " ";
-
-			for (Player all : Bukkit.getOnlinePlayers()) {
-
-				switch (Manager.getRank(player.getUniqueId().toString())) {
-
-				case HELPER:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				case MODERATOR:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				case ADMIN:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				case OWNER:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				case DEVELOPER:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				case BUILDER:
-					all.sendMessage(F.GOLD + rank + player.getName() + " "
-							+ annc);
-					all.playSound(all.getLocation(), Sound.NOTE_PLING, 8F, 2F);
-					return;
-				default:
-					break;
-
+			for(Player staff : Bukkit.getOnlinePlayers()) {
+				
+				if(Manager.getRank(staff.getUniqueId().toString()).has(getRequiredRank())) {
+					
+					staff.sendMessage(F.info(ChatColor.stripColor(player.getDisplayName()), annc));
+					continue;
+					
 				}
+				if(!Manager.getRank(staff.getUniqueId().toString()).has(getRequiredRank())) {
+					continue;
+				}
+			
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

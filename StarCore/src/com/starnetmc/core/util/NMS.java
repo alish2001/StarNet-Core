@@ -18,8 +18,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -29,14 +33,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.starnetmc.core.events.NPCRemoveEvent;
 import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.modules.Tutorial;
+import com.starnetmc.core.npc.NPCPig;
+import com.starnetmc.core.npc.NPCSkeleton;
+import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
+import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.npc.command.NPCCommand;
 import com.starnetmc.core.objects.Module;
 import com.starnetmc.core.objects.ModuleType;
 
 public class NMS extends Module {
 
-	public static LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+	public static LinkedHashMap<String, Location> villagernpcs = new LinkedHashMap<String, Location>();
+	public static LinkedHashMap<String, Location> pignpcs = new LinkedHashMap<String, Location>();
+	public static LinkedHashMap<String, Location> skeletonnpcs = new LinkedHashMap<String, Location>();
+	public static LinkedHashMap<String, Location> slimenpcs = new LinkedHashMap<String, Location>();
+	public static LinkedHashMap<String, Location> zombienpcs = new LinkedHashMap<String, Location>();
 
 	public NMS(JavaPlugin plugin) {
 
@@ -95,16 +107,37 @@ public class NMS extends Module {
 	public void addCommands() {
 		addCommand(new NPCCommand(this));
 	}
-	
+
 	@Override
 	public void enable() {
 		try {
-			npcs = Manager.downloadNPCs();
+			villagernpcs = Manager.downloadVillagerNPCs();
+			pignpcs = Manager.downloadPigNPCs();
+			skeletonnpcs = Manager.downloadSkeletonNPCs();
+			slimenpcs = Manager.downloadSlimeNPCs();
+			zombienpcs = Manager.downloadZombieNPCs();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		spawnNPCS();
+		
+
+		if (villagernpcs != null) {
+			spawnVillagers();
+		}
+		if (pignpcs != null) {
+			spawnPigs();
+		}
+		if (skeletonnpcs != null) {
+			spawnSkeletons();
+		}
+		if (slimenpcs != null) {
+			spawnSlimes();
+		}
+		if (zombienpcs != null) {
+			spawnZombies();
+		}
+
 		log("Enabled.");
 
 	}
@@ -124,8 +157,8 @@ public class NMS extends Module {
 
 		if (player.getItemInHand().getType() == Material.BLAZE_ROD) {
 
-			if (Manager.getRank(player.getUniqueId().toString())
-					.equals(Rank.OWNER)) {
+			if (Manager.getRank(player.getUniqueId().toString()).equals(
+					Rank.OWNER)) {
 
 				if (en instanceof Player) {
 					return;
@@ -278,26 +311,63 @@ public class NMS extends Module {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onSpawn(NPCSpawnEvent e) throws Exception {
 
-		Manager.createNPC(e.getName(), e.getLocation());
+		Manager.createNPC(e.getName(), e.getType(), e.getLocation());
 
 	}
 
-	public static void spawnNPCS() {
+	public static void spawnVillagers() {
 
-		for (String s : npcs.keySet()) {
+		for (String s : villagernpcs.keySet()) {
 
-			Villager b = NPCVillager.spawn(npcs.get(s));
+			Villager b = NPCVillager.spawn(villagernpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
 		}
 
 	}
 
-	
-}
+	public static void spawnPigs() {
 
-enum NPCType {
+		for (String s : pignpcs.keySet()) {
 
-	VILLAGER, SKELETON, PIG, SLIME, SKELETONWITHER, PIGBABY, VILLAGERBABY, ZOMBIE, ZOMBIEBABY;
+			Pig b = NPCPig.spawn(pignpcs.get(s));
+			b.setCustomName(ChatColor.GOLD + " " + s);
+			b.setCustomNameVisible(true);
+		}
+
+	}
+
+	public static void spawnSkeletons() {
+
+		for (String s : skeletonnpcs.keySet()) {
+
+			Skeleton b = NPCSkeleton.spawn(skeletonnpcs.get(s));
+			b.setCustomName(ChatColor.GOLD + " " + s);
+			b.setCustomNameVisible(true);
+		}
+
+	}
+
+	public static void spawnSlimes() {
+
+		for (String s : slimenpcs.keySet()) {
+
+			Slime b = NPCSlime.spawn(slimenpcs.get(s));
+			b.setCustomName(ChatColor.GOLD + " " + s);
+			b.setCustomNameVisible(true);
+		}
+
+	}
+
+	public static void spawnZombies() {
+
+		for (String s : zombienpcs.keySet()) {
+
+			Zombie b = NPCZombie.spawn(zombienpcs.get(s));
+			b.setCustomName(ChatColor.GOLD + " " + s);
+			b.setCustomNameVisible(true);
+		}
+
+	}
 
 }

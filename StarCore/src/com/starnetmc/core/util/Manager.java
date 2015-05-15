@@ -9,9 +9,11 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.Main;
+import com.starnetmc.core.punish.Punishment;
 
 public class Manager {
 
@@ -31,10 +33,7 @@ public class Manager {
 		a.executeUpdate("CREATE TABLE IF NOT EXISTS `Accounts` (`id` INT NOT NULL AUTO_INCREMENT,`Name` varchar(64),`UUID` MEDIUMTEXT, `Shards` INT, `Rank` varchar(32), `firstLogin` LONG, `lastLogin` LONG, `totalPlayTime` INT, `tutorial` TINYINT(1),PRIMARY KEY (`id`));");
 
 		Statement p = db.getConnection().createStatement();
-		p.executeUpdate("CREATE TABLE IF NOT EXISTS `Punishments` (`id` INT NOT NULL AUTO_INCREMENT,`UUID` MEDIUMTEXT, `PunishType` varchar(32), `PunishReason` MEDIUMTEXT,`PunishPerm` BOOL, `PunishExpire` LONG, PRIMARY KEY (`id`));");
-
-		Statement pp = db.getConnection().createStatement();
-		pp.executeUpdate("CREATE TABLE IF NOT EXISTS `PastPunishments` (`id` INT NOT NULL AUTO_INCREMENT,`UUID` MEDIUMTEXT, `PunishmentType` varchar(32), `PunishRemover` MEDIUMTEXT, `RemoveReason` MEDIUMTEXT, PRIMARY KEY (`id`));");
+		p.executeUpdate("CREATE TABLE IF NOT EXISTS `Punishments` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT,`UUID` MEDIUMTEXT, `PunishType` varchar(32), `PunishReason` MEDIUMTEXT,`PunishPerm` BOOL, `Punisher` MEDIUMTEXT, PRIMARY KEY (`id`));");
 
 		Statement sf = db.getConnection().createStatement();
 		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
@@ -44,6 +43,141 @@ public class Manager {
 
 	}
 
+	public static void removeAllPunishments(String player) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		OfflinePlayer o = Punishment.getOfflinePlayerFromName(player);
+		String uuid = o.getUniqueId().toString();
+
+		Statement s = db.getConnection().createStatement();
+		if(isBanned(uuid)) {
+			s.executeUpdate("DELETE FROM `Punishments` WHERE `UUID`='"+uuid+"';");
+		}
+		else if(isMuted(uuid)) {
+			s.executeUpdate("DELETE FROM `Punishments` WHERE `UUID`='"+uuid+"';");
+		}
+		else if(Punishment._tempBans.containsKey(uuid)) {
+			Punishment._tempBans.remove(uuid);
+		}
+		else if(Punishment._tempMutes.containsKey(uuid)) {
+			Punishment._tempMutes.remove(uuid);
+		}
+		else {
+			return;
+		}
+	}
+	
+	public static void makeMuted(Player punisher, String offender, String reason)
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		OfflinePlayer o = Punishment.getOfflinePlayerFromName(offender);
+		String uuid = o.getUniqueId().toString();
+
+		Statement s = db.getConnection().createStatement();
+		s.executeUpdate("INSERT INTO `Punishments` (`Name`,`UUID`,`PunishType`,`PunishReason`,`PunishPerm`,`Punisher`) VALUES ('"
+				+ o.getName()
+				+ "','"
+				+ uuid
+				+ "','MUTE','"
+				+ reason
+				+ "','1','" + punisher.getName() + "');");
+
+	}
+
+	public static void makeBanned(Player punisher, String offender,
+			String reason) throws Exception {
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		OfflinePlayer o = Punishment.getOfflinePlayerFromName(offender);
+		String uuid = o.getUniqueId().toString();
+
+		Statement s = db.getConnection().createStatement();
+		s.executeUpdate("INSERT INTO `Punishments` (`Name`,`UUID`,`PunishType`,`PunishReason`,`PunishPerm`,`Punisher`) VALUES ('"
+				+ o.getName()
+				+ "','"
+				+ uuid
+				+ "','BAN','"
+				+ reason
+				+ "','1','" + punisher.getName() + "');");
+	}
+
+	public static boolean isMuted(String uuid)
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"' AND `PunishType`='MUTE';");
+		
+		if(!rs.next()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+
+		
+	}
+
+	public static String getPunishReason(Player player) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		String uuid = player.getUniqueId().toString();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"';");
+		
+		if(!rs.next()) {
+			return null;
+		}
+		else {
+			return rs.getString("PunishReason");
+		}
+
+	}
+	
+	public static boolean isBanned(String uuid)
+			throws Exception {
+
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"' AND `PunishType`='BAN';");
+		
+		if(!rs.next()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+
+
+	}
+
+	
 	public static boolean hasAccount(String uuid) throws Exception {
 
 		if (!db.checkConnection()) {
@@ -198,7 +332,7 @@ public class Manager {
 	}
 
 	// Start NPC Code
-	public static LinkedHashMap<String, Location> downloadNPCs()
+	public static LinkedHashMap<String, Location> downloadVillagerNPCs()
 			throws Exception {
 
 		if (!db.checkConnection()) {
@@ -208,9 +342,11 @@ public class Manager {
 		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
 
 		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `NPCManager`");
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='VILLAGER'");
 
 		while (rs.next()) {
+
 			npcs.put(
 					rs.getString("Name"),
 					new Location(Bukkit.getWorld(rs.getString("World")), rs
@@ -221,7 +357,108 @@ public class Manager {
 
 	}
 
-	public static void createNPC(String name, Location loc) throws Exception {
+	public static LinkedHashMap<String, Location> downloadPigNPCs()
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='PIG'");
+
+		while (rs.next()) {
+
+			npcs.put(
+					rs.getString("Name"),
+					new Location(Bukkit.getWorld(rs.getString("World")), rs
+							.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+		}
+
+		return npcs;
+
+	}
+
+	public static LinkedHashMap<String, Location> downloadSkeletonNPCs()
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='SKELETON'");
+
+		while (rs.next()) {
+
+			npcs.put(
+					rs.getString("Name"),
+					new Location(Bukkit.getWorld(rs.getString("World")), rs
+							.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+		}
+
+		return npcs;
+
+	}
+
+	public static LinkedHashMap<String, Location> downloadSlimeNPCs()
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='SLIME'");
+
+		while (rs.next()) {
+
+			npcs.put(
+					rs.getString("Name"),
+					new Location(Bukkit.getWorld(rs.getString("World")), rs
+							.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+		}
+
+		return npcs;
+
+	}
+
+	public static LinkedHashMap<String, Location> downloadZombieNPCs()
+			throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		LinkedHashMap<String, Location> npcs = new LinkedHashMap<String, Location>();
+
+		Statement s = db.getConnection().createStatement();
+		ResultSet rs = s
+				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='ZOMBIE'");
+
+		while (rs.next()) {
+
+			npcs.put(
+					rs.getString("Name"),
+					new Location(Bukkit.getWorld(rs.getString("World")), rs
+							.getInt("x"), rs.getInt("y"), rs.getInt("z")));
+		}
+
+		return npcs;
+
+	}
+
+	public static void createNPC(String name, String entitytype, Location loc)
+			throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();
@@ -230,10 +467,17 @@ public class Manager {
 		Statement s = db.getConnection().createStatement();
 		s.execute("INSERT INTO `NPCManager` (`Name`,`NPCType`,`World`,`x`,`y`,`z`) VALUES ('"
 				+ name
-				+ "','VILLAGER','"
+				+ "','"
+				+ entitytype
+				+ "','"
 				+ loc.getWorld().getName()
 				+ "','"
-				+ loc.getX() + "','" + loc.getY() + "','" + loc.getZ() + "');");
+				+ loc.getX()
+				+ "','"
+				+ loc.getY()
+				+ "','"
+				+ loc.getZ()
+				+ "');");
 
 	}
 

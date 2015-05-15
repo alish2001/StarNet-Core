@@ -52,7 +52,7 @@ public class News extends Module {
 	public void onJoin(PlayerJoinEvent e) {
 
 		if (isEnabled == true) {
-			sendNews(e.getPlayer(), F.GOLD + "~ Look up :D ~");
+			sendNews(e.getPlayer(), F.GOLD + "~ 97% Done! ~");
 		} else {
 			return;
 		}
@@ -75,7 +75,7 @@ public class News extends Module {
 
 	public void douglas() {
 
-		Location loc = new Location(Bukkit.getWorld("Eclipse"), 96, 30, 0);
+		Location loc = new Location(Bukkit.getWorld("Eclipse"), 96, -60, 0);
 
 		EnderDragon douglas = NPCDragon.spawn(loc);
 		douglas.setCustomName(F.boldAqua + "The Star Network" + F.GREEN + " - "

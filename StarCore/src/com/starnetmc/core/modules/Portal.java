@@ -25,7 +25,6 @@ public class Portal extends Module {
 	@EventHandler
 	public void sendToServer(PlayerPortalEvent e) {
 		e.setCancelled(true);
-		e.setTo(e.getPlayer().getWorld().getSpawnLocation());
 	}
 	
 }
