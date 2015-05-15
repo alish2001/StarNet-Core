@@ -26,16 +26,16 @@ public class HelpCommand extends CommandBase<Chat> {
 			switch (Manager.getRank(player.getUniqueId().toString())) {
 
 			case DEFAULT:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case VIP:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -43,10 +43,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case MVP:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -54,10 +54,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case HELPER:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
@@ -67,10 +67,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case MODERATOR:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/b: "+F.AQUA+"Allows you to broadcast a message to the whole server.");
 				player.sendMessage(F.GOLD+"/tp: "+F.AQUA+"Allows you to teleport to players, or other players to other players.");
@@ -82,10 +82,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case ADMIN:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/tpall: "+F.AQUA+"Allows you to teleport all online players to you.");
 				player.sendMessage(F.GOLD+"/rank: "+F.AQUA+"Allows you to change a player's rank.");
@@ -102,12 +102,12 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case YOUTUBE:
 				break;
 			case BUILDER:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/tpall: "+F.AQUA+"Allows you to teleport all online players to you.");
 				player.sendMessage(F.GOLD+"/rank: "+F.AQUA+"Allows you to change a player's rank.");
@@ -123,10 +123,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case DEVELOPER:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/enable: "+F.AQUA+"Allows you to enable a disabled module.");
 				player.sendMessage(F.GOLD+"/disable: "+F.AQUA+"Allows you to disable a module.");
@@ -148,10 +148,10 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case OWNER:
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-Your Commands-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/enable: "+F.AQUA+"Allows you to enable a disabled module.");
 				player.sendMessage(F.GOLD+"/disable: "+F.AQUA+"Allows you to disable a module.");
@@ -173,7 +173,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
 				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
-				player.sendMessage(F.strikeGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 
 			}

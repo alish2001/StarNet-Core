@@ -44,6 +44,7 @@ public class BlockCommands implements Listener {
 		}
 		
 		if(e.getMessage().startsWith("/help") || e.getMessage().startsWith("/?")) {
+			e.setCancelled(true);
 			HelpCommand.sendHelp(e.getPlayer());
 		}
 
