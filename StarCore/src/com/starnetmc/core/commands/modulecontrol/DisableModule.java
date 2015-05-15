@@ -139,14 +139,14 @@ public class DisableModule extends CommandBase<Chat> {
 			return;
 		case "gamemode":
 			if (Gamemode.isEnabled == true) {
-				gm.enable();
+				gm.disable();
 				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
 						+ "GAMEMODE CHANGING has been disabled by "
 						+ player.getName());
 				return;
 			} else {
 				player.sendMessage(F.error("Modules",
-						"That module is already enabled."));
+						"That module is already disabled."));
 				return;
 			}
 		case "tp":
@@ -158,7 +158,7 @@ public class DisableModule extends CommandBase<Chat> {
 				return;
 			} else {
 				player.sendMessage(F.error("Modules",
-						"That module is already enabled."));
+						"That module is already disabled."));
 				return;
 			}
 		default:

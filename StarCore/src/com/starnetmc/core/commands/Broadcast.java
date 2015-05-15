@@ -19,9 +19,9 @@ public class Broadcast extends CommandBase<Chat> {
 
 	public void execute(Player player, String[] args) {
 
-		if (args.length < 1) {
+		if (args.length == 0) {
 			player.sendMessage(F.error("Commands", "Not enough arguments!"));
-
+			return;
 		} else {
 			String annc = "";
 			for (String arg : args)

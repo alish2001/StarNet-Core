@@ -59,7 +59,7 @@ public class HelpCommand extends CommandBase<Chat> {
 			case HELPER:
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
-				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
+				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET): "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -74,7 +74,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/b: "+F.AQUA+"Allows you to broadcast a message to the whole server.");
 				player.sendMessage(F.GOLD+"/tp: "+F.AQUA+"Allows you to teleport to players, or other players to other players.");
-				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
+				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET): "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -94,7 +94,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/setspawn: "+F.AQUA+"Allows you to set the server spawn point.");
 				player.sendMessage(F.GOLD+"/b: "+F.AQUA+"Allows you to broadcast a message to the whole server.");
 				player.sendMessage(F.GOLD+"/tp: "+F.AQUA+"Allows you to teleport to players, or other players to other players.");
-				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
+				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET): "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -140,7 +140,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/setspawn: "+F.AQUA+"Allows you to set the server spawn point.");
 				player.sendMessage(F.GOLD+"/b: "+F.AQUA+"Allows you to broadcast a message to the whole server.");
 				player.sendMessage(F.GOLD+"/tp: "+F.AQUA+"Allows you to teleport to players, or other players to other players.");
-				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
+				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET): "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");
@@ -165,7 +165,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/setspawn: "+F.AQUA+"Allows you to set the server spawn point.");
 				player.sendMessage(F.GOLD+"/b: "+F.AQUA+"Allows you to broadcast a message to the whole server.");
 				player.sendMessage(F.GOLD+"/tp: "+F.AQUA+"Allows you to teleport to players, or other players to other players.");
-				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET: "+F.AQUA+"Allows you to punish players.");
+				player.sendMessage(F.GOLD+"/punish (NOT IMPLEMENTED YET): "+F.AQUA+"Allows you to punish players.");
 				player.sendMessage(F.GOLD+"/sc: "+F.AQUA+"Allows you to talk to all other online staff privately.");
 				player.sendMessage(F.GOLD+"/spawn: "+F.AQUA+"Sends you to spawn.");
 				player.sendMessage(F.GOLD+"/settings: "+F.AQUA+"Opens the settings menu.");

@@ -4,7 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -48,6 +50,15 @@ public class GenericListener implements Listener {
 	public void onPing(ServerListPingEvent e) {
 		e.setMotd(F.boldAqua + "Star Network " + F.GRAY + "| " + F.GREEN
 				+ "http://starnetmc.com/store \n" + F.boldGold + "COMING SOON!");
+	}
+
+	@EventHandler
+	public void onCreatureSpawn(CreatureSpawnEvent e) {
+
+		if (e.getSpawnReason() == SpawnReason.EGG) {
+			e.setCancelled(true);
+		}
+
 	}
 
 }

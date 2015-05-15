@@ -2,6 +2,7 @@ package com.starnetmc.core;
 
 import java.sql.SQLException;
 
+import net.minecraft.server.v1_8_R1.EntityEnderDragon;
 import net.minecraft.server.v1_8_R1.EntityPig;
 import net.minecraft.server.v1_8_R1.EntitySkeleton;
 import net.minecraft.server.v1_8_R1.EntitySlime;
@@ -30,9 +31,11 @@ import com.starnetmc.core.modules.Gamemode;
 import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
+import com.starnetmc.core.modules.Portal;
 import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.modules.Teleport;
 import com.starnetmc.core.modules.Tutorial;
+import com.starnetmc.core.npc.NPCDragon;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
@@ -99,6 +102,7 @@ public class Main extends JavaPlugin {
 		new HubInventory(this);
 		new Gamemode(this);
 		new Teleport(this);
+		new Portal(this);
 
 		// Registering NPCs
 		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
@@ -108,6 +112,7 @@ public class Main extends JavaPlugin {
 				NPCVillager.class);
 		NMS.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
 		NMS.registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
+		NMS.registerEntity("EnderDragon", 63, EntityEnderDragon.class, NPCDragon.class);
 
 		// Other
 		getConfig().options().copyDefaults(true);

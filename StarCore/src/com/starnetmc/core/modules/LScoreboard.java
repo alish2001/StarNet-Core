@@ -1,7 +1,12 @@
 package com.starnetmc.core.modules;
 
+import net.minecraft.server.v1_8_R1.ChatSerializer;
+import net.minecraft.server.v1_8_R1.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.PacketPlayOutPlayerListHeaderFooter;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -22,35 +27,49 @@ import com.starnetmc.core.util.UpdateType;
 
 public class LScoreboard extends Module {
 
-	
 	public LScoreboard(JavaPlugin plugin) {
-		
-		super("Hub Scoreboard",1.0,ModuleType.INFO,plugin);
-		
-		
+
+		super("Hub Scoreboard", 1.0, ModuleType.INFO, plugin);
+
 	}
-	
+
 	public LScoreboard() {
-		
+
 	}
-	
+
 	@EventHandler
 	public void updateJoin(PlayerJoinEvent e) throws Exception {
+		
 		updateScoreboard();
 	}
-	
+
 	@EventHandler
 	public void update(UpdateEvent e) throws Exception {
-		if(e.getType() == UpdateType.SHORT) {
+		if (e.getType() == UpdateType.SHORT) {
 			updateScoreboard();
 		}
 	}
-	
+
 	@EventHandler
 	public void updateOnShard(ShardPickupEvent e) throws Exception {
 		updateScoreboard();
 	}
-	
+
+	@SuppressWarnings("unused")
+	private void setTabList(Player player) {
+		IChatBaseComponent tabTitle = ChatSerializer
+				.a("{\"text\": \"§b§lThe Star Network\"}");
+		IChatBaseComponent tabFoot = ChatSerializer
+				.a("{\"text\": \"§ahttps://www.starnetmc.com\"}");
+
+		PacketPlayOutPlayerListHeaderFooter header = new PacketPlayOutPlayerListHeaderFooter(
+				tabTitle);
+		PacketPlayOutPlayerListHeaderFooter footer = new PacketPlayOutPlayerListHeaderFooter(
+				tabFoot);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(header);
+		((CraftPlayer) player).getHandle().playerConnection.sendPacket(footer);
+	}
+
 	private void updateScoreboard() throws Exception {
 
 		for (Player player : Bukkit.getOnlinePlayers()) {
@@ -172,19 +191,15 @@ public class LScoreboard extends Module {
 
 	}
 
-
-
 	@Override
 	public void enable() {
 		try {
 			updateScoreboard();
+		} catch (Exception e) {
+
 		}
-		catch(Exception e) {
-			
-		}
-		
+
 		log("Enabled.");
-		
 
 	}
 
@@ -201,8 +216,5 @@ public class LScoreboard extends Module {
 		log("Disabled.");
 
 	}
-
-
-	
 
 }
