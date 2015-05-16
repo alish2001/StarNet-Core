@@ -49,6 +49,8 @@ public class NMS extends Module {
 	public static LinkedHashMap<String, Location> skeletonnpcs = new LinkedHashMap<String, Location>();
 	public static LinkedHashMap<String, Location> slimenpcs = new LinkedHashMap<String, Location>();
 	public static LinkedHashMap<String, Location> zombienpcs = new LinkedHashMap<String, Location>();
+	
+	public static List<String> npcs = new ArrayList<String>();
 
 	public NMS(JavaPlugin plugin) {
 
@@ -319,6 +321,8 @@ public class NMS extends Module {
 
 		for (String s : villagernpcs.keySet()) {
 
+			npcs.add(s);
+			
 			Villager b = NPCVillager.spawn(villagernpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
@@ -329,7 +333,7 @@ public class NMS extends Module {
 	public static void spawnPigs() {
 
 		for (String s : pignpcs.keySet()) {
-
+			npcs.add(s);
 			Pig b = NPCPig.spawn(pignpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
@@ -340,7 +344,7 @@ public class NMS extends Module {
 	public static void spawnSkeletons() {
 
 		for (String s : skeletonnpcs.keySet()) {
-
+			npcs.add(s);
 			Skeleton b = NPCSkeleton.spawn(skeletonnpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
@@ -351,7 +355,7 @@ public class NMS extends Module {
 	public static void spawnSlimes() {
 
 		for (String s : slimenpcs.keySet()) {
-
+			npcs.add(s);
 			Slime b = NPCSlime.spawn(slimenpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
@@ -362,7 +366,7 @@ public class NMS extends Module {
 	public static void spawnZombies() {
 
 		for (String s : zombienpcs.keySet()) {
-
+			npcs.add(s);
 			Zombie b = NPCZombie.spawn(zombienpcs.get(s));
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);

@@ -19,10 +19,6 @@ public class SettingsCommand extends CommandBase<Settings> {
 
 	public void execute(Player player, String[] args) {
 
-		if (args.length != 0) {
-			player.sendMessage(F.error("Commands", "Too many arguments!"));
-		}
-
 		if (Settings.isEnabled == false) {
 			player.sendMessage(F.error("Modules",
 					"Settings have been disabled by an owner."));

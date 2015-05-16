@@ -4,17 +4,28 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.help.HelpTopic;
 
 import com.starnetmc.core.commands.HelpCommand;
 import com.starnetmc.core.util.F;
 
 public class BlockCommands implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void blockCommands(PlayerCommandPreprocessEvent e) throws Exception {
 
+		if ((!e.isCancelled())) {
+			String command = e.getMessage().split(" ")[0];
+			HelpTopic htopic = Bukkit.getServer().getHelpMap()
+					.getHelpTopic(command);
+			if (htopic == null) {
+				
+				e.setCancelled(true);
+			}
+		}
 
 		if (e.getMessage().startsWith("/stop")) {
 
@@ -42,8 +53,9 @@ public class BlockCommands implements Listener {
 			e.getPlayer().sendMessage(
 					F.error("Permissions", "Much deny permissions, so wow."));
 		}
-		
-		if(e.getMessage().startsWith("/help") || e.getMessage().startsWith("/?")) {
+
+		if (e.getMessage().startsWith("/help")
+				|| e.getMessage().startsWith("/?")) {
 			e.setCancelled(true);
 			HelpCommand.sendHelp(e.getPlayer());
 		}

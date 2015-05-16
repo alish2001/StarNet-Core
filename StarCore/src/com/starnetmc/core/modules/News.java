@@ -52,7 +52,7 @@ public class News extends Module {
 	public void onJoin(PlayerJoinEvent e) {
 
 		if (isEnabled == true) {
-			sendNews(e.getPlayer(), F.GOLD + "~ 97% Done! ~");
+			sendNews(e.getPlayer(), F.GOLD + "~ Release Soon! ~");
 		} else {
 			return;
 		}
