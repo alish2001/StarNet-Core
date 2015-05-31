@@ -51,7 +51,6 @@ public class NPCCommand extends CommandBase<NMS> {
 			Zombie b = NPCZombie.spawn(loc);
 			b.setCustomName(ChatColor.GOLD + " " + s);
 			b.setCustomNameVisible(true);
-			player.sendMessage(F.info("NPC", "NPC Summoned Successfully"));
 			Bukkit.getServer()
 					.getPluginManager()
 					.callEvent(
