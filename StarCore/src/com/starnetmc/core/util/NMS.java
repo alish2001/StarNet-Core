@@ -7,10 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.server.v1_8_R1.BiomeBase;
-import net.minecraft.server.v1_8_R1.BiomeMeta;
-import net.minecraft.server.v1_8_R1.EntityInsentient;
-import net.minecraft.server.v1_8_R1.EntityTypes;
+import net.minecraft.server.v1_8_R3.BiomeBase;
+import net.minecraft.server.v1_8_R3.BiomeBase.BiomeMeta;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.EntityTypes;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,17 +30,19 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.accounts.AccountManager;
+import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.events.NPCRemoveEvent;
 import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.modules.Tutorial;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.npc.command.NPCCommand;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
 
 public class NMS extends Module {
 
@@ -55,7 +57,6 @@ public class NMS extends Module {
 	public NMS(JavaPlugin plugin) {
 
 		super("NPC Manager", 2.0, ModuleType.SERVER, plugin);
-
 	}
 
 	public static void registerEntity(String name, int id, Class<?> class1,
@@ -113,13 +114,12 @@ public class NMS extends Module {
 	@Override
 	public void enable() {
 		try {
-			villagernpcs = Manager.downloadVillagerNPCs();
-			pignpcs = Manager.downloadPigNPCs();
-			skeletonnpcs = Manager.downloadSkeletonNPCs();
-			slimenpcs = Manager.downloadSlimeNPCs();
-			zombienpcs = Manager.downloadZombieNPCs();
+			villagernpcs = Databaser.downloadVillagerNPCs();
+			pignpcs = Databaser.downloadPigNPCs();
+			skeletonnpcs = Databaser.downloadSkeletonNPCs();
+			slimenpcs = Databaser.downloadSlimeNPCs();
+			zombienpcs = Databaser.downloadZombieNPCs();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -159,7 +159,7 @@ public class NMS extends Module {
 
 		if (player.getItemInHand().getType() == Material.BLAZE_ROD) {
 
-			if (Manager.getRank(player.getUniqueId().toString()).equals(
+			if (AccountManager.getAccount(player).getRank().equals(
 					Rank.OWNER)) {
 
 				if (en instanceof Player) {
@@ -188,7 +188,7 @@ public class NMS extends Module {
 	@EventHandler
 	public void onRemove(NPCRemoveEvent e) throws Exception {
 
-		Manager.deleteNPC(e.getName());
+		Databaser.deleteNPC(e.getName());
 
 	}
 
@@ -313,7 +313,7 @@ public class NMS extends Module {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onSpawn(NPCSpawnEvent e) throws Exception {
 
-		Manager.createNPC(e.getName(), e.getType(), e.getLocation());
+		Databaser.createNPC(e.getName(), e.getType(), e.getLocation());
 
 	}
 

@@ -21,8 +21,7 @@ public class Updater extends BukkitRunnable {
 		for (int i = 0; i < j; i++) {
 			UpdateType updateType = arrayOfUpdateType[i];
 			if (updateType.elapsed()) {
-				this._plugin.getServer().getPluginManager()
-						.callEvent(new UpdateEvent(updateType));
+				this._plugin.getServer().getPluginManager().callEvent(new UpdateEvent(updateType));
 			}
 		}
 	}

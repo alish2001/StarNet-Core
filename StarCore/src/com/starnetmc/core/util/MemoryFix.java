@@ -2,12 +2,12 @@ package com.starnetmc.core.util;
 
 import java.util.Iterator;
 
-import net.minecraft.server.v1_8_R1.IInventory;
+import net.minecraft.server.v1_8_R3.IInventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.plugin.java.JavaPlugin;
 

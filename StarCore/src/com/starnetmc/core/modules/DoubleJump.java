@@ -14,14 +14,13 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 
 public class DoubleJump extends Module {
 
 	public DoubleJump(JavaPlugin plugin) {
 		super("DoubleJump Manager", 1.0, ModuleType.SERVER, plugin);
-		// TODO Auto-generated constructor stub
 	}
 
 	public DoubleJump() {

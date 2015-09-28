@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 import com.starnetmc.core.util.StarMap;
 
@@ -33,7 +33,7 @@ public class CommandCenter implements Listener {
 	}
 
 	@EventHandler
-	public void runCommands(PlayerCommandPreprocessEvent e) throws Exception {
+	public void runCommands(PlayerCommandPreprocessEvent e) {
 
 		String commandName = e.getMessage().substring(1);
 		String[] args = null;
@@ -42,14 +42,17 @@ public class CommandCenter implements Listener {
 			commandName = commandName.split(" ")[0];
 			args = e.getMessage().substring(e.getMessage().indexOf(' ') + 1)
 					.split(" ");
+		} else {
+			args = new String[0];
 		}
+		
 		ICommand command = (ICommand) this.commands.get(commandName
 				.toLowerCase());
 
 		if (command != null) {
 
 			if(!getRank(e.getPlayer()).has(command.getRequiredRank())) {
-				e.getPlayer().sendMessage(F.error("Permissions", "No permission!"));
+				e.getPlayer().sendMessage(F.error("Permissions", "Such Permission, much not [ " + command.getRequiredRank().toString() + " ] Rank."));
 				return;
 			}
 			
@@ -58,6 +61,8 @@ public class CommandCenter implements Listener {
 
 			e.setCancelled(true);
 
+		} else {
+			e.getPlayer().sendMessage("Unknown Command. Type '/help' u skrub.");
 		}
 
 	}
@@ -76,10 +81,8 @@ public class CommandCenter implements Listener {
 		}
 	}
 
-	public Rank getRank(Player player) throws Exception {
-		
-		return Manager.getRank(player.getUniqueId().toString());
-		
+	public Rank getRank(Player player){
+		return AccountManager.getAccount(player).getRank();
 	}
 	
 }

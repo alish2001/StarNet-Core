@@ -1,25 +1,20 @@
 package com.starnetmc.core.modules;
 
-import java.util.UUID;
-
-import net.minecraft.server.v1_8_R1.EntityPlayer;
-import net.minecraft.server.v1_8_R1.MinecraftServer;
-import net.minecraft.server.v1_8_R1.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.accounts.AccountManager;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.Rank;
 
 public class NameTag extends Module {
 
@@ -35,11 +30,10 @@ public class NameTag extends Module {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) throws Exception {
 
-		setNametag(e.getPlayer());
-		@SuppressWarnings("unused")
-		EntityPlayer ep = new EntityPlayer(null, null, makeProfile("", e
+		//setNametag(e.getPlayer());
+		/*EntityPlayer ep = new EntityPlayer(null, null, makeProfile("", e
 				.getPlayer().getUniqueId(), null),
-				((CraftPlayer) e.getPlayer()).getHandle().playerInteractManager);
+				((CraftPlayer) e.getPlayer()).getHandle().playerInteractManager);*/
 
 	}
 
@@ -47,41 +41,13 @@ public class NameTag extends Module {
 
 		String _prevName = player.getName();
 		EntityPlayer ep = ((CraftPlayer) player).getHandle();
-		switch (Manager.getRank(player.getUniqueId().toString())) {
 
-		case DEFAULT:
-			ep.displayName = player.getName();
-			break;
-		case VIP:
-			ep.displayName = F.boldDA + "VIP " + player.getName();
-			break;
-		case MVP:
-			ep.displayName = F.boldAqua + "MVP " + player.getName();
-			break;
-		case HELPER:
-			ep.displayName = F.boldGreen + "HELPER " + player.getName();
-			break;
-		case MODERATOR:
-			ep.displayName = F.boldGold + "MOD " + player.getName();
-			break;
-		case ADMIN:
-			ep.displayName = F.boldRed + "ADMIN " + player.getName();
-			break;
-		case DEVELOPER:
-			ep.displayName = F.boldDP + "DEV " + player.getName();
-			break;
-		case BUILDER:
-			ep.displayName = F.boldBlue + "BUILDER " + player.getName();
-			break;
-		case OWNER:
-			ep.displayName = F.boldDR + "OWNER " + player.getName();
-			break;
-		case YOUTUBE:
-			ep.displayName = F.BOLD + "YOU" + F.RED + "" + F.BOLD + "TUBE "
-					+ player.getName();
-			break;
-
-		}
+		if (AccountManager.getAccount(player).getRank() != Rank.DEFAULT){
+		    ep.displayName = AccountManager.getAccount(player).getRank().getTag(false) + " " + player.getName();
+		    
+			} else {
+				 player.setDisplayName(F.YELLOW + player.getName());
+			}
 
 		for (Player all : Bukkit.getOnlinePlayers()) {
 
@@ -97,13 +63,13 @@ public class NameTag extends Module {
 
 	}
 
-	public static GameProfile makeProfile(String name, UUID skinId, UUID npcID) {
+	/*public static GameProfile makeProfile(String name, UUID skinId, UUID npcID) {
 		GameProfile profile = new GameProfile(npcID, name);
 		if (skinId != null) {
 			MinecraftServer nmsServer = ((CraftServer) Bukkit.getServer())
 					.getServer();
 			GameProfile skin = new GameProfile(skinId, null);
-			skin = nmsServer.aB().fillProfileProperties(skin, true); // Srg =
+			skin = nmsServer. // Srg =
 																		// func_147130_as
 			if (skin.getProperties().get("textures") == null
 					|| !skin.getProperties().get("textures").isEmpty()) {
@@ -113,7 +79,7 @@ public class NameTag extends Module {
 			}
 		}
 		return profile;
-	}
+	}*/
 
 
 	@Override

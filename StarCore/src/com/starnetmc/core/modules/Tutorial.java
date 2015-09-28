@@ -10,10 +10,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.starnetmc.core.Main;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.accounts.AccountManager;
+import com.starnetmc.core.database.Databaser;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 
 public class Tutorial extends Module {
 
@@ -413,7 +414,7 @@ public class Tutorial extends Module {
 				player.teleport(player.getWorld().getSpawnLocation());
 
 			}
-
+	
 		}.runTaskLater(Main.getPlugin(), 540L);
 
 		new BukkitRunnable() {
@@ -428,10 +429,10 @@ public class Tutorial extends Module {
 				intut.remove(player.getName());
 				
 				try {
-					if (!Manager.hasTutorial(player.getUniqueId().toString())) {
-						Manager.setHasTutorial(player.getUniqueId().toString());
-						Manager.setShards(player.getUniqueId().toString(), 100);
-						player.sendMessage(F.info("Economy",
+					if (!Databaser.hasTutorial(player.getUniqueId().toString())) {
+						Databaser.setHasTutorial(player.getUniqueId().toString());
+						AccountManager.getAccount(player).addShards(100);
+						player.sendMessage(F.info("Shards",
 								"100 shards have been added to your account."));
 
 					} else {

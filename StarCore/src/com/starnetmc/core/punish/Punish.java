@@ -12,10 +12,11 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.database.Databaser;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.UPlayer;
 
 public class Punish extends Module {
 
@@ -44,12 +45,12 @@ public class Punish extends Module {
 
 	@EventHandler
 	public void onMutedChat(AsyncPlayerChatEvent e) throws Exception {
-		if (Manager.isMuted(e.getPlayer().getUniqueId().toString())) {
+		if (Databaser.isMuted(e.getPlayer().getUniqueId().toString())) {
 			e.setCancelled(true);
 			e.getPlayer().sendMessage(
 					F.error("Punishments",
 							"Shh... You're muted for \" "
-									+ Manager.getPunishReason(e.getPlayer())+"\""));
+									+ Databaser.getPunishReason(e.getPlayer())+"\""));
 		}
 		if (Punishment._tempMutes.containsKey(e.getPlayer().getUniqueId()
 				.toString())) {
@@ -63,13 +64,18 @@ public class Punish extends Module {
 	}
 
 	@EventHandler
-	public void onBannedLogin(PlayerLoginEvent e) throws Exception {
-		if (Manager.isBanned(e.getPlayer().getUniqueId().toString())) {
-			e.disallow(
-					Result.KICK_BANNED,
-					F.error("Punishments",
-							"You're banned for \" "
-									+ Manager.getPunishReason(e.getPlayer())+"\""));
+	public void onBannedLogin(PlayerLoginEvent e) {
+		
+		try {
+			if (Databaser.isBanned(e.getPlayer().getUniqueId().toString())) {
+				e.disallow(
+						Result.KICK_BANNED,
+						F.error("Punishments",
+								"You're banned for \" "
+										+ Databaser.getPunishReason(e.getPlayer())+"\""));
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 		if (Punishment._tempBans.containsKey(e.getPlayer().getUniqueId()
 				.toString())) {
@@ -83,7 +89,7 @@ public class Punish extends Module {
 	}
 
 	@EventHandler
-	public void onPunishClick(InventoryClickEvent e) throws Exception {
+	public void onPunishClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
 
 		if (!e.getInventory().getName()
@@ -100,7 +106,11 @@ public class Punish extends Module {
 				.equalsIgnoreCase(ChatColor.RED + "Permanent Ban")) {
 			PunishCommand.punish.get(p).setType(PunishType.PERMBAN);
 			PunishCommand.punish.get(p).setPermanent(true);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			p.closeInventory();
 			e.setCancelled(true);
 
@@ -112,7 +122,11 @@ public class Punish extends Module {
 
 			PunishCommand.punish.get(p).setPermanent(true);
 
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			p.closeInventory();
 			e.setCancelled(true);
@@ -121,7 +135,7 @@ public class Punish extends Module {
 
 		else if (e.getCurrentItem().getItemMeta().getDisplayName()
 				.equalsIgnoreCase(ChatColor.YELLOW + "Warn")) {
-			Punishment.getOnlinePlayerFromName(PunishCommand.punish.get(p).getOffender()).sendMessage(F.error("Punishments", "WARNING: You are breaking server rules. Please do not break them again, or face punishment."));
+			UPlayer.getOnlinePlayerFromName(PunishCommand.punish.get(p).getOffender()).sendMessage(F.error("Punishments", "WARNING: You are breaking server rules. Please do not break them again, or face punishment."));
 			p.closeInventory();
 			e.setCancelled(true);
 
@@ -137,7 +151,11 @@ public class Punish extends Module {
 			PunishCommand.punish.get(p).setType(PunishType.TEMPMUTE);
 
 			PunishCommand.punish.get(p).setDuration(36000L);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			p.closeInventory();
 			e.setCancelled(true);
 
@@ -154,7 +172,11 @@ public class Punish extends Module {
 
 			PunishCommand.punish.get(p).setDuration(144000L);
 
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			p.closeInventory();
 			e.setCancelled(true);
@@ -169,7 +191,11 @@ public class Punish extends Module {
 			PunishCommand.punish.get(p).setType(PunishType.PERMMUTE);
 
 			PunishCommand.punish.get(p).setPermanent(true);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			e.setCancelled(true);
 			p.closeInventory();
@@ -186,7 +212,11 @@ public class Punish extends Module {
 			PunishCommand.punish.get(p).setType(PunishType.TEMPBAN);
 
 			PunishCommand.punish.get(p).setDuration(864000L);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			e.setCancelled(true);
 			p.closeInventory();
@@ -204,7 +234,11 @@ public class Punish extends Module {
 			PunishCommand.punish.get(p).setType(PunishType.TEMPBAN);
 
 			PunishCommand.punish.get(p).setDuration(864000L);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			e.setCancelled(true);
 			p.closeInventory();
@@ -219,7 +253,11 @@ public class Punish extends Module {
 
 			PunishCommand.punish.get(p).setType(PunishType.PERMBAN);
 			PunishCommand.punish.get(p).setPermanent(true);
-			PunishCommand.punish.get(p).setPunished();
+			try {
+				PunishCommand.punish.get(p).setPunished();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 
 			e.setCancelled(true);
 			p.closeInventory();
@@ -228,7 +266,11 @@ public class Punish extends Module {
 			
 			e.setCancelled(true);
 		
-			Manager.removeAllPunishments(Punishment.getOfflinePlayerFromName(PunishCommand.punish.get(p).getOffender()).getName());
+			try {
+				Databaser.removeAllPunishments(UPlayer.getOfflinePlayerFromName(PunishCommand.punish.get(p).getOffender()).getName());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			p.closeInventory();
 		}
 		else if(e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {

@@ -12,7 +12,6 @@ public class TeleportCommand extends CommandBase<Teleport> {
 
 	public TeleportCommand(Teleport plugin) {
 		super(plugin, Rank.MODERATOR, new String[] { "teleport", "tp" });
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute(Player player, String[] args) {

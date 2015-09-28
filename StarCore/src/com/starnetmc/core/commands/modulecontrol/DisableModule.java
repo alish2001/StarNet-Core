@@ -6,12 +6,12 @@ import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.events.ModuleStateChangeEvent;
+import com.starnetmc.core.gadgets.Gadgets;
+import com.starnetmc.core.gamemode.Gamemode;
 import com.starnetmc.core.modules.Border;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.modules.ChatFilter;
 import com.starnetmc.core.modules.DoubleJump;
-import com.starnetmc.core.modules.Gadgets;
-import com.starnetmc.core.modules.Gamemode;
 import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;

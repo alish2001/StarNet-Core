@@ -18,19 +18,15 @@ public class UpdateEvent extends Event implements Cancellable {
 
 	@Override
 	public boolean isCancelled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setCancelled(boolean arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public HandlerList getHandlers() {
-		// TODO Auto-generated method stub
 		return handlers;
 	}
 

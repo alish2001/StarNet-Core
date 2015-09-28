@@ -4,8 +4,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 
 public class ModuleStateChangeEvent extends Event implements Cancellable {
 

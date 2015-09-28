@@ -2,7 +2,6 @@ package com.starnetmc.core.util;
 
 import org.bukkit.ChatColor;
 
-
 public class F {
 
 	public static String AQUA = ChatColor.AQUA + "";
@@ -100,9 +99,9 @@ public class F {
 
 	}
 
-	public static String server(String message) {
+	public static String star(String message) {
 
-		return BLUE + "<Server> " + LIGHT_PURPLE + message;
+		return boldAqua + "< StarNet > " + GREEN + message;
 	}
 
 }

@@ -2,11 +2,11 @@ package com.starnetmc.core.commands;
 
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.settings.SettingsGUI;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 
 public class SettingsCommand extends CommandBase<Settings> {
@@ -27,7 +27,7 @@ public class SettingsCommand extends CommandBase<Settings> {
 
 			try {
 
-				switch (Manager.getRank(player.getUniqueId().toString())) {
+				switch (AccountManager.getAccount(player).getRank()) {
 
 				case BUILDER:
 					SettingsGUI.openSettingsAGUI(player);
@@ -48,7 +48,6 @@ public class SettingsCommand extends CommandBase<Settings> {
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

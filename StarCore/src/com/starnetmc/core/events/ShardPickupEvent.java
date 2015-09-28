@@ -18,14 +18,6 @@ public class ShardPickupEvent extends Event implements Cancellable {
 		this.item = item;
 	}
 	
-	public ShardPickupEvent() {
-		
-		
-		
-	}
-	
-	
-	
 	public Item getItem() {
 		return item;
 	}

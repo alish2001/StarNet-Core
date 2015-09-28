@@ -9,8 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.commands.HelpCommand;
 import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.Rank;
 
 public class BlockCommands implements Listener {
 
@@ -30,8 +32,12 @@ public class BlockCommands implements Listener {
 		if (e.getMessage().startsWith("/stop")) {
 
 			e.setCancelled(true);
-			Bukkit.broadcastMessage(F.error("Server",
-					"Server is going down for an update."));
+			if (AccountManager.getAccount(e.getPlayer()).getRank() != Rank.OWNER){
+				e.getPlayer().sendMessage(F.error("Permissions", "Much deny permissions, so wow."));
+				return;
+			}
+			
+			Bukkit.broadcastMessage(F.error("StarNet", "This server is shutting down."));
 			try {
 				for (Entity en : e.getPlayer().getWorld().getEntities()) {
 
@@ -42,6 +48,7 @@ public class BlockCommands implements Listener {
 					en.remove();
 
 				}
+				
 			} finally {
 				Bukkit.getServer().shutdown();
 			}
@@ -50,8 +57,7 @@ public class BlockCommands implements Listener {
 
 		if (e.getMessage().startsWith("/me")) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage(
-					F.error("Permissions", "Much deny permissions, so wow."));
+			e.getPlayer().sendMessage(F.error("Permissions", "Much deny permissions, so wow."));
 		}
 
 		if (e.getMessage().startsWith("/help")

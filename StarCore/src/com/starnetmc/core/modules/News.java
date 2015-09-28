@@ -1,13 +1,13 @@
 package com.starnetmc.core.modules;
 
-import net.minecraft.server.v1_8_R1.ChatSerializer;
-import net.minecraft.server.v1_8_R1.EnumTitleAction;
-import net.minecraft.server.v1_8_R1.IChatBaseComponent;
-import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,9 +15,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.npc.NPCDragon;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
 import com.starnetmc.core.util.F;
 
 public class News extends Module {
@@ -61,7 +61,6 @@ public class News extends Module {
 	@Override
 	public void enable() {
 		isEnabled = true;
-		douglas();
 		log("Enabled.");
 	}
 
@@ -75,7 +74,7 @@ public class News extends Module {
 
 	public void douglas() {
 
-		Location loc = new Location(Bukkit.getWorld("Eclipse"), 96, -60, 0);
+		Location loc = new Location(Bukkit.getWorld("world"), 96, -60, 0);
 
 		EnderDragon douglas = NPCDragon.spawn(loc);
 		douglas.setCustomName(F.boldAqua + "The Star Network" + F.GREEN + " - "

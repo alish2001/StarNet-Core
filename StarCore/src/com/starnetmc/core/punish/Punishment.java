@@ -1,16 +1,15 @@
 package com.starnetmc.core.punish;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.starnetmc.core.Main;
+import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.StarMap;
+import com.starnetmc.core.util.UNet;
 
 public class Punishment {
 
@@ -35,7 +34,6 @@ public class Punishment {
 		this.setPermanent(permanent);
 		this.setTemporary(temporary);
 		this.setDuration(duration);
-
 	}
 
 	public String getOffender() {
@@ -94,7 +92,8 @@ public class Punishment {
 		this.pt = pt;
 	}
 	
-	public static Player getOnlinePlayerFromName(String p){
+	//WE ALREADY HAD A PLAYER UTIL BLAME SPARKWINGS FOR COPYING IT HERE INSTEAD OF JUST USING IT!!!!
+	private Player getOnlinePlayerFromName(String p){
 		Player sp = Bukkit.getServer().getPlayer(p);
 		if (sp == null){
 			return null;
@@ -105,7 +104,7 @@ public class Punishment {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static OfflinePlayer getOfflinePlayerFromName(String p){
+	private OfflinePlayer getOfflinePlayerFromName(String p){
 		OfflinePlayer sp = Bukkit.getServer().getOfflinePlayer(p);
 		if (sp == null){
 			return null;
@@ -115,46 +114,32 @@ public class Punishment {
 		}
 	}
 	
-	public static Player getPlayerFromUUID(UUID uid){
-		return Bukkit.getServer().getPlayer(uid);
-	}
-	
-	public static boolean isOnline(String name){
-		if (getOnlinePlayerFromName(name) == null){
-			return false;
-		}
-		else { return true; }
-	}
-
-
-
-	
 	public void setPunished() throws Exception {
 
 		if (this.getType() == PunishType.PERMMUTE) {
-			Manager.makeMuted(punisher, offender, getOffense());
+			Databaser.makeMuted(punisher, offender, getOffense());
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName()
-						+ " has been muted permanently."));
+				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been muted permanently."));
 			}
 		} else if (this.getType() == PunishType.PERMBAN) {
 
-			Manager.makeBanned(punisher, offender, getOffense());
+			Databaser.makeBanned(punisher, offender, getOffense());
 			
 			if(getOfflinePlayerFromName(offender).isOnline()) {
-				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments", "You have been banned for \" "+Manager.getPunishReason(getOfflinePlayerFromName(offender).getPlayer())+"\""));
+				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments", "You have been banned for \" "+ getOffense() +"\""));
+			} else {
+				UNet.netKickPlayer(punisher, offender, getOffense());
 			}
 			
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName()
-						+ " has been banned permanently."));
+				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been banned permanently."));
 			}
 		} else if (this.getType() == PunishType.TEMPMUTE) {
 			_tempMutes.put(getOfflinePlayerFromName(offender).getUniqueId().toString(), getOffense());
 			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName()
-						+ " has been muted."));
+				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been muted."));
 			}
+			
 			new BukkitRunnable() {
 
 				@Override
@@ -168,11 +153,13 @@ public class Punishment {
 			_tempBans.put(getOfflinePlayerFromName(offender).getUniqueId().toString(), getOffense());
 			
 			if(getOnlinePlayerFromName(offender).isOnline()) {
-				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments",getOffense()));
+				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments", "You have been banned for \" "+ getOffense() +"\""));
+			} else {
+				UNet.netKickPlayer(punisher, offender, getOffense());
 			}
 			
 			for(Player all : Bukkit.getOnlinePlayers()){
-				all.sendMessage(F.error("Punishments", getOfflinePlayerFromName(offender).getName()+" has been banned."));
+				all.sendMessage(F.error("Punishments", getOfflinePlayerFromName(offender).getName() + " has been banned."));
 			}
 
 			new BukkitRunnable() {

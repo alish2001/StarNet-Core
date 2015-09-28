@@ -1,4 +1,4 @@
-package com.starnetmc.core.objects;
+package com.starnetmc.core.modules.manager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -14,11 +14,11 @@ public abstract class Module implements Listener {
 	String name = "Modules";
 	double version;
 	ModuleType mt;
-	JavaPlugin plugin;
+	static JavaPlugin plugin;
 
 	public Module(String name, double version, ModuleType mt, JavaPlugin plugin) {
 
-		this.plugin = plugin;
+		Module.plugin = plugin;
 		this.name = name;
 		this.version = version;
 		this.mt = mt;
@@ -37,12 +37,12 @@ public abstract class Module implements Listener {
 		addCommands();
 	}
 
-	public PluginManager getPluginManager() {
-		return this.plugin.getServer().getPluginManager();
+	public static PluginManager getPluginManager() {
+		return plugin.getServer().getPluginManager();
 	}
 
-	public JavaPlugin getPlugin() {
-		return this.plugin;
+	public static JavaPlugin getPlugin() {
+		return plugin;
 	}
 
 	public void enable() {

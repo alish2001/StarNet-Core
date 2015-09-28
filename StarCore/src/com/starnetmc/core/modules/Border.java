@@ -7,8 +7,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 
 public class Border extends Module {
 
@@ -46,7 +46,10 @@ public class Border extends Module {
 		
 		Player player = e.getPlayer();
 		Location _spawn = player.getWorld().getSpawnLocation();
-		if (player.getLocation().distance(_spawn) > 150) {
+		
+		double range = 150;
+		double rangeSquared = range*range;
+		if (player.getLocation().distanceSquared(_spawn) > rangeSquared) {
 			player.teleport(_spawn);
 
 		} else {

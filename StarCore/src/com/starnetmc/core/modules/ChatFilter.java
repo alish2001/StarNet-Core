@@ -7,10 +7,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.database.Databaser;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 
 public class ChatFilter extends Module {
 
@@ -36,7 +36,7 @@ public class ChatFilter extends Module {
 					e.getPlayer()
 							.sendMessage(
 									F.error("Filter",
-											"WARNING! Your last message contained a word that is blocked by our swear filter. If you believe this is in error, please contact a server admin."));
+											"WARNING! Your last message contained a word that is blocked by our filter. If you believe this is in error, please contact a server admin."));
 
 				}
 			}
@@ -50,7 +50,7 @@ public class ChatFilter extends Module {
 	public void enable() {
 		isEnabled = true;
 		try {
-			_blockedWords = Manager.downloadFilter();
+			_blockedWords = Databaser.downloadFilter();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

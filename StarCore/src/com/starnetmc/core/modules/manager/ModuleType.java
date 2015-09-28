@@ -1,4 +1,4 @@
-package com.starnetmc.core.objects;
+package com.starnetmc.core.modules.manager;
 
 public enum ModuleType {
 

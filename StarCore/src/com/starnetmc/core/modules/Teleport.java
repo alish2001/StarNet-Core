@@ -4,8 +4,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.commands.TeleportAll;
 import com.starnetmc.core.commands.TeleportCommand;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 
 public class Teleport extends Module {
 

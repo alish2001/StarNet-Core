@@ -1,14 +1,13 @@
 package com.starnetmc.core.commands;
 
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 
 public class StaffChat extends CommandBase<Chat> {
@@ -32,28 +31,20 @@ public class StaffChat extends CommandBase<Chat> {
 		}
 		annc = sb.toString();
 
-		
-		
-		
-		try {
+
 			for(Player staff : Bukkit.getOnlinePlayers()) {
 				
-				if(Manager.getRank(staff.getUniqueId().toString()).has(getRequiredRank())) {
+				if(AccountManager.getAccount(player).getRank().has(getRequiredRank())) {
 					
 					staff.sendMessage(F.info(ChatColor.stripColor(player.getDisplayName()), annc));
 					continue;
 					
 				}
-				if(!Manager.getRank(staff.getUniqueId().toString()).has(getRequiredRank())) {
+				if(!AccountManager.getAccount(player).getRank().has(getRequiredRank())) {
 					continue;
 				}
 			
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 }

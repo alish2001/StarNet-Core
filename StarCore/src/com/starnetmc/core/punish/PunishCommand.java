@@ -3,10 +3,11 @@ package com.starnetmc.core.punish;
 import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
+import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 import com.starnetmc.core.util.StarMap;
+import com.starnetmc.core.util.UPlayer;
 
 public class PunishCommand extends CommandBase<Punish> {
 
@@ -15,7 +16,6 @@ public class PunishCommand extends CommandBase<Punish> {
 	
 	public PunishCommand(Punish plugin) {
 		super(plugin, Rank.HELPER, new String[] { "punish", "p" });
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute(Player player, String[] args) {
@@ -32,24 +32,24 @@ public class PunishCommand extends CommandBase<Punish> {
 		}
 		msg = sb.toString();
 
-		if(!Punishment.isOnline(args[0])) {
-			if(!Punishment.getOfflinePlayerFromName(args[0]).hasPlayedBefore()) {
+		if(!UPlayer.isOnline(args[0])) {
+			if(!UPlayer.getOfflinePlayerFromName(args[0]).hasPlayedBefore()) {
 				player.sendMessage(F.error("Offline Player Search", "That player has never played before!"));
 				return;
 			}
 			
-			punish.put(player, new Punishment(Punishment.getOfflinePlayerFromName(args[0]).getName(), null, msg, player, false, false, 0L));
+			punish.put(player, new Punishment(UPlayer.getOfflinePlayerFromName(args[0]).getName(), null, msg, player, false, false, 0L));
 			try {
-				switch (Manager.getRank(player.getUniqueId().toString())) {
+				switch (Databaser.getRank(player.getUniqueId().toString())) {
 				case HELPER:
-					if(Manager.getRank(Punishment.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.MODERATOR)) {
+					if(Databaser.getRank(UPlayer.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.MODERATOR)) {
 						player.sendMessage(F.error("Permissions", "No permission!"));
 						return;
 					}
 					PunishGUI.showHelperMenu(player, punish);
 					break;
 					case MODERATOR:
-						if(Manager.getRank(Punishment.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.ADMIN)) {
+						if(Databaser.getRank(UPlayer.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.ADMIN)) {
 							player.sendMessage(F.error("Permissions", "No permission!"));
 							return;
 						}
@@ -62,23 +62,22 @@ public class PunishCommand extends CommandBase<Punish> {
 
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		else {
 			punish.put(player, new Punishment(args[0], null, msg, player, false, false, 0L));
 			try {
-				switch (Manager.getRank(player.getUniqueId().toString())) {
+				switch (Databaser.getRank(player.getUniqueId().toString())) {
 				case HELPER:
-					if(Manager.getRank(Punishment.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.MODERATOR)) {
+					if(Databaser.getRank(UPlayer.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.MODERATOR)) {
 						player.sendMessage(F.error("Permissions", "No permission!"));
 						return;
 					}
 					PunishGUI.showHelperMenu(player, punish);
 					break;
 				case MODERATOR:
-					if(Manager.getRank(Punishment.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.ADMIN)) {
+					if(Databaser.getRank(UPlayer.getOfflinePlayerFromName(args[0]).getUniqueId().toString()).has(Rank.ADMIN)) {
 						player.sendMessage(F.error("Permissions", "No permission!"));
 						return;
 					}
@@ -90,7 +89,6 @@ public class PunishCommand extends CommandBase<Punish> {
 
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 		}

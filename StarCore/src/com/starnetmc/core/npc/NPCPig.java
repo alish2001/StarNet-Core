@@ -1,12 +1,12 @@
 package com.starnetmc.core.npc;
 
-import net.minecraft.server.v1_8_R1.EntityPig;
-import net.minecraft.server.v1_8_R1.World;
+import net.minecraft.server.v1_8_R3.EntityPig;
+import net.minecraft.server.v1_8_R3.World;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPig;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPig;
 import org.bukkit.entity.Pig;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -14,7 +14,6 @@ public class NPCPig extends EntityPig {
 
 	public NPCPig(World world) {
 		super(world);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -49,4 +48,3 @@ public class NPCPig extends EntityPig {
 
 	
 }
-

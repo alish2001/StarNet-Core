@@ -6,16 +6,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.gadgets.GadgetGUI;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.accounts.AccountManager;
+import com.starnetmc.core.gadgets.Gadgets;
+import com.starnetmc.core.gadgets.GUI.GadgetGUI;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.settings.SettingsGUI;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.ItemFactory;
-import com.starnetmc.core.util.Manager;
 
 public class HubInventory extends Module {
 
@@ -81,7 +83,7 @@ public class HubInventory extends Module {
 					}
 					
 					
-					GadgetGUI.openGadgetInventory(player);
+					GadgetGUI.openGadgetGUI(player);
 				} else if (player.getItemInHand().getType() == Material.SLIME_BALL) {
 					e.setCancelled(true);
 
@@ -90,7 +92,7 @@ public class HubInventory extends Module {
 						return;
 					}
 					
-					switch (Manager.getRank(player.getUniqueId().toString())) {
+					switch (AccountManager.getAccount(player).getRank()) {
 
 					case ADMIN:
 						SettingsGUI.openSettingsAGUI(player);
@@ -126,6 +128,15 @@ public class HubInventory extends Module {
 		e.getPlayer().getInventory().clear();
 		giveInventory(e.getPlayer());
 
+	}
+	
+	@EventHandler
+	public void removeInv(PlayerQuitEvent e){
+		Player p = e.getPlayer();
+		
+		p.getInventory().remove(Material.COMPASS);
+		p.getInventory().remove(Material.SLIME_BALL);
+		p.getInventory().remove(Material.ENDER_CHEST);
 	}
 
 }

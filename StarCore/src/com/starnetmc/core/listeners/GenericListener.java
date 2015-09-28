@@ -6,19 +6,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
-import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.server.ServerListPingEvent;
 
 import com.starnetmc.core.events.ShardPickupEvent;
 import com.starnetmc.core.util.F;
 
 public class GenericListener implements Listener {
 
+	@EventHandler
+	public void onExplosion(EntityExplodeEvent e){
+			e.blockList().clear();
+	}
+	
 	@EventHandler
 	public void onPickup(PlayerPickupItemEvent e) {
 		e.setCancelled(true);
@@ -44,17 +48,6 @@ public class GenericListener implements Listener {
 	}
 
 	@EventHandler
-	public void onCompleteTab(PlayerChatTabCompleteEvent e) {
-		e.getTabCompletions().clear();
-	}
-
-	@EventHandler
-	public void onPing(ServerListPingEvent e) {
-		e.setMotd(F.boldAqua + "Star Network " + F.GRAY + "| " + F.GREEN
-				+ "http://starnetmc.com/store \n" + F.boldGold + "COMING SOON!");
-	}
-
-	@EventHandler
 	public void onCreatureSpawn(CreatureSpawnEvent e) {
 
 		if (e.getSpawnReason() == SpawnReason.EGG) {
@@ -70,8 +63,7 @@ public class GenericListener implements Listener {
 
 			e.disallow(
 					Result.KICK_WHITELIST,
-					F.error("Server",
-							"The server is currently in private mode. Buy VIP to bypass this feature!"));
+					F.error("StarNet", "This server is currently in private mode."));
 
 		}
 

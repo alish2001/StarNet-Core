@@ -2,17 +2,16 @@ package com.starnetmc.core.commands;
 
 import org.bukkit.entity.Player;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
 import com.starnetmc.core.util.Rank;
 
 public class HelpCommand extends CommandBase<Chat> {
 
 	public HelpCommand(Chat plugin) {
 		super(plugin, Rank.DEFAULT, new String[] { "help" });
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute(Player player, String[] args) {
@@ -23,7 +22,7 @@ public class HelpCommand extends CommandBase<Chat> {
 
 	public static void sendHelp(Player player) {
 		try {
-			switch (Manager.getRank(player.getUniqueId().toString())) {
+			switch (AccountManager.getAccount(player).getRank()) {
 
 			case DEFAULT:
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
@@ -42,7 +41,6 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case MVP:
@@ -53,7 +51,6 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case HELPER:
@@ -66,7 +63,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case MODERATOR:
@@ -81,7 +78,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case ADMIN:
@@ -101,7 +98,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case YOUTUBE:
@@ -110,7 +107,6 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=- Your Commands -=-=-=-=-=-=-=-=");
 				player.sendMessage(F.GOLD+"/help: "+F.AQUA+"Shows this message");
 				player.sendMessage(F.GOLD+"/tpall: "+F.AQUA+"Allows you to teleport all online players to you.");
-				player.sendMessage(F.GOLD+"/rank <player> <newrank> "+F.AQUA+"Allows you to change a player's rank.");
 				player.sendMessage(F.GOLD+"/t: "+F.AQUA+"Opens the time management menu.");
 				player.sendMessage(F.GOLD+"/gm: "+F.AQUA+"Opens the gamemode management menu.");
 				player.sendMessage(F.GOLD+"/setspawn: "+F.AQUA+"Allows you to set the server spawn point.");
@@ -122,7 +118,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case DEVELOPER:
@@ -147,7 +143,7 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 			case OWNER:
@@ -172,13 +168,12 @@ public class HelpCommand extends CommandBase<Chat> {
 				player.sendMessage(F.GOLD+"/gadgets: "+F.AQUA+"Opens the gadgets menu.");
 				player.sendMessage(F.GOLD+"/msg: "+F.AQUA+"Sends a private message to the specified player.");
 				player.sendMessage(F.GOLD+"/r: "+F.AQUA+"A quick reply to players you have messaged recently.");
-				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test any new things Spark has added!");
+				player.sendMessage(F.GOLD+"/test: "+F.RED+"A test command."+F.AQUA+" Allows you to test new things!");
 				player.sendMessage(F.boldGreen+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 				break;
 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

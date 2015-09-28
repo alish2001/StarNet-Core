@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import com.starnetmc.core.objects.Module;
+import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.util.Rank;
 
 public class CommandBase<PluginType extends Module> implements ICommand
@@ -46,7 +46,6 @@ public class CommandBase<PluginType extends Module> implements ICommand
 
 	
 	public void execute(Player paramPlayer, String[] paramArrayOfString) {
-		// TODO Auto-generated method stub
 		
 	}
 }

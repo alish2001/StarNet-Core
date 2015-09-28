@@ -4,25 +4,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.commands.AFK;
 import com.starnetmc.core.commands.Broadcast;
 import com.starnetmc.core.commands.ChatClear;
 import com.starnetmc.core.commands.RankCommand;
 import com.starnetmc.core.commands.SetSpawn;
-import com.starnetmc.core.commands.Spawn;
 import com.starnetmc.core.commands.StaffChat;
 import com.starnetmc.core.commands.Test;
-import com.starnetmc.core.commands.Time;
+import com.starnetmc.core.commands.TimeCommand;
 import com.starnetmc.core.commands.message.Message;
 import com.starnetmc.core.commands.message.Reply;
 import com.starnetmc.core.commands.modulecontrol.DisableModule;
 import com.starnetmc.core.commands.modulecontrol.EnableModule;
-import com.starnetmc.core.objects.Module;
-import com.starnetmc.core.objects.ModuleType;
+import com.starnetmc.core.modules.manager.Module;
+import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.Manager;
+import com.starnetmc.core.util.Rank;
 import com.starnetmc.core.util.StarMap;
 
 public class Chat extends Module {
@@ -32,9 +33,6 @@ public class Chat extends Module {
 	public Chat(JavaPlugin plugin) {
 		super("Chat", 0.5, ModuleType.INFO, plugin);
 		this.plugin = plugin;
-
-		addCommand(new SetSpawn(this));
-		addCommand(new Spawn(this));
 	}
 
 	public Chat() {
@@ -57,10 +55,11 @@ public class Chat extends Module {
 		addCommand(new Message(this));
 		addCommand(new Reply(this));
 		addCommand(new Test(this));
-		addCommand(new Time(this));
+		addCommand(new TimeCommand(this));
 		addCommand(new EnableModule(this));
 		addCommand(new DisableModule(this));
 		addCommand(new RankCommand(this));
+		addCommand(new SetSpawn(this));
 	}
 
 	@Override
@@ -71,6 +70,17 @@ public class Chat extends Module {
 
 	public static boolean isEnabled;
 
+	
+	public static void setTag(Player player) {
+
+		if (AccountManager.getAccount(player).getRank() != Rank.DEFAULT){
+	    player.setDisplayName(AccountManager.getAccount(player).getRank().getTag(false) + " " + F.YELLOW + player.getName());
+		} else {
+			 player.setDisplayName(F.YELLOW + player.getName());
+		}
+		player.setPlayerListName(player.getDisplayName());
+	}
+	
 	@EventHandler
 	public void silence(AsyncPlayerChatEvent e) {
 
@@ -88,7 +98,7 @@ public class Chat extends Module {
 	public static StarMap<String, String> _playerLastMessage = new StarMap<String, String>();
 
 	@EventHandler(priority = EventPriority.LOW)
-	public void listenToChat(AsyncPlayerChatEvent e) throws Exception {
+	public void listenToChat(AsyncPlayerChatEvent e) {
 		Player player = e.getPlayer();
 
 		e.setFormat(player.getDisplayName() + F.GRAY + ": " + F.RESET
@@ -102,8 +112,7 @@ public class Chat extends Module {
 				&& _playerLastMessage.get(player.getName()).equalsIgnoreCase(
 						e.getMessage())) {
 
-			if (Manager.getRank(player.getUniqueId().toString())
-					.equals("OWNER")) {
+			if (AccountManager.getAccount(player).getRank() == Rank.OWNER) {
 				return;
 			} else {
 				player.sendMessage(F.error("Chat",
@@ -115,5 +124,12 @@ public class Chat extends Module {
 		}
 
 	}
-
+	
+	@EventHandler(priority = EventPriority.LOW)
+	public void exitConversation(PlayerQuitEvent e){
+		Player p = e.getPlayer();
+		if (!Message.conversation.containsKey(p)) return;
+		Message.conversation.remove(p);
+	}
+ 
 }

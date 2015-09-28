@@ -32,8 +32,6 @@ public class NPCSpawnEvent extends Event implements Cancellable{
 
 	@Override
 	public void setCancelled(boolean arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
