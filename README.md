@@ -1,2 +1,3 @@
 # Core
-The Hub plugin for the Star Network.
+The Star Networs Core/Hub plugin.
+Originally by SparkWings. Perfected and Maintained by alish2001.
