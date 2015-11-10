@@ -6,6 +6,9 @@ import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.commands.GadgetCommand;
@@ -32,7 +35,6 @@ public class Gadgets extends Module {
 	}
 	
 	public static ArrayList<Gadget> getGadgets(Player player) {
-		
 		return playergadgets.get(player.getUniqueId().toString());
 	}
 	
@@ -55,6 +57,16 @@ public class Gadgets extends Module {
 		for (Gadget g : getAllGadgets()){
 			  g.unRegister();
 		}
+	}
+	
+	@EventHandler
+	public void gadgetizer(PlayerJoinEvent e){
+		createUserGadget(e.getPlayer());
+	}
+	
+	@EventHandler
+	public void deGadgetizer(PlayerQuitEvent e){
+		Gadgets.removeUser(e.getPlayer());
 	}
 
 	public static void createUserGadget(Player player) {

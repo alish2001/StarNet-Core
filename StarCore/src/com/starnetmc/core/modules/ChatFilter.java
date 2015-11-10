@@ -10,11 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
-import com.starnetmc.core.util.F;
 
 public class ChatFilter extends Module {
 
-	private static List<String> _blockedWords = new ArrayList<String>();
+	private static List<String> blockedWords = new ArrayList<String>();
 
 	public ChatFilter(JavaPlugin plugin) {
 		super("Chat Filter",1.0,ModuleType.INFO,plugin);
@@ -27,32 +26,34 @@ public class ChatFilter extends Module {
 	@EventHandler
 	public void filterChat(AsyncPlayerChatEvent e) {
 
-		if (isEnabled == true) {
+		if (!isEnabled) return;
 
 			String[] message = e.getMessage().toLowerCase().split(" ");
-			for (String s : message) {
-				if (_blockedWords.contains(s)) {
-					e.setCancelled(true);
-					e.getPlayer()
-							.sendMessage(
-									F.error("Filter",
-											"WARNING! Your last message contained a word that is blocked by our filter. If you believe this is in error, please contact a server admin."));
-
+			for (int i = message.length; i != 0; i--) {
+				if (blockedWords.contains(message[i])) {
+					StringBuilder builder = new StringBuilder();
+					for(int x = message[i].length(); x != 0; x--){
+						builder.append("$#%");
+					}
+					
+					message[i] = builder.toString();
 				}
 			}
-
-		} else {
-			return;
-		}
+			
+			StringBuilder fixer = new StringBuilder();
+			for (int i = message.length; i != 0; i--) {
+				fixer.append(message[i]);
+			}
+			
+			e.setMessage(fixer.toString());
 	}
 
 	@Override
 	public void enable() {
 		isEnabled = true;
 		try {
-			_blockedWords = Databaser.downloadFilter();
+			blockedWords = Databaser.downloadFilter();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		log("Enabled.");

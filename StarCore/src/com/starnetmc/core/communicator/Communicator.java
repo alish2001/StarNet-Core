@@ -13,7 +13,7 @@ import com.starnetmc.core.modules.manager.ModuleType;
 public class Communicator extends Module {
 	
 	public Communicator(JavaPlugin plugin) {
-		super("Communicator", 1.0, ModuleType.SERVER, plugin);
+		super("Communicator", 1.0, ModuleType.NETCOM, plugin);
 	}
 	
 

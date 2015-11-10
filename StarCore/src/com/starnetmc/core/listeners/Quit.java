@@ -8,8 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.starnetmc.core.commands.message.Message;
-import com.starnetmc.core.gadgets.Gadgets;
-import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.util.F;
 
 public class Quit implements Listener {
@@ -17,9 +15,6 @@ public class Quit implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onLeave(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-
-		Settings.removeUser(player);
-		Gadgets.removeUser(player);
 		
 		if(Message.conversation.containsKey(player)) {
 			Message.conversation.remove(player);

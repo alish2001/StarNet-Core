@@ -9,9 +9,7 @@ public class Weather implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onWeatherChange(WeatherChangeEvent e) {
-		
 		e.setCancelled(true);
-		
 	}
 	
 }

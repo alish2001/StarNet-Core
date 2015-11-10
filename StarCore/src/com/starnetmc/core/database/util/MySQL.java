@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 public class MySQL extends Database {
+	
 	private final String user;
 	private final String database;
 	private final String password;

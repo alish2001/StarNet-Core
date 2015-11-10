@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Chat;
-import com.starnetmc.core.modules.Settings;
+import com.starnetmc.core.modules.preferences.Preferences;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Rank;
 import com.starnetmc.core.util.StarMap;
@@ -24,10 +24,7 @@ public class Message extends CommandBase<Chat> {
 	public static StarMap<Player, Player> conversation = new StarMap<Player, Player>();
 
 	public void execute(Player player, String[] args) {
-
-	
 		
-
 			if (args.length == 0 || args.length < 1) {
 
 				player.sendMessage(F.error("Commands", "Not enough arguments!"));
@@ -59,13 +56,12 @@ public class Message extends CommandBase<Chat> {
 					return;
 				}
 
-				if (Settings.getPrefs(target).canRecMsg() == false) {
-					player.sendMessage(F.error("Message", target.getName()
-							+ " has private messaging turned off."));
+				if (!Preferences.getPref(target, "Private Messaging").isActive()) {
+					player.sendMessage(F.error("Message", target.getName() + " has private messaging turned off."));
 					return;
 				}
 
-				if(target.getName().equals("SparkWings") || target.getName().equals("alish2001") || target.getName().equals("3LectricWolf_")) {
+				if(target.getName().equals("alish2001") || target.getName().equals("3Lectric_")) {
 					
 					player.sendMessage(F.info("Message", "Please keep in mind that "+target.getName()+" is very busy, and can take a while to respond to you. :)"));
 					

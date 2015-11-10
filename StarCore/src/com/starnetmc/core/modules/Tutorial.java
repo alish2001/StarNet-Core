@@ -14,6 +14,7 @@ import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
+import com.starnetmc.core.modules.preferences.Preferences;
 import com.starnetmc.core.util.F;
 
 public class Tutorial extends Module {
@@ -45,7 +46,7 @@ public class Tutorial extends Module {
 		Location tutLoc = new Location(player.getWorld(), 144, 100, -27);
 
 		intut.add(player.getName());
-		Settings.getPrefs(player).setPlayersVisible(false);
+		Preferences.setPrefState(player, "Player Visibility", false);
 		player.teleport(tutLoc);
 
 		player.sendMessage(F.GREEN + "" + F.STRIKE
@@ -410,7 +411,7 @@ public class Tutorial extends Module {
 						+ F.STRIKE
 						+ "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
-				Settings.getPrefs(player).setPlayersVisible(false);
+				Preferences.setPrefState(player, "Player Visibility", true);
 				player.teleport(player.getWorld().getSpawnLocation());
 
 			}
@@ -439,7 +440,6 @@ public class Tutorial extends Module {
 						return;
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

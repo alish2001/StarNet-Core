@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,11 +75,16 @@ public class Chat extends Module {
 	public static void setTag(Player player) {
 
 		if (AccountManager.getAccount(player).getRank() != Rank.DEFAULT){
-	    player.setDisplayName(AccountManager.getAccount(player).getRank().getTag(false) + " " + F.YELLOW + player.getName());
+	         player.setDisplayName(AccountManager.getAccount(player).getRank().getTag(false) + " " + F.YELLOW + player.getName());
 		} else {
 			 player.setDisplayName(F.YELLOW + player.getName());
 		}
 		player.setPlayerListName(player.getDisplayName());
+	}
+	
+	@EventHandler
+	public void tagerizer(PlayerJoinEvent e){
+		setTag(e.getPlayer());
 	}
 	
 	@EventHandler
@@ -95,7 +101,13 @@ public class Chat extends Module {
 
 	}
 
-	public static StarMap<String, String> _playerLastMessage = new StarMap<String, String>();
+	public static StarMap<String, String> lastPlayerMessages = new StarMap<String, String>();
+	
+	@EventHandler(priority = EventPriority.LOW)
+	public void onPlayerQuitRemove(PlayerQuitEvent e){
+		if (!lastPlayerMessages.containsKey(e.getPlayer().getName())) return;
+		lastPlayerMessages.remove(e.getPlayer().getName());
+	}
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void listenToChat(AsyncPlayerChatEvent e) {
@@ -108,8 +120,8 @@ public class Chat extends Module {
 			e.setMessage(e.getMessage().replace("%s", "s"));
 		}
 
-		if (_playerLastMessage.containsKey(player.getName())
-				&& _playerLastMessage.get(player.getName()).equalsIgnoreCase(
+		if (lastPlayerMessages.containsKey(player.getName())
+				&& lastPlayerMessages.get(player.getName()).equalsIgnoreCase(
 						e.getMessage())) {
 
 			if (AccountManager.getAccount(player).getRank() == Rank.OWNER) {
@@ -120,7 +132,7 @@ public class Chat extends Module {
 				e.setCancelled(true);
 			}
 		} else {
-			_playerLastMessage.put(player.getName(), e.getMessage());
+			lastPlayerMessages.put(player.getName(), e.getMessage());
 		}
 
 	}

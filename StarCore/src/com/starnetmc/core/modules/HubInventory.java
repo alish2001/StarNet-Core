@@ -10,12 +10,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.gadgets.Gadgets;
 import com.starnetmc.core.gadgets.GUI.GadgetGUI;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
-import com.starnetmc.core.settings.SettingsGUI;
+import com.starnetmc.core.modules.preferences.Preferences;
+import com.starnetmc.core.modules.preferences.GUI.PrefGUI;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.ItemFactory;
 
@@ -87,33 +87,12 @@ public class HubInventory extends Module {
 				} else if (player.getItemInHand().getType() == Material.SLIME_BALL) {
 					e.setCancelled(true);
 
-					if(Settings.isEnabled == false) {
+					if(Preferences.isEnabled == false) {
 						player.sendMessage(F.error("Modules", "Settings have been disabled by an owner."));
 						return;
 					}
 					
-					switch (AccountManager.getAccount(player).getRank()) {
-
-					case ADMIN:
-						SettingsGUI.openSettingsAGUI(player);
-						break;
-					case OWNER:
-						SettingsGUI.openSettingsAGUI(player);
-						break;
-					case DEVELOPER:
-						SettingsGUI.openSettingsAGUI(player);
-						break;
-					case BUILDER:
-						SettingsGUI.openSettingsAGUI(player);
-						break;
-					case YOUTUBE:
-						SettingsGUI.openSettingsAGUI(player);
-						break;
-					default:
-						SettingsGUI.openSettingsGUI(player);
-						break;
-
-					}
+					PrefGUI.openPrefGUI(player);
 				}
 
 			}

@@ -15,9 +15,9 @@ import com.starnetmc.core.modules.DoubleJump;
 import com.starnetmc.core.modules.HubInventory;
 import com.starnetmc.core.modules.LScoreboard;
 import com.starnetmc.core.modules.News;
-import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.modules.Teleport;
 import com.starnetmc.core.modules.Tutorial;
+import com.starnetmc.core.modules.preferences.Preferences;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Rank;
 
@@ -29,7 +29,7 @@ public class DisableModule extends CommandBase<Chat> {
 	Gadgets gadgets = new Gadgets();
 	LScoreboard sc = new LScoreboard();
 	News news = new News();
-	Settings set = new Settings();
+	Preferences set = new Preferences();
 	Tutorial tut = new Tutorial();
 	com.starnetmc.core.modules.Chat c = new com.starnetmc.core.modules.Chat();
 	HubInventory h = new HubInventory();
@@ -38,14 +38,12 @@ public class DisableModule extends CommandBase<Chat> {
 
 	public DisableModule(Chat plugin) {
 		super(plugin, Rank.DEVELOPER, new String[] { "disable" });
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void execute(Player player, String[] args) {
 
-		Bukkit.getServer().getPluginManager()
-		.callEvent(new ModuleStateChangeEvent());
+		Bukkit.getServer().getPluginManager().callEvent(new ModuleStateChangeEvent());
 		
 		for(Player allp : Bukkit.getOnlinePlayers()) {
 			allp.playSound(allp.getLocation(), Sound.ENDERDRAGON_GROWL, 10F, 1F);
@@ -104,7 +102,7 @@ public class DisableModule extends CommandBase<Chat> {
 			}
 			return;
 		case "settings":
-			if (Settings.isEnabled == true) {
+			if (Preferences.isEnabled == true) {
 				set.disable();
 				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
 						+ "SETTINGS have been disabled by " + player.getName());

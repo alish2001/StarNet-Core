@@ -1,5 +1,6 @@
 package com.starnetmc.core.gadgets.GUI;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,8 +18,8 @@ import com.starnetmc.core.gadgets.Gadgets;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.ItemFactory;
 import com.starnetmc.core.util.Rank;
-import com.starnetmc.core.util.USound;
 import com.starnetmc.core.util.UPacket;
+import com.starnetmc.core.util.USound;
 
 public class GadgetGUI {
 	
@@ -26,8 +27,8 @@ public class GadgetGUI {
 		
 		Inventory gui = Bukkit.createInventory(null, 54, F.boldRed + "Gadgets");
 		
-		ItemStack info;
-		List<String> desc;
+		ItemStack info = new ItemStack(Material.AIR);
+		List<String> desc = new ArrayList<String>();
 		
 		if (Rank.getStaffRanks().contains(AccountManager.getAccount(p).getRank())){
 			
@@ -38,14 +39,14 @@ public class GadgetGUI {
 						F.boldYellow + " ",
 						F.boldYellow + "Ayy Welcome Boss",
 						F.boldYellow + "How you doin' today?");
-			} else {
+			} else if (AccountManager.getAccount(p).getRank() == Rank.MODERATOR || AccountManager.getAccount(p).getRank() == Rank.HELPER || AccountManager.getAccount(p).getRank() == Rank.BUILDER) {
 			
 			desc = Arrays.asList(" ",
 					F.boldYellow + "Rank " + F.boldAqua + "> " + AccountManager.getAccount(p).getRank().getTag(false),
 					F.boldPurple + "Shards " + F.boldAqua + "> " + F.boldYellow + AccountManager.getAccount(p).getShards(),
 					F.boldYellow + " ",
 					F.boldYellow + "Thank you for all of your hardwork :)",
-					F.boldYellow + "We really apperichiate having you on the Star Team!",
+					F.boldYellow + "We really appreciate having you on the Star Team!",
 					F.boldYellow + "-LeaderShip");
 			}
 			
@@ -64,7 +65,7 @@ public class GadgetGUI {
 				F.boldYellow + "and to da SWIG VIP's <3");
 		info = ItemFactory.createItem(Material.NETHER_STAR, F.boldYellow + "Player Info | " + p.getName(), desc, true);
 		
-		} else {
+		} else if (AccountManager.getAccount(p).getRank() == Rank.DEFAULT) {
 			
 			desc = Arrays.asList(" ",
 					F.boldYellow + "Rank " + F.boldAqua + "> " + AccountManager.getAccount(p).getRank().getTag(false),

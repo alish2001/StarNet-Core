@@ -78,7 +78,6 @@ public class GadgetShardBomb extends Gadget {
 		Player player = e.getPlayer();
 
 		if ((AccountManager.getAccount(player).getShards() - 20) <= 0) {
-			e.setCancelled(true);
 			player.sendMessage(F.error("Economy",
 					"Insufficient funds to fire gadget."));
 		} else {

@@ -8,9 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.starnetmc.core.gadgets.Gadgets;
-import com.starnetmc.core.modules.Chat;
-import com.starnetmc.core.modules.Settings;
 import com.starnetmc.core.util.F;
 
 public class Join implements Listener {
@@ -22,10 +19,6 @@ public class Join implements Listener {
 		player.setFoodLevel(20);
 		player.setHealthScale(20D);
 		player.setGameMode(GameMode.SURVIVAL);
-		
-		Settings.createUserPrefs(player);
-		Gadgets.createUserGadget(player);
-		Chat.setTag(player);
 		
 		e.setJoinMessage(F.boldAqua + "<" + F.boldGreen + "+" + F.boldAqua + ">" + ChatColor.RESET + F.YELLOW + " " + player.getName());
 	}

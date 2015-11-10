@@ -31,7 +31,6 @@ public class Databaser {
 	public Databaser(JavaPlugin main) {
 		this.main = main;
 	}
-
 	
 	public void setup() throws Exception, SQLException, ClassNotFoundException {
 		if (!db.checkConnection()) {
@@ -39,7 +38,10 @@ public class Databaser {
 		}
 
 		Statement a = db.getConnection().createStatement();
-		a.executeUpdate("CREATE TABLE IF NOT EXISTS `Accounts` (`id` INT NOT NULL AUTO_INCREMENT,`Name` varchar(64),`UUID` MEDIUMTEXT, `Shards` INT, `Rank` varchar(32), `firstLogin` LONG, `lastLogin` LONG, `totalPlayTime` INT, `tutorial` TINYINT(1),PRIMARY KEY (`id`));");
+		a.executeUpdate("CREATE TABLE IF NOT EXISTS Accounts("
+				      + "UUID varchar(36) NOT NULL PRIMARY KEY,"
+				      + "Username varchar(16) NOT NULL,"
+				      + "Rank varchar(16));");
 
 		Statement p = db.getConnection().createStatement();
 		p.executeUpdate("CREATE TABLE IF NOT EXISTS `Punishments` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT,`UUID` MEDIUMTEXT, `PunishType` varchar(32), `PunishReason` MEDIUMTEXT,`PunishPerm` BOOL, `Punisher` MEDIUMTEXT, PRIMARY KEY (`id`));");
@@ -56,6 +58,10 @@ public class Databaser {
 			createAccount(alisID, "alish2001");
 			setRank(alisID, "OWNER");
 		}
+	}
+	
+	public static void deploy(){
+		
 	}
 
 	public static void removeAllPunishments(String player) throws Exception {

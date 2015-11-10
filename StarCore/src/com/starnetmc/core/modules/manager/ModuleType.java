@@ -2,6 +2,6 @@ package com.starnetmc.core.modules.manager;
 
 public enum ModuleType {
 
-	CHAT, SERVER, UPDATE, INFO;
+	NETCOM, SERVER, INTERNAL, INFO;
 
 }
