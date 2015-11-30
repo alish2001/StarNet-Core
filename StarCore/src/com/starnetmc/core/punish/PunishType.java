@@ -1,10 +1,20 @@
 package com.starnetmc.core.punish;
 
 public enum PunishType {
+	
+	MUTE,
+	BAN;
 
-	TEMPMUTE,
-	PERMMUTE,
-	TEMPBAN,
-	PERMBAN;
+	public static PunishType getPunishmentTypeFromString(String s){
+		if (s.equalsIgnoreCase("mute")){
+			return MUTE;
+		}
+		
+		if (s.equalsIgnoreCase("ban")){
+			return BAN;
+		}
+		
+		return null;
+	}
 	
 }

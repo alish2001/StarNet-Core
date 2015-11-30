@@ -27,7 +27,7 @@ public class Account {
 	
 	public void updateRank() throws Exception {
 		if (Databaser.getRank(playerUUID) == rank) return;
-		Databaser.setRank(playerUUID, rank.toString());
+		Databaser.setRank(playerUUID, rank);
 	}
 	
 	public void updateShards() throws Exception {

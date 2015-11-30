@@ -97,7 +97,7 @@ public class Gadgets extends Module {
 		int finalIndexLoc = 0;
 		
 		for (Gadget gdgt : getGadgets(p)){
-			if (indexFound) return;
+			if (indexFound) continue;
 			
 			if (!ChatColor.stripColor(gdgt.getName()).equalsIgnoreCase(ChatColor.stripColor(g.getName()))){
 				indexLoc++;

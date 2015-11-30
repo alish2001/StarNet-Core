@@ -9,14 +9,13 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.starnetmc.core.database.util.MySQL;
+import com.starnetmc.core.punish.PunishType;
 import com.starnetmc.core.punish.Punishment;
 import com.starnetmc.core.util.Rank;
-import com.starnetmc.core.util.UPlayer;
 
 public class Databaser {
 
@@ -32,313 +31,338 @@ public class Databaser {
 		this.main = main;
 	}
 	
-	public void setup() throws Exception, SQLException, ClassNotFoundException {
+	public static void deploy() throws Exception, SQLException, ClassNotFoundException {
+		
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
+		
+		//UUID | Username | Rank | Shards
+		Statement accountsTable = db.getConnection().createStatement();
+		accountsTable.executeUpdate("CREATE TABLE IF NOT EXISTS Accounts("
+				                  + "UUID varchar(36) PRIMARY KEY,"
+				                  + "Username varchar(16) NOT NULL,"
+				                  + "Rank varchar(16) NOT NULL,"
+				                  + "Shards INT);");
 
-		Statement a = db.getConnection().createStatement();
-		a.executeUpdate("CREATE TABLE IF NOT EXISTS Accounts("
-				      + "UUID varchar(36) NOT NULL PRIMARY KEY,"
-				      + "Username varchar(16) NOT NULL,"
-				      + "Rank varchar(16));");
+		//Punished_UUID | Punisher_UUID | PunishmentType | PunishmentReason | PunishmentDate | PunishmentExpiryDate | Permanent | Remover_UUID | RemoveReason | RemoveDate
+		Statement punishmentsTable = db.getConnection().createStatement();
+		punishmentsTable.executeUpdate("CREATE TABLE IF NOT EXISTS Punishments("
+				                     + "Punished_UUID varchar(36) NOT NULL,"
+									 + "Punisher_UUID varchar(36) NOT NULL,"
+									 + "PunishmentType varchar(16) NOT NULL,"
+									 + "PunishmentReason TINYTEXT NOT NULL,"
+									 + "PunishmentDate TIMESTAMP NOT NULL,"
+									 + "PunishmentExpiryDate TIMESTAMP,"
+									 + "Permanent BOOLEAN NOT NULL,"
+									 + "Remover_UUID varchar(36),"
+									 + "RemoveReason TINYTEXT,"
+									 + "RemoveDate TIMESTAMP);");
+		
+		//Buyer_UUID | PurchaseName | PurchaseType | Cost | Date 
+		Statement transactionsTable = db.getConnection().createStatement();
+		transactionsTable.executeUpdate("CREATE TABLE IF NOT EXISTS Transactions("
+				                       + "Buyer_UUID varchar(36),"
+			                           + "PurchaseName varchar(64),"
+				                       + "PurchaseType varchar (16),"
+				                       + "Cost INT,"
+			               	           + "Date TIMESTAMP);");
+		
+		//Words
+		Statement filterTable = db.getConnection().createStatement();
+		filterTable.executeUpdate("CREATE TABLE IF NOT EXISTS Filter("
+				                 + "Word varchar(32));");
 
-		Statement p = db.getConnection().createStatement();
-		p.executeUpdate("CREATE TABLE IF NOT EXISTS `Punishments` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT,`UUID` MEDIUMTEXT, `PunishType` varchar(32), `PunishReason` MEDIUMTEXT,`PunishPerm` BOOL, `Punisher` MEDIUMTEXT, PRIMARY KEY (`id`));");
-
-		Statement sf = db.getConnection().createStatement();
-		sf.executeUpdate("CREATE TABLE IF NOT EXISTS `Filter` (`Word` varchar(32));");
-
+		//ID | Name | Type | ServerType | Location_World | Location_X | Location_Y | Location_Z
 		Statement n = db.getConnection().createStatement();
-		n.executeUpdate("CREATE TABLE IF NOT EXISTS `NPCManager` (`id` INT NOT NULL AUTO_INCREMENT, `Name` MEDIUMTEXT, `NPCType` varchar(32), `World` varchar(32),`x` DECIMAL, `y` DECIMAL, `z` DECIMAL, PRIMARY KEY (`id`));");
-
+		n.executeUpdate("CREATE TABLE IF NOT EXISTS NPCs ("
+				      + "ID INT AUTO_INCREMENT PRIMARY KEY,"
+				      + "Name TINYTEXT,"
+				      + "Type varchar(32),"
+				      + "ServerType varchar(16),"
+				      + "Location_World varchar(32),"
+				      + "Location_X DECIMAL,"
+				      + "Location_Y DECIMAL,"
+				      + "Location_Z DECIMAL"
+				      + ");");
+		
+		db.closeConnection();
+	}
+	
+	public void setup() throws Exception {
+		
 		String alisID = "f5738c50-ca61-44d7-af98-6b188e6285a1";
 		
 		if (!hasAccount(alisID)){
-			createAccount(alisID, "alish2001");
-			setRank(alisID, "OWNER");
+			createAccount(alisID, "alish2001", Rank.OWNER, 9000);
 		}
 	}
 	
-	public static void deploy(){
-		
-	}
-
-	public static void removeAllPunishments(String player) throws Exception {
-		
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		OfflinePlayer o = UPlayer.getOfflinePlayerFromName(player);
-		String uuid = o.getUniqueId().toString();
-
-		Statement s = db.getConnection().createStatement();
-		if(isBanned(uuid)) {
-			s.executeUpdate("DELETE FROM `Punishments` WHERE `UUID`='"+uuid+"';");
-		}
-		else if(isMuted(uuid)) {
-			s.executeUpdate("DELETE FROM `Punishments` WHERE `UUID`='"+uuid+"';");
-		}
-		else if(Punishment._tempBans.containsKey(uuid)) {
-			Punishment._tempBans.remove(uuid);
-		}
-		else if(Punishment._tempMutes.containsKey(uuid)) {
-			Punishment._tempMutes.remove(uuid);
-		}
-		else {
-			return;
-		}
+	//Accounts
+	public static void createAccount(Player p, Rank rank, int shards) throws Exception {
+		createAccount(p.getUniqueId().toString(), p.getName(), rank, shards);
 	}
 	
-	public static void makeMuted(Player punisher, String offender, String reason)
-			throws Exception {
+	public static void createAccount(String UUID, String username, Rank rank, int shards) throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
-
-		OfflinePlayer o = UPlayer.getOfflinePlayerFromName(offender);
-		String uuid = o.getUniqueId().toString();
-
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("INSERT INTO `Punishments` (`Name`,`UUID`,`PunishType`,`PunishReason`,`PunishPerm`,`Punisher`) VALUES ('"
-				+ o.getName()
-				+ "','"
-				+ uuid
-				+ "','MUTE','"
-				+ reason
-				+ "','1','" + punisher.getName() + "');");
-
-	}
-
-	public static void makeBanned(Player punisher, String offender,
-			String reason) throws Exception {
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		OfflinePlayer o = UPlayer.getOfflinePlayerFromName(offender);
-		String uuid = o.getUniqueId().toString();
-
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("INSERT INTO `Punishments` (`Name`,`UUID`,`PunishType`,`PunishReason`,`PunishPerm`,`Punisher`) VALUES ('"
-				+ o.getName()
-				+ "','"
-				+ uuid
-				+ "','BAN','"
-				+ reason
-				+ "','1','" + punisher.getName() + "');");
-	}
-
-	public static boolean isMuted(String uuid)
-			throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
 		
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s
-				.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"' AND `PunishType`='MUTE';");
+		Statement creationStatement = db.getConnection().createStatement();
+		creationStatement.executeUpdate("INSERT INTO Accounts(UUID, Username, Rank, Shards) VALUES ("
+				                      + "'" + UUID + "'," + "'" + username + "'," + "'" + rank + "'," + "'" + shards + "'" + ");");
+		db.closeConnection();
+	}
+	
+	public static void setUsername(Player p) throws Exception {
+		setUsername(p.getUniqueId().toString(), p.getName());
+	}
+	
+	public static void setUsername(String UUID, String username) throws Exception {
 		
-		if(!rs.next()) {
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement rankStatement = db.getConnection().createStatement();
+		rankStatement.executeUpdate("UPDATE Accounts SET Username = " + "'" + username + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		
+		db.closeConnection();
+	}
+	
+	public static void setRank(Player p, Rank rank) throws Exception {
+		setRank(p.getUniqueId().toString(), rank);
+	}
+	
+	public static void setRank(String UUID, Rank rank) throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement rankStatement = db.getConnection().createStatement();
+		rankStatement.executeUpdate("UPDATE Accounts SET Rank = " + "'" + rank + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		db.closeConnection();
+	}
+	
+	public static void setShards(Player p, int shards) throws Exception {
+		setShards(p.getUniqueId().toString(), shards);
+	}
+	
+	public static void setShards(String UUID, int shards) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement rankStatement = db.getConnection().createStatement();
+		rankStatement.executeUpdate("UPDATE Accounts SET Shards = " + "'" + shards + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		db.closeConnection();
+	}
+	
+	public static String getUUID(String username) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement uuidStatement = db.getConnection().createStatement();
+		ResultSet uuid = uuidStatement.executeQuery("SELECT * FROM Accounts WHERE Username = " + "'" + username + "';");
+		
+		String retrieved_uuid = uuid.getString("UUID");
+		
+		db.closeConnection();
+		return retrieved_uuid;
+	}
+	
+	public static String getUsername(String UUID) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement nameStatement = db.getConnection().createStatement();
+		ResultSet name = nameStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
+		
+		String username = name.getString("Username");
+		
+		db.closeConnection();
+		return username;
+	}
+	
+	public static Rank getRank(String UUID) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement rankStatement = db.getConnection().createStatement();
+		ResultSet rank = rankStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
+		
+		Rank r = Rank.getRankFromString(rank.getString("Rank"));
+		
+		db.closeConnection();
+		return r;
+	}
+	
+	public static int getShards(String UUID) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement nameStatement = db.getConnection().createStatement();
+		ResultSet shards = nameStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
+		
+		int shardBalance = shards.getInt("Shards");
+		
+		db.closeConnection();
+		return shardBalance;
+	}
+	
+	public static boolean hasAccount(String UUID) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement nameStatement = db.getConnection().createStatement();
+		ResultSet name = nameStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
+		
+		if (!name.next()){
+			
+			db.closeConnection();
 			return false;
-		}
-		else {
+		} else {
+			
+			db.closeConnection();
 			return true;
 		}
-
-		
 	}
-
-	public static String getPunishReason(Player player) throws Exception {
+	
+	public static boolean usernameHasAccount(String username) throws Exception {
 		
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
-
-		String uuid = player.getUniqueId().toString();
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s
-				.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"';");
 		
-		if(!rs.next()) {
+		Statement nameStatement = db.getConnection().createStatement();
+		ResultSet name = nameStatement.executeQuery("SELECT * FROM Accounts WHERE Username = " + "'" + username + "';");
+		
+		if (!name.next()){
+			
+			db.closeConnection();
+			return false;
+		} else {
+			
+			db.closeConnection();
+			return true;
+		}
+	}
+	
+	
+	//Punishments
+	public static void executePunishment(Punishment p) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement punishment = db.getConnection().createStatement();
+		punishment.executeUpdate("INSERT INTO Punishments(Punished_UUID, Punisher_UUID, PunishmentType, PunishmentReason, PunishmentDate, PunishmentExpiryDate, Permanent)"
+				              + " VALUES ("
+				              + "'" + p.getPunished() + "',"
+				              + "'" + p.getPunisher() + "',"
+				              + "'" + p.getType() + "',"
+				              + "'" + p.getReason() + "',"
+				              + "'" + p.getExecutionTime() + "',"
+				              + "'" + p.getPunisher() + "',"
+				              + "'" + p.getExpiryDate() + "',"
+				              + "'" + p.getPerm() + "'"
+				              + ");");
+		db.closeConnection();
+	}
+	
+	public static Punishment getLastestActivePunishment(String UUID, PunishType type) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement checkQuery = db.getConnection().createStatement();
+		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true ORDER BY PunishmentDate DESC;");
+		
+		if (!punishSet.next()){
+			db.closeConnection();
 			return null;
 		}
-		else {
-			return rs.getString("PunishReason");
-		}
-
-	}
-	
-	public static boolean isBanned(String uuid)
-			throws Exception {
-
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Punishments` WHERE `UUID`='"+uuid+"' AND `PunishType`='BAN';");
 		
-		if(!rs.next()) {
-			return false;
-		}
-		else {
-			return true;
-		}
-
-
+		Punishment p = new Punishment(punishSet.getString("Punished_UUID"), punishSet.getString("Punisher_UUID"), punishSet.getString("PunishmentReason"), punishSet.getString("Remover_UUID"), punishSet.getString("RemoveReason"), punishSet.getTimestamp("RemoveDate"), punishSet.getTimestamp("PunishmentDate"), punishSet.getTimestamp("PunishmentExpiryDate").getTime() - punishSet.getTimestamp("PunishmentDate").getTime(), punishSet.getBoolean("Permanent"), PunishType.getPunishmentTypeFromString(punishSet.getString("PunishmentType")));
+		db.closeConnection();
+		return p;
 	}
-
 	
-	public static boolean hasAccount(String uuid) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Accounts` WHERE `UUID`='"
-				+ uuid + "';");
-
-		if (!rs.next()) {
-			return false;
-		} else {
-			return true;
-		}
-
-	}
-
-	public static void createAccount(Player player) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		String name = player.getName();
-		String uuid = player.getUniqueId().toString();
+	public static List<Punishment> getPunishments(String UUID) throws Exception {
 		
-		createAccount(uuid, name);
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		List<Punishment> punishments = new ArrayList<Punishment>();
+		
+		Statement checkQuery = db.getConnection().createStatement();
+		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + "ORDER BY PunishmentDate DESC;");
+		
+		if (!punishSet.next()){
+			db.closeConnection();
+			return null;
+		}
+		
+		while(punishSet.next()){
+			punishments.add(new Punishment(punishSet.getString("Punished_UUID"), punishSet.getString("Punisher_UUID"), punishSet.getString("PunishmentReason"), punishSet.getString("Remover_UUID"), punishSet.getString("RemoveReason"), punishSet.getTimestamp("RemoveDate"), punishSet.getTimestamp("PunishmentDate"), punishSet.getTimestamp("PunishmentExpiryDate").getTime() - punishSet.getTimestamp("PunishmentDate").getTime(), punishSet.getBoolean("Permanent"), PunishType.getPunishmentTypeFromString(punishSet.getString("PunishmentType"))));
+		}
+		
+		
+		db.closeConnection();
+		return punishments;
 	}
 	
-	public static void createAccount(String uuid, String name) throws Exception {
+	public static void removePunishment(Punishment p) throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
 		
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("INSERT INTO `Accounts` (`Name`,`UUID`,`Shards`,`Rank`,`firstLogin`,`lastLogin`,`totalPlayTime`) VALUES ('"
-				+ name + "','" + uuid + "','200','DEFAULT',now(),now(),'0');");
-
+		Statement punishment = db.getConnection().createStatement();
+		punishment.executeUpdate("INSERT INTO Punishments(Remover_UUID, RemoveReason, RemoveDate)"
+				              + " VALUES ("
+				              + "'" + p.getRemover() + "',"
+				              + "'" + p.getRemovalReason()+ "',"
+				              + "'" + p.getRemovalTime() + "'"
+				              + ");");
+		db.closeConnection();
 	}
 	
-	public static Rank getRank(String uuid) throws Exception {
-
+	public static boolean isPunished(String UUID, PunishType type) throws Exception {
+		
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Accounts` WHERE UUID='"
-				+ uuid + "';");
-
-		if (!rs.next()) {
-			return Rank.DEFAULT;
-		}
-		return Rank.valueOf(rs.getString("Rank"));
-
-	}
-
-	public static void setRank(String uuid, String rank) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("UPDATE `Accounts` SET `Rank`='" + rank
-				+ "' WHERE `UUID`='" + uuid + "';");
-
-	}
-
-	public static int getShards(String uuid) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Accounts` WHERE `UUID`='"
-				+ uuid + "';");
-
-		if (!rs.next()) {
-			return 0;
-		} else {
-			return rs.getInt("Shards");
-		}
-
-	}
-
-	public static void setShards(String uuid, int amount) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("UPDATE `Accounts` SET `Shards`='"
-				+ (getShards(uuid) + amount) + "' WHERE `UUID`='" + uuid + "';");
-
-	}
-
-	public static void setLastLogin(String uuid) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("UPDATE `Accounts` SET `lastLogin`='now()' WHERE `UUID`='"
-				+ uuid + "';");
-	}
-
-	public static boolean hasTutorial(String uuid) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Accounts` WHERE `UUID`='"
-				+ uuid + "'");
-
-		if (!rs.next()) {
+		
+		Statement checkQuery = db.getConnection().createStatement();
+		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true;");
+		
+		if (!punishSet.next()){
+			db.closeConnection();
 			return false;
-		} else {
-			return rs.getBoolean("tutorial");
 		}
-
+		
+		db.closeConnection();
+		return true;
 	}
 
-	public static void setHasTutorial(String uuid) throws Exception {
-
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-
-		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("UPDATE `Accounts` SET `tutorial`='1' WHERE `UUID`='"
-				+ uuid + "';");
-
-	}
-
+	//Filter
 	public static List<String> downloadFilter() throws Exception {
 
 		if (!db.checkConnection()) {
@@ -347,15 +371,14 @@ public class Databaser {
 
 		List<String> words = new ArrayList<String>();
 
-		Statement s = db.getConnection().createStatement();
-		ResultSet rs = s.executeQuery("SELECT * FROM `Filter`");
+		Statement downloadStatement = db.getConnection().createStatement();
+		ResultSet wordList = downloadStatement.executeQuery("SELECT * FROM Filter");
 
-		while (rs.next()) {
-
-			words.add(rs.getString("Word"));
-
+		while (wordList.next()) {
+			words.add(wordList.getString("Word"));
 		}
-
+		
+		db.closeConnection();
 		return words;
 
 	}

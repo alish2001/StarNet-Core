@@ -36,6 +36,7 @@ import com.starnetmc.core.modules.News;
 import com.starnetmc.core.modules.Teleport;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.modules.preferences.Preferences;
+import com.starnetmc.core.npc.NPC;
 import com.starnetmc.core.npc.NPCDragon;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
@@ -46,7 +47,6 @@ import com.starnetmc.core.punish.Punish;
 import com.starnetmc.core.serversorter.ServerSorter;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.MemoryFix;
-import com.starnetmc.core.util.NMS;
 import com.starnetmc.core.util.Updater;
 
 /**
@@ -88,7 +88,7 @@ public class Main extends JavaPlugin {
 		new Chat(this);
 		new Tutorial(this);
 		new ChatFilter(this);
-		new NMS(this);
+		new NPC(this);
 		new Preferences(this);
 		new Gadgets(this);
 		new Border(this);
@@ -101,12 +101,12 @@ public class Main extends JavaPlugin {
 		new Punish(this);
 
 		// Registering NPCs
-		NMS.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
-		NMS.registerEntity("Skeleton", 51, EntitySkeleton.class, NPCSkeleton.class);
-		NMS.registerEntity("Villager", 120, EntityVillager.class, NPCVillager.class);
-		NMS.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
-		NMS.registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
-		NMS.registerEntity("EnderDragon", 63, EntityEnderDragon.class, NPCDragon.class);
+		NPC.registerEntity("Zombie", 54, EntityZombie.class, NPCZombie.class);
+		NPC.registerEntity("Skeleton", 51, EntitySkeleton.class, NPCSkeleton.class);
+		NPC.registerEntity("Villager", 120, EntityVillager.class, NPCVillager.class);
+		NPC.registerEntity("Slime", 55, EntitySlime.class, NPCSlime.class);
+		NPC.registerEntity("Pig", 90, EntityPig.class, NPCPig.class);
+		NPC.registerEntity("EnderDragon", 63, EntityEnderDragon.class, NPCDragon.class);
 
 		// Other
 		getConfig().options().copyDefaults(true);

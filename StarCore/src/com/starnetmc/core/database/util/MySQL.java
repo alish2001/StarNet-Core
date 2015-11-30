@@ -25,11 +25,11 @@ public class MySQL extends Database {
 	}
 
 	@Override
-	public Connection openConnection() throws SQLException,
-			ClassNotFoundException {
+	public Connection openConnection() throws SQLException, ClassNotFoundException {
 		if (checkConnection()) {
 			return connection;
 		}
+		
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://"
 				+ this.ip + ":" + this.port + "/" + this.database,

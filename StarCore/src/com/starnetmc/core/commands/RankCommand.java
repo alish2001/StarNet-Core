@@ -34,12 +34,12 @@ public class RankCommand extends CommandBase<Chat> {
 				player.sendMessage(F.error("Player Search", "Player not found."));
 				return;
 			} else {
-				Databaser.setRank(target.getPlayer().getUniqueId().toString(), args[1].toUpperCase());
+				Databaser.setRank(target.getPlayer().getUniqueId().toString(), Rank.getRankFromString(args[1]));
 				player.sendMessage(F.info("Rank", "Rank updated."));
 
 				if (target.isOnline()) {
 					Player onlineTarget = UPlayer.getOnlinePlayerFromName(target.getName());
-					Databaser.setRank(onlineTarget.getUniqueId().toString(), args[1].toUpperCase());
+					Databaser.setRank(onlineTarget.getUniqueId().toString(), Rank.getRankFromString(args[1]));
 					player.sendMessage(F.info("Rank", "Rank updated."));
 					
 					onlineTarget.getPlayer().sendMessage(F.info("Rank", "Attention: Your rank has been changed. Please relog."));
@@ -48,7 +48,7 @@ public class RankCommand extends CommandBase<Chat> {
 				
 				else {
 					
-					Databaser.setRank(target.getPlayer().getUniqueId().toString(), args[1].toUpperCase());
+					Databaser.setRank(target.getPlayer().getUniqueId().toString(), Rank.getRankFromString(args[1]));
 					player.sendMessage(F.info("Rank", "Rank updated."));
 					return;
 				}

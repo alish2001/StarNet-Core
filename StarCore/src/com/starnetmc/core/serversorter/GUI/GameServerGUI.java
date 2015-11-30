@@ -31,6 +31,8 @@ public class GameServerGUI extends ServerGUI {
 	@EventHandler
 	public void UI(InventoryClickEvent e){
 		e.setCancelled(true);
+		if (e.getClickedInventory() == null) return;
+		if (e.getClickedInventory().getName() == null) return;
 		if (!e.getClickedInventory().getName().equalsIgnoreCase(gui.getName())) return;
 		if (e.getCurrentItem() == null) return;
 		if (e.getCurrentItem().getType() == null) return;

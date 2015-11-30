@@ -8,6 +8,12 @@ import org.bukkit.entity.Player;
 
 public class UPlayer {
 	
+	/*
+	 * DO NOT USE THIS CLASS
+	 * It is being kept for legacy support.
+	 * Please do not write new methods using this.
+	 */
+	
 	public static void hidePlayerFromAll(Player hider){
 		
 		for (Player p : Bukkit.getServer().getOnlinePlayers()){

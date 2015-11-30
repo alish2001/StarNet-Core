@@ -9,12 +9,12 @@ import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.modules.Chat;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.Rank;
+import com.starnetmc.core.util.UString;
 
 public class StaffChat extends CommandBase<Chat> {
 
 	public StaffChat(Chat plugin) {
 		super(plugin, Rank.HELPER, new String[] { "staffchat", "sc" });
-		// TODO Auto-generated constructor stub
 	}
 
 	public void execute(Player player, String[] args) {
@@ -23,24 +23,19 @@ public class StaffChat extends CommandBase<Chat> {
 			player.sendMessage(F.error("Commands", "Please use: /sc <Message>"));
 			return;
 		}
-
-		String annc = "";
-		StringBuilder sb = new StringBuilder();
-		for (String arg : args) {
-			sb.append(arg + " ");
-		}
-		annc = sb.toString();
-
-
+		
+		String msg = UString.forgeArgMessage(args, 0);
+		
 			for(Player staff : Bukkit.getOnlinePlayers()) {
 				
-				if(AccountManager.getAccount(player).getRank().has(getRequiredRank())) {
+				if(AccountManager.getAccount(player).getRank() == getRequiredRank()) {
 					
-					staff.sendMessage(F.info(ChatColor.stripColor(player.getDisplayName()), annc));
+					staff.sendMessage(F.info(ChatColor.stripColor(player.getDisplayName()), msg));
 					continue;
 					
 				}
-				if(!AccountManager.getAccount(player).getRank().has(getRequiredRank())) {
+				
+				if(AccountManager.getAccount(player).getRank() != getRequiredRank()) {
 					continue;
 				}
 			

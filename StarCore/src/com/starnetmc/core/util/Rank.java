@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 public enum Rank {
 
@@ -19,22 +18,10 @@ public enum Rank {
 	VIP(F.boldYellow + "VIP"),
 	DEFAULT(F.boldWhite + "DEFAULT");
 	
-	static List<Rank> staffRanks;
 	private String tag;
 	
 	Rank(String tag){
 		this.tag = tag;
-		initList();
-	}
-	
-	private void initList(){
-		staffRanks = new ArrayList<Rank>();
-		staffRanks.add(OWNER);
-		staffRanks.add(DEVELOPER);
-		staffRanks.add(ADMIN);
-		staffRanks.add(BUILDER);
-		staffRanks.add(MODERATOR);
-		staffRanks.add(HELPER);
 	}
 	
 	public String getTag(boolean noColor){
@@ -47,20 +34,14 @@ public enum Rank {
 	}
 	
 	public static List<Rank> getStaffRanks(){
+		List<Rank> staffRanks = new ArrayList<Rank>();
+		staffRanks.add(OWNER);
+		staffRanks.add(DEVELOPER);
+		staffRanks.add(ADMIN);
+		staffRanks.add(BUILDER);
+		staffRanks.add(MODERATOR);
+		staffRanks.add(HELPER);
 		return staffRanks;
-	}
-	
-	public boolean has(Rank rt) {
-		return has(null, rt);
-	}
-
-	public boolean has(Player player, Rank rt) {
-
-		if (compareTo(rt) <= 0) {
-			return true;
-		}
-		return false;
-
 	}
 	
 	public static Rank getRankFromString(String rank){

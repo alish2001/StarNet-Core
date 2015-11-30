@@ -19,6 +19,7 @@ import com.starnetmc.core.modules.preferences.prefs.Pref_Build;
 import com.starnetmc.core.modules.preferences.prefs.Pref_Chat;
 import com.starnetmc.core.modules.preferences.prefs.Pref_MSG;
 import com.starnetmc.core.modules.preferences.prefs.Pref_Visiblity;
+import com.starnetmc.core.util.Logger;
 import com.starnetmc.core.util.StarMap;
 
 public class Preferences extends Module {
@@ -63,6 +64,7 @@ public class Preferences extends Module {
 	}
 	
 	public static void setPrefState(Player p, String prefName, boolean state){
+		Logger.log("Changing pref " + prefName + " to state " + state);
 		getPref(p, prefName).setActive(state);
 		Bukkit.getServer().getPluginManager().callEvent(new PlayerPrefrenceStateChangeEvent(p, getPref(p, prefName)));
 	}
@@ -94,7 +96,7 @@ public class Preferences extends Module {
 		int finalIndexLoc = 0;
 		
 		for (Pref pref : getPrefs(p)){
-			if (!indexFound) continue;
+			if (indexFound) continue;
 			
 			if (!ChatColor.stripColor(prefName).equalsIgnoreCase(ChatColor.stripColor(pref.getName()))){
 				indexLoc++;
@@ -105,6 +107,7 @@ public class Preferences extends Module {
 			}
 		}
 		
+		//Check for pref nullness.
 		Pref pref = getPrefs(p).get(finalIndexLoc);
 		
 		return pref;

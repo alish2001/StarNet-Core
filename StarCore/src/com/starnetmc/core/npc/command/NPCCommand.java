@@ -13,18 +13,18 @@ import org.bukkit.entity.Zombie;
 
 import com.starnetmc.core.commands.util.CommandBase;
 import com.starnetmc.core.events.NPCSpawnEvent;
+import com.starnetmc.core.npc.NPC;
 import com.starnetmc.core.npc.NPCPig;
 import com.starnetmc.core.npc.NPCSkeleton;
 import com.starnetmc.core.npc.NPCSlime;
 import com.starnetmc.core.npc.NPCVillager;
 import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.NMS;
 import com.starnetmc.core.util.Rank;
 
-public class NPCCommand extends CommandBase<NMS> {
+public class NPCCommand extends CommandBase<NPC> {
 
-	public NPCCommand(NMS plugin) {
+	public NPCCommand(NPC plugin) {
 		super(plugin, Rank.DEVELOPER, new String[] { "npc" });
 		// TODO Auto-generated constructor stub
 	}

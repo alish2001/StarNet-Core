@@ -12,18 +12,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.ItemFactory;
-import com.starnetmc.core.util.StarMap;
 
 public class PunishGUI {
 
 	@SuppressWarnings("deprecation")
-	public static void showOtherMenu(Player opener,
-			StarMap<Player, Punishment> punish) {
+	public static void showOtherMenu(Player opener, Punishment p) {
 
-		Inventory main = Bukkit.createInventory(opener, 54,F.underRed
-				+ "Punishments");
+		Inventory main = Bukkit.createInventory(opener, 54,F.underRed + "Punishments");
 
 		List<String> chat1 = Arrays.asList(" ", ChatColor.YELLOW + "Examples:",
 				ChatColor.GRAY + "- All after Warnings", ChatColor.GRAY
@@ -85,10 +83,15 @@ public class PunishGUI {
 		ItemStack Hackd = ItemFactory.createItem(Material.BOOK, ChatColor.RED
 				+ "" + ChatColor.BOLD + "Hacked Client", Hack, true);
 
-		ItemStack head = ItemFactory.createItem(Material.SKULL_ITEM, punish
-				.get(opener).getOffender(), Arrays.asList(ChatColor.WHITE
-				+ punish.get(opener).getOffense()), true);
+		ItemStack head = null;
+		
+		try{
+			
+		head = ItemFactory.createItem(Material.SKULL_ITEM, Databaser.getUsername(p.getPunished()), Arrays.asList("", F.boldAqua + "Reason", F.WHITE + p.getReason()), true);
 
+		} catch (Exception e){
+		}
+		
 		ItemStack exploiticon = ItemFactory.createItem(Material.TNT,
 				ChatColor.YELLOW + "" + ChatColor.BOLD + "Exploitation", null,
 				false);
@@ -254,8 +257,7 @@ public class PunishGUI {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void showHelperMenu(Player opener,
-			StarMap<Player, Punishment> punish) {
+	public static void showHelperMenu(Player opener, Punishment p) {
 
 		Inventory main = Bukkit.createInventory(opener, 54, F.underRed
 				+ "Punishments");
@@ -319,11 +321,15 @@ public class PunishGUI {
 				"Unapproved Client MOD's", MOD, true);
 		ItemStack Hackd = ItemFactory.createItem(Material.BOOK,
 				"Hacked Client", Hack, true);
-
 		
-		ItemStack head = ItemFactory.createItem(Material.SKULL_ITEM, punish
-				.get(opener).getOffender(), Arrays.asList(ChatColor.WHITE
-				+ punish.get(opener).getOffense()), true);
+		ItemStack head = null;
+		
+		try{
+			
+		head = ItemFactory.createItem(Material.SKULL_ITEM, Databaser.getUsername(p.getPunished()), Arrays.asList("", F.boldAqua + "Reason", F.WHITE + p.getReason()), true);
+
+		} catch (Exception e){
+		}
 
 		ItemStack exploiticon = ItemFactory.createItem(Material.TNT,
 				ChatColor.YELLOW + "" + ChatColor.BOLD + "Exploitation", null,

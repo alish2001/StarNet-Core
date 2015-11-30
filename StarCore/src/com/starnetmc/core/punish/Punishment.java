@@ -1,179 +1,160 @@
 package com.starnetmc.core.punish;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import java.sql.Timestamp;
 
-import com.starnetmc.core.Main;
+import org.bukkit.Bukkit;
+
 import com.starnetmc.core.database.Databaser;
-import com.starnetmc.core.util.F;
-import com.starnetmc.core.util.StarMap;
 import com.starnetmc.core.util.UNet;
 
 public class Punishment {
 
-	private String offender;
-	private String offense;
-	private Player punisher;
-	private boolean permanent;
-	private boolean temporary;
+	private String punished;
+	private String punisher;
+	private String reason;
+	
+	private String remover;
+	private String remove_reason;
+	private Timestamp removal_time;
+	
+	private Timestamp time;
 	private long duration;
-	private PunishType pt;
+	private boolean permanent;
+	private PunishType type;
 
-	public static StarMap<String, String> _tempMutes = new StarMap<String, String>();
-	public static StarMap<String, String> _tempBans = new StarMap<String, String>();
-
-	public Punishment(String offender, PunishType pt,String offense, Player punisher,
-			boolean permanent, boolean temporary, long duration) {
-
-		this.setOffender(offender);
-		this.setType(pt);
-		this.setOffense(offense);
-		this.setPunisher(punisher);
-		this.setPermanent(permanent);
-		this.setTemporary(temporary);
-		this.setDuration(duration);
-	}
-
-	public String getOffender() {
-		return offender;
-	}
-
-	public void setOffender(String offender) {
-		this.offender = offender;
-	}
-
-	public String getOffense() {
-		return offense;
-	}
-
-	public void setOffense(String offense) {
-		this.offense = offense;
-	}
-
-	public Player getPunisher() {
-		return punisher;
-	}
-
-	public void setPunisher(Player punisher) {
+	public Punishment(String punished, String punisher, String reason, String remover, String remove_reason, Timestamp removal_time, Timestamp time, long duration, boolean permanent, PunishType type){
+		this.punished = punished;
 		this.punisher = punisher;
-	}
-
-	public boolean isPermanent() {
-		return permanent;
-	}
-
-	public void setPermanent(boolean permanent) {
+		this.reason = reason;
+		this.remover = remover;
+		this.remove_reason = remove_reason;
+		this.removal_time = removal_time;
+		this.time = time;
+		this.duration = duration;
 		this.permanent = permanent;
+		this.type = type;
 	}
-
-	public boolean isTemporary() {
-		return temporary;
+	
+	public Punishment(String punished, String punisher, String reason, Timestamp time, long duration, boolean permanent, PunishType type){
+		this.punished = punished;
+		this.punisher = punisher;
+		this.reason = reason;
+		this.time = time;
+		this.duration = duration;
+		this.permanent = permanent;
+		this.type = type;
 	}
-
-	public void setTemporary(boolean temporary) {
-		this.temporary = temporary;
+	
+	public Punishment(String punished, String punisher){
+		this.punished = punished;
+		this.punisher = punisher;
+		this.permanent = false;
 	}
-
-	public long getDuration() {
-		return duration;
+	
+	public void execute(){
+		try {
+			
+			Databaser.executePunishment(this);
+			UNet.netKickPlayer(Bukkit.getServer().getPlayer(punisher), Databaser.getUsername(punished), reason);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-	public void setDuration(long duration) {
+	
+	public void remove(){
+		
+		try {
+			Databaser.removePunishment(this);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPunished(String UUID){
+		this.punished = UUID;
+	}
+	
+	public void setPunisher(String UUID){
+		this.punisher = UUID;
+	}
+	
+	public void setReason(String reason){
+		this.reason = reason;
+	}
+	
+	public void setRemover(String UUID){
+		this.remover = UUID;
+	}
+	
+	public void setRemovalReason(String reason){
+		this.remove_reason = reason;
+	}
+	
+	public void setRemovalTime(Timestamp time){
+		this.removal_time = time;
+	}
+	
+	public void setExecutionTime(Timestamp time){
+		this.time = time;
+	}
+	
+	public void setDuration(long duration){
 		this.duration = duration;
 	}
-
-	public PunishType getType() {
-		return pt;
-	}
-
-	public void setType(PunishType pt) {
-		this.pt = pt;
+	
+	public void setPerm(boolean perm ){
+		this.permanent = perm;
 	}
 	
-	//WE ALREADY HAD A PLAYER UTIL BLAME SPARKWINGS FOR COPYING IT HERE INSTEAD OF JUST USING IT!!!!
-	private Player getOnlinePlayerFromName(String p){
-		Player sp = Bukkit.getServer().getPlayer(p);
-		if (sp == null){
-			return null;
-		}
-		else{
-			return sp;
-		}
+	public void setType(PunishType type){
+		this.type = type;
 	}
 	
-	@SuppressWarnings("deprecation")
-	private OfflinePlayer getOfflinePlayerFromName(String p){
-		OfflinePlayer sp = Bukkit.getServer().getOfflinePlayer(p);
-		if (sp == null){
-			return null;
-		}
-		else{
-			return sp;
-		}
+	public String getPunished(){
+		return punished;
 	}
 	
-	public void setPunished() throws Exception {
-
-		if (this.getType() == PunishType.PERMMUTE) {
-			Databaser.makeMuted(punisher, offender, getOffense());
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been muted permanently."));
-			}
-		} else if (this.getType() == PunishType.PERMBAN) {
-
-			Databaser.makeBanned(punisher, offender, getOffense());
-			
-			if(getOfflinePlayerFromName(offender).isOnline()) {
-				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments", "You have been banned for \" "+ getOffense() +"\""));
-			} else {
-				UNet.netKickPlayer(punisher, offender, getOffense());
-			}
-			
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been banned permanently."));
-			}
-		} else if (this.getType() == PunishType.TEMPMUTE) {
-			_tempMutes.put(getOfflinePlayerFromName(offender).getUniqueId().toString(), getOffense());
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.sendMessage(F.info("Punishments", getOfflinePlayerFromName(offender).getName() + " has been muted."));
-			}
-			
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-					_tempMutes.remove(getOfflinePlayerFromName(offender).getUniqueId().toString());
-
-				}
-			}.runTaskLater(Main.getPlugin(), getDuration());
-
-		} else if (this.getType() == PunishType.TEMPBAN) {
-			_tempBans.put(getOfflinePlayerFromName(offender).getUniqueId().toString(), getOffense());
-			
-			if(getOnlinePlayerFromName(offender).isOnline()) {
-				getOnlinePlayerFromName(offender).kickPlayer(F.error("Punishments", "You have been banned for \" "+ getOffense() +"\""));
-			} else {
-				UNet.netKickPlayer(punisher, offender, getOffense());
-			}
-			
-			for(Player all : Bukkit.getOnlinePlayers()){
-				all.sendMessage(F.error("Punishments", getOfflinePlayerFromName(offender).getName() + " has been banned."));
-			}
-
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-					_tempBans.remove(getOfflinePlayerFromName(offender).getUniqueId().toString());
-
-				}
-			}.runTaskLater(Main.getPlugin(), getDuration());
-		}
-
+	public String getPunisher(){
+		return punisher;
 	}
-
 	
+	public String getReason(){
+		return reason;
+	}
+	
+	public String getRemover(){
+		return remover;
+	}
+	
+	public String getRemovalReason(){
+		return remove_reason;
+	}
+	
+	public Timestamp getRemovalTime(){
+		return removal_time;
+	}
+	
+	public Timestamp getExecutionTime(){
+		return time;
+	}
+	
+	public long getDuration(){
+		return duration;
+	}
+	
+	public boolean getPerm(){
+		return permanent;
+	}
+	
+	public PunishType getType(){
+		return type;
+	}
+	
+	public Timestamp getExpiryDate(){
+		Timestamp expiry = new Timestamp(time.getTime() + duration);
+		return expiry;
+	}
 
 }

@@ -8,13 +8,13 @@ import com.starnetmc.core.Main;
 
 public class UNet {
 	
-	public static void netKickPlayer(Player p, String playerName, String reason){
+	public static void netKickPlayer(Player kickHost, String kicked, String reason){
 		  ByteArrayDataOutput out = ByteStreams.newDataOutput();
 		  out.writeUTF("KickPlayer");
-		  out.writeUTF(playerName);
+		  out.writeUTF(kicked);
 		  out.writeUTF(reason);
 		  
-		 p.sendPluginMessage(Main.getPlugin(), "BungeeCord", out.toByteArray());
+		 kickHost.sendPluginMessage(Main.getPlugin(), "BungeeCord", out.toByteArray());
 	}
 
 

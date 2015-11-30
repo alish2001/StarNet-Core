@@ -35,6 +35,7 @@ public class DisableModule extends CommandBase<Chat> {
 	HubInventory h = new HubInventory();
 	Gamemode gm = new Gamemode();
 	Teleport tp = new Teleport();
+	Border bd = new Border();
 
 	public DisableModule(Chat plugin) {
 		super(plugin, Rank.DEVELOPER, new String[] { "disable" });
@@ -152,6 +153,18 @@ public class DisableModule extends CommandBase<Chat> {
 				tp.disable();
 				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
 						+ "TELEPORTATION has been disabled by "
+						+ player.getName());
+				return;
+			} else {
+				player.sendMessage(F.error("Modules",
+						"That module is already disabled."));
+				return;
+			}
+		case "border":
+			if (Border.isEnabled == true) {
+				bd.disable();
+				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldRed
+						+ "BORDER has been disabled by "
 						+ player.getName());
 				return;
 			} else {

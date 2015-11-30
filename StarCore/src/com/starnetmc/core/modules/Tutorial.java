@@ -10,8 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.starnetmc.core.Main;
-import com.starnetmc.core.accounts.AccountManager;
-import com.starnetmc.core.database.Databaser;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.modules.preferences.Preferences;
@@ -429,7 +427,7 @@ public class Tutorial extends Module {
 				
 				intut.remove(player.getName());
 				
-				try {
+				/*try {
 					if (!Databaser.hasTutorial(player.getUniqueId().toString())) {
 						Databaser.setHasTutorial(player.getUniqueId().toString());
 						AccountManager.getAccount(player).addShards(100);
@@ -441,7 +439,7 @@ public class Tutorial extends Module {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 
 			}
 		}.runTaskLater(Main.getPlugin(), 560L);

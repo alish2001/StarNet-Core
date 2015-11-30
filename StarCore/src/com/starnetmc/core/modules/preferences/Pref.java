@@ -48,7 +48,7 @@ public class Pref implements Listener {
 	
 	public void setActive(boolean active){
 		this.active = active;
-		System.out.println("Pref state changed to: " + active);
+		System.out.println("Pref " + name + " state changed to: " + this.active);
 	}
 	
 	public void setIconMat(Material mat){

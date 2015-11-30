@@ -39,6 +39,7 @@ public class EnableModule extends CommandBase<Chat> {
 	HubInventory h = new HubInventory();
 	Gamemode gm = new Gamemode();
 	Teleport tp = new Teleport();
+	Border bd = new Border();
 
 	public void execute(Player player, String[] args) {
 
@@ -160,6 +161,18 @@ public class EnableModule extends CommandBase<Chat> {
 				tp.enable();
 				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldGreen
 						+ "TELEPORTATION has been enabled by "
+						+ player.getName());
+				return;
+			} else {
+				player.sendMessage(F.error("Modules",
+						"That module is already enabled."));
+				return;
+			}
+		case "border":
+			if (Teleport.isEnabled == false) {
+				tp.enable();
+				Bukkit.broadcastMessage(F.BOLD + "<SERVER> " + F.boldGreen
+						+ "BORDER has been enabled by "
 						+ player.getName());
 				return;
 			} else {

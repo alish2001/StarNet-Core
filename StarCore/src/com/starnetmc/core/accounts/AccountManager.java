@@ -58,12 +58,12 @@ public class AccountManager extends Module {
 		
 		if (DatabaseManager.isConnected()){
 		try {
+			
 			if (!Databaser.hasAccount(p.getUniqueId().toString())) {
-				Databaser.createAccount(p.getUniqueId().toString(), p.getName());
+				Databaser.createAccount(p, Rank.DEFAULT, 0);
 			}
 			
 			accounts.put(p.getUniqueId().toString(), new Account(p.getUniqueId().toString(), Databaser.getRank(p.getUniqueId().toString()), Databaser.getShards(p.getUniqueId().toString())));
-			Databaser.setLastLogin(p.getUniqueId().toString());
 			
 			if (Rank.getStaffRanks().contains(getAccount(p).getRank())){
 				staff.add(p.getName());

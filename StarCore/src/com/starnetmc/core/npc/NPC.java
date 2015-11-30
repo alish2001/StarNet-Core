@@ -1,4 +1,4 @@
-package com.starnetmc.core.util;
+package com.starnetmc.core.npc;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -37,14 +37,11 @@ import com.starnetmc.core.events.NPCSpawnEvent;
 import com.starnetmc.core.modules.Tutorial;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
-import com.starnetmc.core.npc.NPCPig;
-import com.starnetmc.core.npc.NPCSkeleton;
-import com.starnetmc.core.npc.NPCSlime;
-import com.starnetmc.core.npc.NPCVillager;
-import com.starnetmc.core.npc.NPCZombie;
 import com.starnetmc.core.npc.command.NPCCommand;
+import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.Rank;
 
-public class NMS extends Module {
+public class NPC extends Module {
 
 	public static LinkedHashMap<String, Location> villagernpcs = new LinkedHashMap<String, Location>();
 	public static LinkedHashMap<String, Location> pignpcs = new LinkedHashMap<String, Location>();
@@ -54,9 +51,9 @@ public class NMS extends Module {
 	
 	public static List<String> npcs = new ArrayList<String>();
 
-	public NMS(JavaPlugin plugin) {
+	public NPC(JavaPlugin plugin) {
 
-		super("NPC Manager", 2.0, ModuleType.SERVER, plugin);
+		super("NPC Manager", 1.0, ModuleType.SERVER, plugin);
 	}
 
 	public static void registerEntity(String name, int id, Class<?> class1,
@@ -64,16 +61,17 @@ public class NMS extends Module {
 		try {
 			List<Map<?, ?>> dataMaps = new ArrayList<Map<?, ?>>();
 			for (Field f : EntityTypes.class.getDeclaredFields()) {
-				if (f.getType().getSimpleName()
-						.equals(Map.class.getSimpleName())) {
+				if (f.getType().getSimpleName().equals(Map.class.getSimpleName())) {
 					f.setAccessible(true);
 					dataMaps.add((Map<?, ?>) f.get(null));
 				}
 			}
+			
 			if (dataMaps.get(2).containsKey(Integer.valueOf(id))) {
 				dataMaps.get(0).remove(name);
 				dataMaps.get(2).remove(Integer.valueOf(id));
 			}
+			
 			Method method = EntityTypes.class.getDeclaredMethod("a",
 					new Class[] { Class.class, String.class, Integer.TYPE });
 			method.setAccessible(true);
@@ -101,6 +99,7 @@ public class NMS extends Module {
 					}
 				}
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

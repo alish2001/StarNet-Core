@@ -13,6 +13,7 @@ import com.starnetmc.core.accounts.AccountManager;
 import com.starnetmc.core.modules.preferences.Pref;
 import com.starnetmc.core.modules.preferences.Preferences;
 import com.starnetmc.core.util.F;
+import com.starnetmc.core.util.Logger;
 import com.starnetmc.core.util.Rank;
 
 public class PrefGUI {
@@ -23,17 +24,24 @@ public class PrefGUI {
 		
 		ArrayList<Pref> prefCache = Preferences.getPrefs(p);
 		
-		if (AccountManager.getAccount(p).getRank() != Rank.OWNER || AccountManager.getAccount(p).getRank() != Rank.DEVELOPER || AccountManager.getAccount(p).getRank() != Rank.ADMIN){
+		System.out.println(p.getName() + prefCache);
 		
+		if (!(AccountManager.getAccount(p).getRank() == Rank.OWNER || AccountManager.getAccount(p).getRank() == Rank.DEVELOPER || AccountManager.getAccount(p).getRank() == Rank.ADMIN)){
+		   Logger.log("Rank != Admin, removing admin prefs.");
 		for (Iterator<Pref> pref = prefCache.iterator(); pref.hasNext();){
+			   Logger.log("Looping through prefCache..");
 			for (Pref uP : Preferences.getAdminPrefs()){
+				   Logger.log("Looping through AdminPrefs..");
 				if (ChatColor.stripColor(pref.next().getName()).equalsIgnoreCase(ChatColor.stripColor(uP.getName()))){
-					prefCache.remove(pref);
+					Logger.log("Name matched. Pref=" + pref.next().getName() + " uP=" + uP.getName());
+					prefCache.remove(pref.next());
 					continue;
 				}
 			  }
 		   }
 		}
+		
+		Logger.log("Rank check done.");
 		
 		int centerPosition = 22;
 		int position = centerPosition;
