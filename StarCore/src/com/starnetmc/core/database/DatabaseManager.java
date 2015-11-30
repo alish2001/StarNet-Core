@@ -1,22 +1,13 @@
 package com.starnetmc.core.database;
 
-import java.sql.SQLException;
-
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.starnetmc.core.Main;
 import com.starnetmc.core.database.util.MySQL;
 import com.starnetmc.core.events.DatabaseConnectionStateChangeEvent;
-import com.starnetmc.core.events.UpdateEvent;
 import com.starnetmc.core.modules.manager.Module;
 import com.starnetmc.core.modules.manager.ModuleType;
 import com.starnetmc.core.util.Logger;
-import com.starnetmc.core.util.Tickifier;
-import com.starnetmc.core.util.Tickifier.Time;
-import com.starnetmc.core.util.UpdateType;
 
 public class DatabaseManager extends Module {
 	
@@ -60,7 +51,7 @@ public class DatabaseManager extends Module {
 		Logger.log("Attempting Connection with database creds: name: " + creds.getName() + " ip: " + creds.getIP());
 		
 		  try {
-			Databaser.db.openConnection();
+			databaser.deploy();
 			databaser.setup();
 			connected = true;
 			Bukkit.getServer().getPluginManager().callEvent(new DatabaseConnectionStateChangeEvent(connected));
@@ -74,18 +65,16 @@ public class DatabaseManager extends Module {
 			Logger.log("------------------------------------------------------------");
 			e.printStackTrace();
 			Logger.log("------------------------------------------------------------");
-			Logger.log("<DatabaseManager> Will attempt to reconnect in 60 seconds!");
-			reConnect();
 		}
 	}
 	
-	public static void reConnect(){
+/*	public static void reConnect(){
 		new BukkitRunnable() {
 			
 			@Override
 			public void run() {
 				  try {
-						Databaser.db.openConnection();
+				        databaser.openConnection();
 						databaser.setup();
 						connected = true;
 						Bukkit.getServer().getPluginManager().callEvent(new DatabaseConnectionStateChangeEvent(connected));
@@ -127,7 +116,7 @@ public class DatabaseManager extends Module {
 			Logger.log("<DatabaseManager> Attempting to reconnect in 60 seconds!");
 			reConnect();
 		}
-	}
+	}*/
 	
 	public static void setCreds(DatabaseCreds newCreds){
 		creds = newCreds;

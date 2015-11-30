@@ -31,7 +31,7 @@ public class Databaser {
 		this.main = main;
 	}
 	
-	public static void deploy() throws Exception, SQLException, ClassNotFoundException {
+	public void deploy() throws Exception, SQLException, ClassNotFoundException {
 		
 		if (!db.checkConnection()) {
 			db.openConnection();
