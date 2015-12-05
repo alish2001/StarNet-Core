@@ -17,17 +17,12 @@ public class Account {
 	
 	public void update(){
 		try {
-			updateRank();
+			
 			updateShards();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void updateRank() throws Exception {
-		if (Databaser.getRank(playerUUID) == rank) return;
-		Databaser.setRank(playerUUID, rank);
 	}
 	
 	public void updateShards() throws Exception {

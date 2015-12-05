@@ -1,5 +1,6 @@
 package com.starnetmc.core.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ import com.starnetmc.core.database.util.MySQL;
 import com.starnetmc.core.punish.PunishType;
 import com.starnetmc.core.punish.Punishment;
 import com.starnetmc.core.util.Rank;
+import com.starnetmc.core.util.UString;
 
 public class Databaser {
 
@@ -125,9 +127,8 @@ public class Databaser {
 			db.openConnection();
 		}
 		
-		Statement rankStatement = db.getConnection().createStatement();
-		rankStatement.executeUpdate("UPDATE Accounts SET Username = " + "'" + username + "'" + " WHERE UUID = " + "'" + UUID + "';");
-		
+		PreparedStatement nameStatement = db.getConnection().prepareStatement("UPDATE Accounts SET Username = " + "'" + username + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		nameStatement.execute();
 		db.closeConnection();
 	}
 	
@@ -141,8 +142,8 @@ public class Databaser {
 			db.openConnection();
 		}
 		
-		Statement rankStatement = db.getConnection().createStatement();
-		rankStatement.executeUpdate("UPDATE Accounts SET Rank = " + "'" + rank + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		PreparedStatement rankStatement = db.getConnection().prepareStatement("UPDATE Accounts SET Rank = " + "'" + rank + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		rankStatement.execute();
 		db.closeConnection();
 	}
 	
@@ -156,8 +157,8 @@ public class Databaser {
 			db.openConnection();
 		}
 		
-		Statement rankStatement = db.getConnection().createStatement();
-		rankStatement.executeUpdate("UPDATE Accounts SET Shards = " + "'" + shards + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		PreparedStatement rankStatement = db.getConnection().prepareStatement("UPDATE Accounts SET Shards = " + "'" + shards + "'" + " WHERE UUID = " + "'" + UUID + "';");
+		rankStatement.execute();
 		db.closeConnection();
 	}
 	
@@ -169,8 +170,11 @@ public class Databaser {
 		
 		Statement uuidStatement = db.getConnection().createStatement();
 		ResultSet uuid = uuidStatement.executeQuery("SELECT * FROM Accounts WHERE Username = " + "'" + username + "';");
+		String retrieved_uuid = "";
 		
-		String retrieved_uuid = uuid.getString("UUID");
+		while(uuid.next()){
+		   retrieved_uuid = uuid.getString("UUID");
+		}
 		
 		db.closeConnection();
 		return retrieved_uuid;
@@ -184,8 +188,11 @@ public class Databaser {
 		
 		Statement nameStatement = db.getConnection().createStatement();
 		ResultSet name = nameStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
+		String username = "";
 		
-		String username = name.getString("Username");
+		while(name.next()){
+		    username = name.getString("Username");
+	    }
 		
 		db.closeConnection();
 		return username;
@@ -200,7 +207,11 @@ public class Databaser {
 		Statement rankStatement = db.getConnection().createStatement();
 		ResultSet rank = rankStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
 		
-		Rank r = Rank.getRankFromString(rank.getString("Rank"));
+		Rank r = Rank.DEFAULT;
+		
+		while(rank.next()){
+	       r = Rank.getRankFromString(rank.getString("Rank"));
+		}
 		
 		db.closeConnection();
 		return r;
@@ -215,7 +226,11 @@ public class Databaser {
 		Statement nameStatement = db.getConnection().createStatement();
 		ResultSet shards = nameStatement.executeQuery("SELECT * FROM Accounts WHERE UUID = " + "'" + UUID + "';");
 		
-		int shardBalance = shards.getInt("Shards");
+		int shardBalance = 0;
+		
+		while(shards.next()){
+			shardBalance = shards.getInt("Shards");
+		}
 		
 		db.closeConnection();
 		return shardBalance;
@@ -277,30 +292,10 @@ public class Databaser {
 				              + "'" + p.getType() + "',"
 				              + "'" + p.getReason() + "',"
 				              + "'" + p.getExecutionTime() + "',"
-				              + "'" + p.getPunisher() + "',"
 				              + "'" + p.getExpiryDate() + "',"
-				              + "'" + p.getPerm() + "'"
+				              + "'" + UString.booleanToNumericalString(p.getPerm()) + "'"
 				              + ");");
 		db.closeConnection();
-	}
-	
-	public static Punishment getLastestActivePunishment(String UUID, PunishType type) throws Exception {
-		
-		if (!db.checkConnection()) {
-			db.openConnection();
-		}
-		
-		Statement checkQuery = db.getConnection().createStatement();
-		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true ORDER BY PunishmentDate DESC;");
-		
-		if (!punishSet.next()){
-			db.closeConnection();
-			return null;
-		}
-		
-		Punishment p = new Punishment(punishSet.getString("Punished_UUID"), punishSet.getString("Punisher_UUID"), punishSet.getString("PunishmentReason"), punishSet.getString("Remover_UUID"), punishSet.getString("RemoveReason"), punishSet.getTimestamp("RemoveDate"), punishSet.getTimestamp("PunishmentDate"), punishSet.getTimestamp("PunishmentExpiryDate").getTime() - punishSet.getTimestamp("PunishmentDate").getTime(), punishSet.getBoolean("Permanent"), PunishType.getPunishmentTypeFromString(punishSet.getString("PunishmentType")));
-		db.closeConnection();
-		return p;
 	}
 	
 	public static List<Punishment> getPunishments(String UUID) throws Exception {
@@ -314,11 +309,6 @@ public class Databaser {
 		Statement checkQuery = db.getConnection().createStatement();
 		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + "ORDER BY PunishmentDate DESC;");
 		
-		if (!punishSet.next()){
-			db.closeConnection();
-			return null;
-		}
-		
 		while(punishSet.next()){
 			punishments.add(new Punishment(punishSet.getString("Punished_UUID"), punishSet.getString("Punisher_UUID"), punishSet.getString("PunishmentReason"), punishSet.getString("Remover_UUID"), punishSet.getString("RemoveReason"), punishSet.getTimestamp("RemoveDate"), punishSet.getTimestamp("PunishmentDate"), punishSet.getTimestamp("PunishmentExpiryDate").getTime() - punishSet.getTimestamp("PunishmentDate").getTime(), punishSet.getBoolean("Permanent"), PunishType.getPunishmentTypeFromString(punishSet.getString("PunishmentType"))));
 		}
@@ -328,19 +318,34 @@ public class Databaser {
 		return punishments;
 	}
 	
+	public static Punishment getLastestActivePunishment(String UUID, PunishType type) throws Exception {
+		
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+		
+		Statement checkQuery = db.getConnection().createStatement();
+		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND (TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true) ORDER BY PunishmentDate DESC LIMIT 1;");
+		
+		Punishment p = null;
+		
+		while(punishSet.next()){
+		    p = new Punishment(punishSet.getString("Punished_UUID"), punishSet.getString("Punisher_UUID"), punishSet.getString("PunishmentReason"), punishSet.getString("Remover_UUID"), punishSet.getString("RemoveReason"), punishSet.getTimestamp("RemoveDate"), punishSet.getTimestamp("PunishmentDate"), punishSet.getTimestamp("PunishmentExpiryDate").getTime() - punishSet.getTimestamp("PunishmentDate").getTime(), punishSet.getBoolean("Permanent"), PunishType.getPunishmentTypeFromString(punishSet.getString("PunishmentType")));
+		}
+		
+		
+		db.closeConnection();
+		return p;
+	}
+	
 	public static void removePunishment(Punishment p) throws Exception {
 
 		if (!db.checkConnection()) {
 			db.openConnection();
 		}
 		
-		Statement punishment = db.getConnection().createStatement();
-		punishment.executeUpdate("INSERT INTO Punishments(Remover_UUID, RemoveReason, RemoveDate)"
-				              + " VALUES ("
-				              + "'" + p.getRemover() + "',"
-				              + "'" + p.getRemovalReason()+ "',"
-				              + "'" + p.getRemovalTime() + "'"
-				              + ");");
+		PreparedStatement punishment = db.getConnection().prepareStatement("UPDATE Punishments SET Remover_UUID = " + "'" + p.getRemover() + "'," +" RemoveReason = " + "'" + p.getRemovalReason() + "'," + " RemoveDate = " + "'" + p.getRemovalTime() + "' WHERE Punished_UUID = " + "'" + p.getPunished() + "'" + ";");
+		punishment.execute();
 		db.closeConnection();
 	}
 	
@@ -351,7 +356,7 @@ public class Databaser {
 		}
 		
 		Statement checkQuery = db.getConnection().createStatement();
-		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true;");
+		ResultSet punishSet = checkQuery.executeQuery("SELECT * FROM Punishments WHERE Punished_UUID = " + "'" + UUID + "'" + " AND PunishmentType = " + "'" + type + "'" + " AND Remover_UUID IS NULL AND (TIMESTAMPDIFF(SECOND, now(), PunishmentExpiryDate) > -1 OR Permanent = true);");
 		
 		if (!punishSet.next()){
 			db.closeConnection();
@@ -363,6 +368,18 @@ public class Databaser {
 	}
 
 	//Filter
+	public static void addWordToFilter(String word) throws Exception {
+
+		if (!db.checkConnection()) {
+			db.openConnection();
+		}
+
+		Statement addWordStatement = db.getConnection().createStatement();
+		addWordStatement.executeUpdate("INSERT INTO Filter(Word) VALUES (" + "'" + word + "'" + ");");
+		
+		db.closeConnection();
+	}
+	
 	public static List<String> downloadFilter() throws Exception {
 
 		if (!db.checkConnection()) {
@@ -375,7 +392,7 @@ public class Databaser {
 		ResultSet wordList = downloadStatement.executeQuery("SELECT * FROM Filter");
 
 		while (wordList.next()) {
-			words.add(wordList.getString("Word"));
+			words.add(wordList.getString("Word").toLowerCase());
 		}
 		
 		db.closeConnection();
@@ -395,7 +412,7 @@ public class Databaser {
 
 		Statement s = db.getConnection().createStatement();
 		ResultSet rs = s
-				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='VILLAGER'");
+				.executeQuery("SELECT * FROM `NPCs` WHERE `NPCType`='VILLAGER'");
 
 		while (rs.next()) {
 
@@ -420,7 +437,7 @@ public class Databaser {
 
 		Statement s = db.getConnection().createStatement();
 		ResultSet rs = s
-				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='PIG'");
+				.executeQuery("SELECT * FROM `NPCs` WHERE `NPCType`='PIG'");
 
 		while (rs.next()) {
 
@@ -445,7 +462,7 @@ public class Databaser {
 
 		Statement s = db.getConnection().createStatement();
 		ResultSet rs = s
-				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='SKELETON'");
+				.executeQuery("SELECT * FROM `NPCs` WHERE `NPCType`='SKELETON'");
 
 		while (rs.next()) {
 
@@ -470,7 +487,7 @@ public class Databaser {
 
 		Statement s = db.getConnection().createStatement();
 		ResultSet rs = s
-				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='SLIME'");
+				.executeQuery("SELECT * FROM `NPCs` WHERE `NPCType`='SLIME'");
 
 		while (rs.next()) {
 
@@ -495,7 +512,7 @@ public class Databaser {
 
 		Statement s = db.getConnection().createStatement();
 		ResultSet rs = s
-				.executeQuery("SELECT * FROM `NPCManager` WHERE `NPCType`='ZOMBIE'");
+				.executeQuery("SELECT * FROM `NPCs` WHERE `NPCType`='ZOMBIE'");
 
 		while (rs.next()) {
 
@@ -517,7 +534,7 @@ public class Databaser {
 		}
 
 		Statement s = db.getConnection().createStatement();
-		s.execute("INSERT INTO `NPCManager` (`Name`,`NPCType`,`World`,`x`,`y`,`z`) VALUES ('"
+		s.execute("INSERT INTO `NPCs` (`Name`,`NPCType`,`World`,`x`,`y`,`z`) VALUES ('"
 				+ name
 				+ "','"
 				+ entitytype
@@ -540,7 +557,7 @@ public class Databaser {
 		}
 
 		Statement s = db.getConnection().createStatement();
-		s.executeUpdate("DELETE FROM `NPCManager` WHERE `Name`='" + name
+		s.executeUpdate("DELETE FROM `NPCs` WHERE `Name`='" + name
 				+ " ';");
 
 	}

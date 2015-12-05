@@ -19,16 +19,14 @@ import com.starnetmc.core.util.F;
 public class Punish extends Module {
 
 	public Punish(JavaPlugin plugin) {
-		super("Punish", 0.1, ModuleType.SERVER, plugin);
+		super("Punishments", 0.96, ModuleType.SERVER, plugin);
 	}
 
 	public void enable() {
-
 		log("Enabled.");
 	}
 
 	public void disable() {
-
 		log("Disabled.");
 	}
 
@@ -41,7 +39,14 @@ public class Punish extends Module {
 		if (Databaser.isPunished(e.getPlayer().getUniqueId().toString(), PunishType.MUTE)) {
 			e.setCancelled(true);
 			
-			e.getPlayer().sendMessage(F.error("Punishments","SHHH!!! You're muted! Reason: " + Databaser.getLastestActivePunishment(e.getPlayer().getUniqueId().toString(), PunishType.MUTE).getReason() + " By: " + Databaser.getUsername(Databaser.getLastestActivePunishment(e.getPlayer().getUniqueId().toString(), PunishType.MUTE).getPunisher())));
+			Punishment p = Databaser.getLastestActivePunishment(e.getPlayer().getUniqueId().toString(), PunishType.MUTE);
+			System.out.println("MEMES ALPHA: " + p.getType());
+			System.out.println("MEMES BETA: " + p.getReason());
+			System.out.println("MEMES: " + p.getPunisher());
+			System.out.println("MEMES2.0: " + p.getPunished());
+			String username = Databaser.getUsername(p.getPunisher());
+			
+			e.getPlayer().sendMessage(F.error("Punishments","SHHH!!! You're muted! Reason: " + p.getReason() + " By: " + username));
 		}
 	}
 
@@ -201,16 +206,28 @@ public class Punish extends Module {
 			e.setCancelled(true);
 		
 			try {
-				Punishment lastBan = Databaser.getLastestActivePunishment(p.getUniqueId().toString(), PunishType.BAN);
-				lastBan.setReason(PunishCommand.punish.get(p.getUniqueId().toString()).getReason());
-				Punishment lastMute = Databaser.getLastestActivePunishment(p.getUniqueId().toString(), PunishType.MUTE);
-				lastMute.setReason(PunishCommand.punish.get(p.getUniqueId().toString()).getReason());
 				
-				Databaser.removePunishment(lastBan);
-				Databaser.removePunishment(lastMute);
+				Punishment lastBan = Databaser.getLastestActivePunishment(p.getUniqueId().toString(), PunishType.BAN);
+				if (lastBan != null){
+					lastBan.setRemovalReason(PunishCommand.punish.get(p.getUniqueId().toString()).getReason());
+					lastBan.setRemover(p.getUniqueId().toString());
+					Databaser.removePunishment(lastBan);
+				}
+					
+				Punishment lastMute = Databaser.getLastestActivePunishment(p.getUniqueId().toString(), PunishType.MUTE);
+				if (lastMute != null){
+				    lastMute.setRemovalReason(PunishCommand.punish.get(p.getUniqueId().toString()).getReason());
+					lastMute.setRemover(p.getUniqueId().toString());
+					Databaser.removePunishment(lastMute);
+				}
+			
+				p.sendMessage(F.info("Punishments", "Removed latest active punishments for user " + Databaser.getUsername(PunishCommand.punish.get(p.getUniqueId().toString()).getPunished())));
+				PunishCommand.punish.get(p.getUniqueId().toString()).remove();
+				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
+			
 			p.closeInventory();
 		}
 		

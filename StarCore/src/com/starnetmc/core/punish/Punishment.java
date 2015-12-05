@@ -1,10 +1,12 @@
 package com.starnetmc.core.punish;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
 import com.starnetmc.core.database.Databaser;
+import com.starnetmc.core.util.F;
 import com.starnetmc.core.util.UNet;
 
 public class Punishment {
@@ -51,15 +53,39 @@ public class Punishment {
 		this.permanent = false;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void execute(){
+		
+		time = new Timestamp(System.currentTimeMillis());
+		
 		try {
 			
 			Databaser.executePunishment(this);
-			UNet.netKickPlayer(Bukkit.getServer().getPlayer(punisher), Databaser.getUsername(punished), reason);
 			
+			if(type == PunishType.BAN){
+			   UNet.netKickPlayer(Bukkit.getServer().getPlayer(UUID.fromString(punisher)), Databaser.getUsername(punished), reason);
+			}
+		
+		if (type == PunishType.BAN){
+			if (permanent){
+		       Bukkit.getServer().broadcastMessage(F.info("Punishments", Databaser.getUsername(punisher) + " has permanently banned " + Databaser.getUsername(punished) + " for " + getReason()));
+			} else {
+			   Bukkit.getServer().broadcastMessage(F.info("Punishments", Databaser.getUsername(punisher) + " has temporarily banned " + Databaser.getUsername(punished) + " for " + new Timestamp(getDuration()).getHours() + " Hours" + " for " + getReason()));
+			}
+			
+		} else {
+			if (permanent){
+			       Bukkit.getServer().broadcastMessage(F.info("Punishments", Databaser.getUsername(punisher) + " has permanently muted " + Databaser.getUsername(punished) + " for " + getReason()));
+				} else {
+				   Bukkit.getServer().broadcastMessage(F.info("Punishments", Databaser.getUsername(punisher) + " has temporarily muted " + Databaser.getUsername(punished) + " for " + new Timestamp(getDuration()).getHours() + " Hours" + " for " + getReason()));
+				}
+		}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		PunishCommand.punish.get(punisher).remove();
 	}
 	
 	public void remove(){
@@ -133,10 +159,20 @@ public class Punishment {
 	}
 	
 	public Timestamp getRemovalTime(){
+		
+		if (removal_time == null){
+			removal_time = new Timestamp(System.currentTimeMillis());
+		}
+		
 		return removal_time;
 	}
 	
 	public Timestamp getExecutionTime(){
+		
+		if (time == null){
+			time = new Timestamp(System.currentTimeMillis());
+		}
+		
 		return time;
 	}
 	
@@ -154,6 +190,11 @@ public class Punishment {
 	
 	public Timestamp getExpiryDate(){
 		Timestamp expiry = new Timestamp(time.getTime() + duration);
+		
+		if (permanent){
+			expiry = new Timestamp(time.getTime() - 2000);
+		}
+		
 		return expiry;
 	}
 

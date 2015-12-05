@@ -48,7 +48,7 @@ public enum Rank {
 		Rank finalRank = DEFAULT;
 		
 		for (Rank r : getStaffRanks()){
-			if (r.getTag(false).equalsIgnoreCase(rank)){
+			if (r.toString().equalsIgnoreCase(rank)){
 				finalRank = r;
 			}
 		}

@@ -8,6 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class MySQL extends Database {
 	
+	private static String connectorFlags = "zeroDateTimeBehavior=convertToNull";
+	
 	private final String user;
 	private final String database;
 	private final String password;
@@ -32,7 +34,7 @@ public class MySQL extends Database {
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://"
-				+ this.ip + ":" + this.port + "/" + this.database,
+				+ this.ip + ":" + this.port + "/" + this.database + "?" + connectorFlags,
 				this.user, this.password);
 		return connection;
 	}

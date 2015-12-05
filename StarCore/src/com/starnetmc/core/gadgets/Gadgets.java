@@ -115,12 +115,12 @@ public class Gadgets extends Module {
 		Bukkit.getServer().getPluginManager().callEvent(new PlayerGadgetChangeEvent(p, g, true));
 	}
 	
-	public static void removeUser(Player player) {
-		for (Gadget g : getUsers().get(player.getUniqueId().toString())){
-			removeGadgetFromUser(player, g);
+	public static void removeUser(Player p) {
+		for (int i = Gadgets.getUsers().get(p.getUniqueId().toString()).size()-1; i != 0; i--){
+			removeGadgetFromUser(p, Gadgets.getUsers().get(p.getUniqueId().toString()).get(i));
 		}
 		
-		getUsers().remove(player.getUniqueId().toString());
+		getUsers().remove(p.getUniqueId().toString());
 	}
 	
 	public static boolean hasGadget(Player p, Gadget g){
@@ -130,7 +130,7 @@ public class Gadgets extends Module {
 			if (ChatColor.stripColor(gdgt.getName()).equalsIgnoreCase(ChatColor.stripColor(g.getName()))){
 				b = true;
 			}
-		 }
+		  }
 		}
 		
 		return b;
@@ -154,7 +154,7 @@ public class Gadgets extends Module {
 		deInitAllGadgets();
 		isEnabled = false;
 		log("Disabled.");
-	}
+	} 
 
 	public static boolean isEnabled;
 

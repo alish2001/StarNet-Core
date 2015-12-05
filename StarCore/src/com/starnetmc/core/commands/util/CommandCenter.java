@@ -51,7 +51,7 @@ public class CommandCenter implements Listener {
 
 		if (command != null) {
 
-			if(getRank(e.getPlayer()) != command.getRequiredRank()) {
+			if (!(getRank(e.getPlayer()).compareTo(command.getRequiredRank()) <= 0)) {
 				e.getPlayer().sendMessage(F.error("Permissions", "Such Permission, much not [ " + command.getRequiredRank().toString() + " ] Rank."));
 				return;
 			}

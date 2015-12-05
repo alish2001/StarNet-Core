@@ -3,9 +3,9 @@ package com.starnetmc.core.util;
 public class UString {
 	
 	public static String UppercaseFirstLetter(String string) {
-		return string.substring(0, 1).toUpperCase()
-		+ string.substring(1).toLowerCase();
-		}
+		return string.substring(0, 1).toUpperCase()+ string.substring(1).toLowerCase();
+		
+	}
 	
 	public static String forgeArgMessage(String[] args, int startArg) {
 		StringBuilder bldr = new StringBuilder();
@@ -18,4 +18,11 @@ public class UString {
 		return bldr.toString();
 	}
 
+	public static String booleanToNumericalString(final Boolean bool) {
+		  if (bool == null) {
+		    return "null";
+		  } else {
+         return bool.booleanValue() ? "1" : "0";
+	   }
+	}
 }

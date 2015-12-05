@@ -72,7 +72,7 @@ public class AccountManager extends Module {
 			Logger.log("<AccountManager> Account added for player: " + p.getName());
 	   	 } catch (Exception ex) {
 			ex.printStackTrace();
-	 	  }
+	 	 }
 		
 		} else {
 			

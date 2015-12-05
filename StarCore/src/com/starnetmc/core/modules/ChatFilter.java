@@ -16,7 +16,7 @@ public class ChatFilter extends Module {
 	private static List<String> blockedWords = new ArrayList<String>();
 
 	public ChatFilter(JavaPlugin plugin) {
-		super("Chat Filter",1.0,ModuleType.INFO,plugin);
+		super("Chat Filter", 1.0, ModuleType.INTERNAL, plugin);
 	}
 
 	public ChatFilter() {
@@ -29,23 +29,24 @@ public class ChatFilter extends Module {
 		if (!isEnabled) return;
 
 			String[] message = e.getMessage().toLowerCase().split(" ");
-			for (int i = message.length; i != 0; i--) {
+			for (int i = message.length - 1; i != -1; i--) {
 				if (blockedWords.contains(message[i])) {
 					StringBuilder builder = new StringBuilder();
 					for(int x = message[i].length(); x != 0; x--){
-						builder.append("$#%");
+						builder.append("#");
 					}
 					
 					message[i] = builder.toString();
 				}
 			}
 			
-			StringBuilder fixer = new StringBuilder();
-			for (int i = message.length; i != 0; i--) {
-				fixer.append(message[i]);
+			StringBuilder msg = new StringBuilder();
+			for (String s : message) {
+				msg.append(s);
+				msg.append(" ");
 			}
 			
-			e.setMessage(fixer.toString());
+			e.setMessage(msg.toString());
 	}
 
 	@Override
